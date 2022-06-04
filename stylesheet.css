@@ -1,8 +1,7 @@
-  .wrapper {
+  .outer_wrapper {
       display: flex;
       flex-flow: row wrap;
       flex-direction: column;
-      font-weight: bold;
       text-align: center;
       padding: 10px;
       flex: 1 100%;
@@ -17,6 +16,15 @@
       text-align: left;
   }
   
+  .header {
+      color: white;
+  }
+  
+  .main_wrapper {
+      display: flex;
+      flex-direction: row;
+  }
+  /*
   .cctitle {
       background: white;
       padding: 20px;
@@ -26,11 +34,14 @@
       text-align: left;
       line-height: 60%;
       color: black;
+      order: 10;
   }
+  
   
   .cctitle:hover {
       background: violet;
   }
+  */
   
   .crimes {
       background: coral;
