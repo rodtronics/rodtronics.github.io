@@ -1,0 +1,43 @@
+  .wrapper {
+      display: flex;
+      flex-flow: row wrap;
+      flex-direction: column;
+      font-weight: bold;
+      text-align: center;
+      padding: 10px;
+      flex: 1 100%;
+      background: black;
+  }
+  
+  * {
+      font-family: "Helvetica neue lt std", helvetica, arial, sans-serif;
+      font-size: 30pt;
+      font-weight: 600;
+      letter-spacing: -2px;
+      text-align: left;
+  }
+  
+  .cctitle {
+      background: white;
+      padding: 20px;
+      font-style: oblique;
+      font-weight: 800;
+      letter-spacing: -3px;
+      text-align: left;
+      line-height: 60%;
+      color: black;
+  }
+  
+  .cctitle:hover {
+      background: violet;
+  }
+  
+  .crimes {
+      background: coral;
+      padding: 10px;
+  }
+  
+  .information {
+      background: skyblue;
+      padding: 10px;
+  }
