@@ -1,54 +1,73 @@
-  .outer_wrapper {
-      display: flex;
-      flex-flow: row wrap;
-      flex-direction: column;
-      text-align: center;
-      padding: 10px;
-      flex: 1 100%;
-      background: black;
-  }
-  
-  * {
-      font-family: "Helvetica neue lt std", helvetica, arial, sans-serif;
-      font-size: 30pt;
-      font-weight: 600;
-      letter-spacing: -2px;
-      text-align: left;
-  }
-  
-  .header {
-      color: white;
-  }
-  
-  .main_wrapper {
-      display: flex;
-      flex-direction: row;
-  }
-  /*
-  .cctitle {
-      background: white;
-      padding: 20px;
-      font-style: oblique;
-      font-weight: 800;
-      letter-spacing: -3px;
-      text-align: left;
-      line-height: 60%;
-      color: black;
-      order: 10;
-  }
-  
-  
-  .cctitle:hover {
-      background: violet;
-  }
-  */
-  
-  .crimes {
-      background: coral;
-      padding: 10px;
-  }
-  
-  .information {
-      background: skyblue;
-      padding: 10px;
-  }
+* {
+    font-family: "Helvetica neue lt std", helvetica, arial, sans-serif;
+    font-weight: 600;
+    text-align: left;
+}
+
+.header_wrapper {
+    letter-spacing: -2px;
+    display: flex;
+    color: white;
+    flex-flow: row;
+    justify-content: space-between;
+    background: black;
+    padding: 15px;
+    align-items: flex-end;
+}
+
+.stats_banner {
+    font-size: 30pt;
+}
+
+.mini_stats {
+    font-size: 15pt;
+    letter-spacing: 0 px;
+}
+
+.title {
+    color: darkviolet;
+    font-size: 20pt;
+    font-style: oblique;
+}
+
+.main_wrapper {
+    display: flex;
+    flex-flow: row;
+    flex: 1 100%;
+    background: black;
+    justify-content: space-between;
+}
+
+.crimes_wrapper {
+    display: flex;
+    background: black;
+    padding: 2px;
+    flex-grow: 1;
+    margin: 2px;
+    flex-flow: row;
+}
+
+.crime {
+    background: white;
+    font-size: 15px;
+    margin: 2px;
+    flex-shrink: 1;
+    text-align: right;
+    padding: 5px;
+}
+
+.crime:hover {
+    background: coral;
+}
+
+.information {
+    font-size: 25pt;
+    letter-spacing: -2px;
+    background: skyblue;
+    width: 20%;
+    flex: 0 0 300px;
+    padding: 5px;
+    margin: 2px;
+    margin-left: 0px;
+    text-align: right;
+}
