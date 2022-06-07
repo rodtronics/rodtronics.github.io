@@ -36,8 +36,7 @@ function createCrimeWindows(structOfCrimesIterator, buttonIndex) {
     document.getElementById('crimeID').appendChild(newWindowButton);
 
     // add function to the button for when it is clicked
-    document.getElementById(structOfCrimesIterator.name).addEventListener("click",clickOnCrimeButton(buttonIndex));
-}
+    document.getElementById(structOfCrimesIterator.name).addEventListener("click", () => clickOnCrimeButton(buttonIndex));}
 
 // this function is called when a crime button is clicked
 function clickOnCrimeButton(idOfButton) {
