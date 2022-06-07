@@ -36,6 +36,7 @@
     flex: 1 100%;
     background: black;
     justify-content: space-between;
+    gap: 5px;
 }
 
 .crimes_wrapper {
@@ -49,9 +50,10 @@
 
 .crime {
     background: white;
+    color: brown;
     font-size: 15px;
     margin: 2px;
-    flex-shrink: 1;
+    flex-shrink: 0;
     text-align: right;
     padding: 5px;
 }
