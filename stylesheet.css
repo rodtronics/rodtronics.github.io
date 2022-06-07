@@ -10,7 +10,8 @@
     color: white;
     flex-flow: row;
     justify-content: space-between;
-    background: black;
+    background: rgb(74,0,102);
+background: linear-gradient(4deg, rgba(74,0,102,1) 0%, rgba(0,0,0,1) 100%);
     padding: 15px;
     align-items: flex-end;
 }
@@ -39,33 +40,43 @@
     gap: 5px;
 }
 
-.crimes_wrapper {
+.crime_wrapper {
     display: flex;
-    background: black;
     padding: 2px;
-    flex-grow: 1;
+    flex-grow: 0;
     margin: 2px;
     flex-flow: row;
+    flex-wrap: wrap;
 }
 
 .crime {
-    background: white;
+    background: rgb(255,255,255);
+background: linear-gradient(4deg, rgba(255,255,255,1) 0%, rgba(192,229,255,1) 100%);
+    display: flex;
+    width: 100px;
+    height: 100px;
     color: brown;
     font-size: 15px;
+    flex-grow: 1;
     margin: 2px;
-    flex-shrink: 0;
-    text-align: right;
     padding: 5px;
+
+    text-align: right;
+    flex-grow: 0;
+
 }
 
 .crime:hover {
-    background: coral;
+    background: rgb(251,141,63);
+background: linear-gradient(0deg, rgba(251,141,63,1) 0%, rgba(252,70,107,1) 100%);
+color:antiquewhite;
 }
 
 .information {
     font-size: 25pt;
     letter-spacing: -2px;
-    background: skyblue;
+    background: rgb(184,0,255);
+background: linear-gradient(4deg, rgba(184,0,255,1) 0%, rgba(128,0,255,1) 100%);
     width: 20%;
     flex: 0 0 300px;
     padding: 5px;
