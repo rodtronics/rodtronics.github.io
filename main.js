@@ -27,7 +27,7 @@ function createCrimeButtons(structOfCrimesIterator, buttonIndex) {
     newCrimeButton.className = "crime";
     newCrimeButton.id = structOfCrimesIterator.buttonid;
 
-    // create the text that goes in the window
+    // create the text that goes in the button
     var newButtonText = structOfCrimesIterator.name;
 
     // add the text to the div
@@ -42,8 +42,10 @@ function createCrimeButtons(structOfCrimesIterator, buttonIndex) {
 
 // this function is called when a crime button is clicked
 function clickOnCrimeButton(idOfButton) {
-    var buttonText = setOfCrime[idOfButton].name;
-    document.getElementById("infoID").textContent = buttonText;
+
+    // add the name
+    var newInfoText = setOfCrime[idOfButton].name;
+    document.getElementById("infoID").textContent = newInfoText;
 }
 
 

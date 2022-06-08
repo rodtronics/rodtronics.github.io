@@ -2,18 +2,23 @@
     font-family: "Helvetica neue lt std", helvetica, arial, sans-serif;
     font-weight: 600;
     text-align: left;
+    background: black;
 }
 
 .header_wrapper {
-    letter-spacing: -2px;
     display: flex;
-    color: white;
     flex-flow: row;
-    justify-content: space-between;
-    background: rgb(74, 0, 102);
-    background: linear-gradient(4deg, rgba(74, 0, 102, 1) 0%, rgba(0, 0, 0, 1) 100%);
-    padding: 15px;
+    flex 0 0;
     align-items: flex-end;
+    letter-spacing: -1px;
+    background: black;
+    color: white;
+    justify-content: space-between;
+    padding: 10px;
+    width: 1000px;
+    border: 2px;
+    border-color: white;
+    border-style: solid;
 }
 
 .stats_banner {
@@ -38,6 +43,12 @@
     background: black;
     justify-content: space-between;
     gap: 5px;
+    width: 1000px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    border: 2px;
+    border-color: white;
+    border-style: solid;
 }
 
 .crime_wrapper {
@@ -77,6 +88,7 @@
     letter-spacing: -2px;
     background: rgb(184, 0, 255);
     background: linear-gradient(4deg, rgba(184, 0, 255, 1) 0%, rgba(128, 0, 255, 1) 100%);
+    color: white;
     width: 20%;
     flex: 0 0 300px;
     padding: 5px;
