@@ -37,7 +37,7 @@ function createCrimeButtons(structOfCrimesIterator, buttonIndex) {
 
     // create the text that goes in the button
     var newButtonText = structOfCrimesIterator.name;
-
+    
     // add the text to the div
     newCrimeButton.innerHTML = newButtonText;
 
@@ -77,14 +77,15 @@ function clickOnCrimeButton(buttonIndex) {
 
 // starts crime
 function commitCrime(buttonIndex) {
-    setDatetimes(buttonIndex);
-    setOfCrime[buttonIndex].state = 1;
+    setDatetimes(globalButtonIndex);
+    setOfCrime[globalButtonIndex].state = 1;
+    console.log("working");
 }
 
 // sets dates and times of crime start and finish
 function setDatetimes(buttonIndex) {
-    setOfCrime[buttonIndex].datetimeCrimeStarted = date.now();
-    setOfCrime[buttonIndex].datetimeCrimeWillEnd = date.now() + setOfCrime[buttonIndex].datetimetocompleteinmilliseconds;
+    setOfCrime[globalButtonIndex].datetimeCrimeStarted = date.now();
+    setOfCrime[globalButtonIndex].datetimeCrimeWillEnd = date.now() + setOfCrime[globalButtonIndex].datetimetocompleteinmilliseconds;
 }
 
 // this function is called every frame, and will call a couple other functions
