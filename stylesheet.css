@@ -8,7 +8,7 @@
 .header_wrapper {
     display: flex;
     flex-flow: row;
-    flex 0 0;
+    flex: 0 0;
     align-items: flex-end;
     letter-spacing: -1px;
     background: black;

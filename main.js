@@ -1,5 +1,9 @@
+//globals
+
+var globalButtonIndex
+
 // this function stores information in itself
-function structOfCrimes(buttonid, name, requiredNoto, moneyEarned, notoEarned, timeToCompleteInSeconds, timeToCompleteInHours) {
+function structOfCrimes(buttonid, name, requiredNoto, moneyEarned, notoEarned, timeToCompleteInSeconds, timeToCompleteInHours, state, datetimeCrimeStarted, datetimeCrimeWillEnd) {
     this.buttonid = buttonid;
     this.name = name;
     this.requiredNoto = requiredNoto;
@@ -7,13 +11,17 @@ function structOfCrimes(buttonid, name, requiredNoto, moneyEarned, notoEarned, t
     this.notoEarned = notoEarned;
     this.timeToCompleteInSeconds = timeToCompleteInSeconds;
     this.timeToCompleteInHours = timeToCompleteInHours;
+    this.timeToCompleteInMilliseconds = (timeToCompleteInHours * 60 * 60 * 1000) + (timeToCompleteInSeconds * 1000);
+    this.state = state;
+    this.datetimeCrimeStarted = datetimeCrimeStarted;
+    this.datetimeCrimeWillEnd = datetimeCrimeWillEnd;
 }
 
 // this creates an array "setOfCrime" that contains different crimes
 var setOfCrime = [
-    new structOfCrimes("loit", "Loitering", 0, 0, 2, 3, 0),
-    new structOfCrimes("skate", "Skateboarding", 10, 0, 5, 10, 0),
-    new structOfCrimes("litt", "Littering", 7, 0, 3, 1, 0)
+    new structOfCrimes("loit", "Loitering", 0, 0, 2, 3, 0, 0, 0, 0),
+    new structOfCrimes("skate", "Skateboarding", 10, 0, 5, 10, 0, 0, 0, 0),
+    new structOfCrimes("litt", "Littering", 7, 0, 3, 1, 0, 0, 0, 0)
 
 ]
 
@@ -41,14 +49,57 @@ function createCrimeButtons(structOfCrimesIterator, buttonIndex) {
 }
 
 // this function is called when a crime button is clicked
-function clickOnCrimeButton(idOfButton) {
+function clickOnCrimeButton(buttonIndex) {
+
+    globalButtonIndex = buttonIndex;
 
     // add the name
-    var newInfoText = setOfCrime[idOfButton].name;
+    var newInfoText = setOfCrime[buttonIndex].name;
     document.getElementById("infoID").textContent = newInfoText;
+
+    // make a new button that you can click to start the crime and style it
+    var newGoButton = document.createElement("button");
+    newGoButton.id = "goButton";
+    newGoButton.className = "crime";
+
+    // add text to button
+    newGoButton.textContent = "commit crime";
+
+    // append button into info panel
+    document.getElementById("infoID").appendChild(newGoButton);
+
+    // add event listener to button
+    document.getElementById("goButton").addEventListener("click", () => commitCrime(buttonIndex));
+
+
+
 }
 
+// starts crime
+function commitCrime(buttonIndex) {
+    setDatetimes(buttonIndex);
+    setOfCrime[buttonIndex].state = 1;
+}
+
+// sets dates and times of crime start and finish
+function setDatetimes(buttonIndex) {
+    setOfCrime[buttonIndex].datetimeCrimeStarted = date.now();
+    setOfCrime[buttonIndex].datetimeCrimeWillEnd = date.now() + setOfCrime[buttonIndex].datetimetocompleteinmilliseconds;
+}
+
+// this function is called every frame, and will call a couple other functions
+function initiateRefresh(timestamp) {
+    //setOfCrime.forEach(refreshButtons)
+    var timeUntilComplete = setOfCrime[globalButtonIndex].datetimeCrimeWillEnd - date.now();
+    document.getElementById("infoID").textContent = timeUntilComplete;
+}
+
+function refreshButtons(structOfCrimesIterator, buttonIndex) {
+
+}
 
 
 setOfCrime.forEach(createCrimeButtons);
 document.getElementById("infoID").textContent = "Welcome to Crime Committer";
+
+window.requestAnimationFrame(initiateRefresh);
