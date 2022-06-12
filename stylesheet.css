@@ -6,13 +6,15 @@ these are comments
     /*
     font-family: 'Courier New', Courier, monospace;
         font-family: "Helvetica neue lt std", helvetica, arial, sans-serif;
+    font-family: 'Courier New', Courier, monospace;
 
 
     */
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Source Code Pro';
     text-align: left;
     background: black;
     text-transform: uppercase;
+    font-weight: 400
 }
 
 .header_wrapper {

@@ -2,7 +2,7 @@
 
 var globalButtonIndex
 
-// this function stores information in itself
+// this function stores information in itself, and defines our main object
 function structOfCrimes(buttonid, name, requiredNoto, moneyEarned, notoEarned, timeToCompleteInSeconds, timeToCompleteInHours, state, datetimeCrimeStarted, datetimeCrimeWillEnd) {
     this.buttonid = buttonid;
     this.name = name;
