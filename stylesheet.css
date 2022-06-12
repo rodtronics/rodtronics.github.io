@@ -4,14 +4,15 @@ these are comments
 
 * {
     /*
-    font-family: "Helvetica neue lt std", helvetica, arial, sans-serif;
+    font-family: 'Courier New', Courier, monospace;
+        font-family: "Helvetica neue lt std", helvetica, arial, sans-serif;
+
 
     */
     font-family: 'Courier New', Courier, monospace;
-    font-weight: 300;
     text-align: left;
     background: black;
-    text-transform: uppercase
+    text-transform: uppercase;
 }
 
 .header_wrapper {
@@ -19,7 +20,7 @@ these are comments
     flex-flow: row;
     flex: 0 0;
     align-items: flex-end;
-    letter-spacing: -1px;
+    letter-spacing: 2px;
     background: black;
     color: white;
     justify-content: space-between;
