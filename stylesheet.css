@@ -8,6 +8,7 @@ these are comments
   background: black;
   text-transform: uppercase;
   font-weight: 400;
+  color: white;
 }
 
 .header_wrapper {
@@ -110,6 +111,7 @@ these are comments
 }
 
 .log {
+  display: flex;
   border: 2xp;
   border-color: white;
   border-style: solid;

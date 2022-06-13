@@ -1,7 +1,9 @@
 //globals
 
 var globalButtonIndex;
-const logLength = 50;
+const logLength = 10;
+//var logOfCrimes = ["","","",""];
+var logOfCrimes = new Array(logLength).fill("");
 
 // this function stores information in itself, and defines our main object
 function structOfCrimes(
@@ -36,8 +38,6 @@ var setOfCrime = [
   new structOfCrimes("skate", "Skateboarding", 10, 0, 5, 10, 0, 0, 0, 0),
   new structOfCrimes("litt", "Littering", 7, 0, 3, 1, 0, 0, 0, 0),
 ];
-
-var logOfCrimes = ["this is the log", "please enjoy"];
 
 // this function builds the crime windows and places them in the flexbox
 function createCrimeButtons(structOfCrimesIterator, buttonIndex) {
@@ -86,6 +86,9 @@ function clickOnCrimeButton(buttonIndex) {
   document
     .getElementById("goButton")
     .addEventListener("click", () => commitCrime(buttonIndex));
+
+  // send message to log
+  addToLog(setOfCrime[buttonIndex].name);
 }
 
 // starts crime
@@ -103,7 +106,6 @@ function setDatetimes(buttonIndex) {
 
 // this function is called every frame, and will call a couple other functions
 function refreshLoop(timestamp) {
-  document.getElementById("logID").textContent = date.now;
   //var timeUntilComplete = setOfCrime[globalButtonIndex].datetimeCrimeWillEnd - date.now();
   //document.getElementById("infoID").textContent = timeUntilComplete;
 
@@ -116,7 +118,7 @@ function refreshButtons(structOfCrimesIterator, buttonIndex) {}
 // this function updates the log
 function addToLog(text) {
   // moves each element in the array along one, making space for the new bit of info
-  for (logShuffleIndex = 0; logShuffleIndex < logLength; logShuffleIndex++) {
+  for (logShuffleIndex = logLength; logShuffleIndex > -1; logShuffleIndex--) {
     logOfCrimes[logShuffleIndex + 1] = logOfCrimes[logShuffleIndex];
   }
   // set the latest log into
@@ -125,12 +127,13 @@ function addToLog(text) {
   // build new log text
   newLogText = "";
   for (logAddIndex = 0; logAddIndex < logLength + 1; logAddIndex++) {
-    newLogText = newLogText + logOfCrimes[logAddIndex];
+    newLogText = newLogText + logOfCrimes[logAddIndex] + "<br>";
   }
-
-  document.getElementById("logID").textContent = newLogText;
+  document.getElementById("logID").innerHTML = newLogText;
 }
 
+//
+addToLog("crimes beginning");
 setOfCrime.forEach(createCrimeButtons);
 document.getElementById("infoID").textContent = "Welcome to Crime Committer";
 
