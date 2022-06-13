@@ -3,104 +3,120 @@ these are comments
 */
 
 * {
-    /*
-    font-family: 'Courier New', Courier, monospace;
-        font-family: "Helvetica neue lt std", helvetica, arial, sans-serif;
-    font-family: 'Courier New', Courier, monospace;
-
-
-    */
-    font-family: 'Source Code Pro', monospace;
-    text-align: left;
-    background: black;
-    text-transform: uppercase;
-    font-weight: 400
+  font-family: "Source Code Pro", monospace;
+  text-align: left;
+  background: black;
+  text-transform: uppercase;
+  font-weight: 400;
 }
 
 .header_wrapper {
-    display: flex;
-    flex-flow: row;
-    flex: 0 0;
-    align-items: flex-end;
-    letter-spacing: 2px;
-    background: black;
-    color: white;
-    justify-content: space-between;
-    padding: 10px;
-    width: 1000px;
-    border: 2px;
-    border-color: white;
-    border-style: solid;
+  display: flex;
+  flex-flow: row;
+  flex: 0 0;
+  align-items: flex-end;
+  letter-spacing: 2px;
+  background: black;
+  color: white;
+  justify-content: space-between;
+  padding: 10px;
+  width: 1000px;
+  border: 2px;
+  border-color: white;
+  border-style: solid;
 }
 
 .stats_banner {
-    font-size: 30pt;
+  font-size: 30pt;
 }
 
 .mini_stats {
-    font-size: 15pt;
-    letter-spacing: 0 px;
+  font-size: 15pt;
+  letter-spacing: 0 px;
 }
 
 .title {
-    color: darkviolet;
-    font-size: 15pt;
-    font-style: oblique;
+  color: darkviolet;
+  font-size: 15pt;
+  font-style: oblique;
 }
 
 .main_wrapper {
-    display: flex;
-    flex-flow: row;
-    flex: 1 100%;
-    background: black;
-    justify-content: space-between;
-    gap: 5px;
-    width: 1000px;
-    flex-grow: 0;
-    flex-shrink: 0;
+  display: flex;
+  flex-flow: row;
+  flex: 1 100%;
+  background: black;
+  justify-content: space-between;
+  gap: 5px;
+  width: 1000px;
+  height: 800px;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 .crime_wrapper {
-    display: flex;
-    padding: 2px;
-    flex-grow: 0;
-    margin: 2px;
-    flex-flow: row;
-    flex-wrap: wrap;
+  display: flex;
+  padding: 2px;
+  flex-grow: 0;
+  margin: 2px;
+  flex-flow: row;
+  flex-wrap: wrap;
 }
 
 .crime {
-    background: rgb(0, 0, 0);
-    display: flex;
-    width: 150px;
-    height: 50px;
-    color: white;
-    font-size: 15px;
-    flex-grow: 1;
-    margin: 2px;
-    padding: 10px;
-    text-align: left;
-    flex-grow: 0;
-    border: 2px;
-    border-color: white;
-    border-style: solid;
+  background: rgb(0, 0, 0);
+  display: flex;
+  width: 150px;
+  height: 50px;
+  color: white;
+  font-size: 15px;
+  margin: 2px;
+  padding: 10px;
+  text-align: left;
+  flex-grow: 0;
+  border: 2px;
+  border-color: white;
+  border-style: solid;
 }
 
 .crime:hover {
-    background: rgb(251, 141, 63);
-    background: linear-gradient(0deg, rgba(251, 141, 63, 1) 0%, rgba(252, 70, 107, 1) 100%);
-    color: antiquewhite;
+  background: rgb(251, 141, 63);
+  background: linear-gradient(
+    0deg,
+    rgba(251, 141, 63, 1) 0%,
+    rgba(252, 70, 107, 1) 100%
+  );
+  color: rgb(253, 255, 126);
+}
+
+.information_wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  justify-content: space-around;
 }
 
 .information {
-    font-size: 25pt;
-    letter-spacing: 2px;
-    background: darkviolet;
-    color: white;
-    width: 20%;
-    flex: 0 0 300px;
-    padding: 15px;
-    margin: 2px;
-    margin-left: 0px;
-    text-align: right;
+  font-size: 25pt;
+  letter-spacing: 2px;
+  background: darkviolet;
+  color: white;
+  height: 60%;
+  padding: 15px;
+  margin: 2px;
+  margin-left: 0px;
+  text-align: right;
+  justify-content: center;
+}
+
+.log {
+  border: 2xp;
+  border-color: white;
+  border-style: solid;
+  flex: 0 0;
+  height: 40%;
+
+  color: white;
+  text-transform: none;
+  padding: 5px;
 }
