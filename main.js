@@ -86,15 +86,14 @@ function clickOnCrimeButton(buttonIndex) {
   document
     .getElementById("goButton")
     .addEventListener("click", () => commitCrime(buttonIndex));
-
-  // send message to log
-  addToLog(setOfCrime[buttonIndex].name);
 }
 
 // starts crime
 function commitCrime(buttonIndex) {
-  setDatetimes(globalButtonIndex);
-  setOfCrime[globalButtonIndex].state = 1;
+  //setDatetimes(globalButtonIndex);
+  //setOfCrime[globalButtonIndex].state = 1;
+  // send message to log
+  addToLog(setOfCrime[buttonIndex].name);
 }
 
 // sets dates and times of crime start and finish
