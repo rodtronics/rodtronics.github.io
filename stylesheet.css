@@ -10,7 +10,7 @@ these are comments
 
 
     */
-    font-family: 'Source Code Pro';
+    font-family: 'Source Code Pro', monospace;
     text-align: left;
     background: black;
     text-transform: uppercase;
