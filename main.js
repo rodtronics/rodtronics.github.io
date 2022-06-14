@@ -75,52 +75,53 @@ function createCrimeButtons(structOfCrimesIterator, buttonIndex) {
 //end of init functions
 
 // this function is called when a crime button is clicked
+// and largely makes sure the info panel is relevant
 function clickOnCrimeButton(buttonIndex) {
+  // set the global button index
   globalButtonIndex = buttonIndex;
+
+  // first off, if they've clicked on it because the crime was ready to reap rewards
+  if (setOfCrime[buttonIndex].state == 2) {
+    noto += setOfCrime[buttonIndex].notoEarned;
+    money += setOfCrime[buttonIndex].moneyEarned;
+    addToLog(
+      setOfCrime[buttonIndex].notoEarned +
+        " noto earned " +
+        setOfCrime[buttonIndex].moneyEarned +
+        " money earned"
+    );
+    setOfCrime[buttonIndex].state = 0;
+  }
+  // refresh the panel
+  refreshInfoPanel(buttonIndex);
+}
+
+function refreshInfoPanel(buttonIndex) {
+  // work on the assumption that the button index passed is the msot recently pressed button
 
   switch (setOfCrime[buttonIndex].state) {
     case 0:
-      // add the name
       var newInfoTitle = setOfCrime[buttonIndex].name;
-      var newInfoText = "";
-
-      document.getElementById("infoID").innerHTML = newInfoTitle;
-      document.getElementById("infotextID").innerHTML = newInfoText;
-
-      // make a new button that you can click to start the crime and style it
-      var newGoButton = document.createElement("button");
-      newGoButton.id = "goButton";
-      newGoButton.className = "crime";
-
-      // add text to button
-      newGoButton.textContent = "commit crime";
-
-      // append button into info panel
-      document.getElementById("infotextID").appendChild(newGoButton);
-
-      // add event listener to button
-      document
-        .getElementById("goButton")
-        .addEventListener("click", () => commitCrime(buttonIndex));
-
+      var newInfoText = "a cool crime for sure";
+      break;
+    case 1:
+      var newInfoTitle = setOfCrime[buttonIndex].name;
+      var newInfoText = "and it's being committed";
       break;
     case 2:
-      noto += setOfCrime[buttonIndex].notoEarned;
-      money += setOfCrime[buttonIndex].moneyEarned;
-      addToLog(
-        setOfCrime[buttonIndex].notoEarned +
-          " noto earned " +
-          setOfCrime[buttonIndex].moneyEarned +
-          " money earned"
-      );
-      setOfCrime[buttonIndex].state = 0;
-
+      var newInfoTitle = "setOfCrime[buttonIndex].name";
+      var newInfoText = "and it's been done<br>praise the lord";
       break;
   }
+  document.getElementById("infoID").innerHTML = newInfoTitle;
+  document.getElementById("infotextID").innerHTML = newInfoText;
 }
 
+//
+//
 // starts crime
 function commitCrime(buttonIndex) {
+  buttonIndex = globalButtonIndex;
   if (setOfCrime[buttonIndex].state == 0) {
     setDatetimes(buttonIndex);
     setOfCrime[buttonIndex].state = 1;
@@ -156,8 +157,8 @@ function refreshSingleButton(structOfCrimes, buttonIndex) {
       formattedTimehuman = dayjs.duration(timeUntilComplete).humanize(true);
       refreshedButtonText =
         setOfCrime[buttonIndex].name +
-        "<br>" +
-        formattedTimehuman +
+        // "<br>" +
+        // formattedTimehuman +
         "<br>" +
         formattedTime;
       // set the class of the element to get it to go blue
@@ -191,15 +192,11 @@ function setDatetimes(buttonIndex) {
   );
 }
 
-function hasCrimeFinished(structOfCrimes, crimeIndex) {
-  switch (setOfCrime[crimeIndex].state) {
-    case 0:
-      break;
-    case 1:
-      if (dayjs().isAfter(setOfCrime[globalButtonIndex].datetimeCrimeWillEnd)) {
-        setOfCrime[crimeIndex].state = 2;
-      }
-      break;
+function hasCrimeFinished(structOfCrimes, buttonIndex) {
+  if (setOfCrime[buttonIndex].state == 1) {
+    if (dayjs().isAfter(setOfCrime[buttonIndex].datetimeCrimeWillEnd)) {
+      setOfCrime[buttonIndex].state = 2;
+    }
   }
 }
 
@@ -215,7 +212,7 @@ function addToLog(text) {
   // build new log text
   newLogText = "";
   for (logAddIndex = 0; logAddIndex < logLength + 1; logAddIndex++) {
-    newLogText = newLogText + logOfCrimes[logAddIndex] + "<br>";
+    newLogText = newLogText + "*-" + logOfCrimes[logAddIndex] + "<br>";
   }
   document.getElementById("logID").innerHTML = newLogText;
 }
@@ -229,6 +226,8 @@ function refreshBanner() {
 function refreshLoop(timestamp) {
   // refresh the banner at the time
   refreshBanner();
+  document.getElementById("currentTimeID").innerHTML =
+    "its " + dayjs().format("YY.MM.DD HH:mm:ss");
   // refresh info on each button
   setOfCrime.forEach(refreshSingleButton);
   setOfCrime.forEach(hasCrimeFinished);
@@ -237,9 +236,13 @@ function refreshLoop(timestamp) {
 }
 
 //
-addToLog("crimes beginning");
+addToLog(dayjs().format("YY.MM.DD HH:mm") + " the crimespree has begun");
 setOfCrime.forEach(createCrimeButtons);
-document.getElementById("infoID").textContent = "Welcome to Crime Committer";
 
+// assign eventlistener to the go button
+document.getElementById("infoID").textContent = "Welcome to Crime Committer";
+document
+  .getElementById("buttonLocationID")
+  .addEventListener("click", () => commitCrime());
 // finally we initiate the refreshLoop
 window.requestAnimationFrame(refreshLoop);

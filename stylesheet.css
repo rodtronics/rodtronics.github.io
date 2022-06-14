@@ -90,6 +90,10 @@ these are comments
   color: rgb(253, 255, 126);
 }
 
+#buttonLocationID {
+  font-size: 15px;
+}
+
 [state="ready"] {
   background: black;
 }
