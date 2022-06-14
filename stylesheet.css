@@ -90,29 +90,59 @@ these are comments
   color: rgb(253, 255, 126);
 }
 
-.information_wrapper {
+[state="ready"] {
+  background: black;
+}
+[state="running"] {
+  background: rgb(34, 118, 195);
+  background: linear-gradient(
+    0deg,
+    rgba(34, 118, 195, 1) 0%,
+    rgba(119, 202, 255, 1) 100%
+  );
+}
+[state="complete"] {
+  background: rgb(195, 53, 34);
+  background: linear-gradient(
+    0deg,
+    rgba(195, 53, 34, 1) 0%,
+    rgba(255, 119, 161, 1) 100%
+  );
+}
+
+.side_wrapper {
   display: flex;
   flex-direction: column;
   width: 30%;
   justify-content: space-around;
+  background: darkviolet;
+  color: white;
 }
 
-.information {
+.information_title {
   font-size: 25pt;
   letter-spacing: 2px;
   background: darkviolet;
-  color: white;
-  height: 60%;
+  height: 10%;
   padding: 15px;
   margin: 2px;
   margin-left: 0px;
   text-align: right;
-  justify-content: center;
+  justify-content: flex-start;
+}
+
+.information_text {
+  font-size: 10pt;
+  background: darkviolet;
+  color: white;
+  height: 50%;
+  padding: 5px;
 }
 
 .log {
   display: flex;
   border: 2xp;
+  background-color: black;
   border-color: white;
   border-style: solid;
   flex: 0 0;
