@@ -5,9 +5,6 @@ const logLength = 4;
 var logOfCrimes = new Array(logLength).fill("");
 var noto = 0;
 var money = 0;
-var timeUntilComplete = new dayjs();
-var relativeTime = require("dayjs/plugin/relativeTime");
-dayjs.extend(relativeTime);
 
 // this function stores information in itself, and defines our main object
 function structOfCrimes(
@@ -37,9 +34,9 @@ function structOfCrimes(
   // 2 = completed but haven't collected resources
   // 3 = unavailable (need more noto)
   this.state = state;
-  this.datetimeCrimeStarted = new dayjs();
+  this.datetimeCrimeStarted = 0;
 
-  this.datetimeCrimeWillEnd = new dayjs();
+  this.datetimeCrimeWillEnd = 0;
 }
 
 // this creates an array "setOfCrime" that contains different crimes
