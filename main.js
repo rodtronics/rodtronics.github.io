@@ -35,7 +35,7 @@ function structOfCrimes(
   // 1 = running
   // 2 = completed but haven't collected resources
   // 3 = unavailable (need more noto)
-  this.state = state;
+  this.state = 3;
   this.datetimeCrimeStarted = 0;
 
   this.datetimeCrimeWillEnd = 0;
@@ -43,9 +43,9 @@ function structOfCrimes(
 
 // this creates an array "setOfCrime" that contains different crimes
 var setOfCrime = [
-  new structOfCrimes("loit", "Loitering", 0, 0, 2, 30, 0, 0, 0, 0),
+  new structOfCrimes("loit", "Loitering", 0, 0, 2, 15, 0, 0, 0, 0),
   new structOfCrimes("skate", "Skateboarding", 10, 0, 5, 100, 0, 0, 0, 0),
-  new structOfCrimes("litt", "Littering", 7, 0, 3, 10, 0, 0, 0, 0),
+  new structOfCrimes("litt", "Littering", 2, 0, 3, 10, 0, 0, 0, 0),
 ];
 
 // this function builds the crime windows and places them in the flexbox
@@ -86,11 +86,13 @@ function clickOnCrimeButton(buttonIndex) {
     money += setOfCrime[buttonIndex].moneyEarned;
     addToLog(
       setOfCrime[buttonIndex].notoEarned +
-        " noto earned " +
+        " noto & " +
         setOfCrime[buttonIndex].moneyEarned +
-        " money earned"
+        " $ earned"
     );
     setOfCrime[buttonIndex].state = 0;
+    // refresh the noto requireds
+    setOfCrime.forEach(checkNotoRequired);
   }
   // refresh the panel
   refreshInfoPanel(buttonIndex);
@@ -102,25 +104,48 @@ function refreshInfoPanel(buttonIndex) {
   switch (setOfCrime[buttonIndex].state) {
     case 0:
       var newInfoTitle = setOfCrime[buttonIndex].name;
-      var newInfoText = "a cool crime for sure";
+      var newInfoText =
+        setOfCrime[buttonIndex].requiredNoto +
+        " NOTOREITY required" +
+        "<br>gain<br>" +
+        setOfCrime[buttonIndex].notoEarned +
+        "N<br>" +
+        setOfCrime[buttonIndex].moneyEarned +
+        "$";
+      updateGoButton("CLICK TO COMMIT");
       break;
     case 1:
       var newInfoTitle = setOfCrime[buttonIndex].name;
-      var newInfoText = "and it's being committed";
+      var newInfoText =
+        "and it's being committed<br>until " +
+        setOfCrime[buttonIndex].datetimeCrimeWillEnd.format(
+          "DD/MM/YY HH:mm:ss"
+        );
+      updateGoButton("COMMITTING");
       break;
     case 2:
-      var newInfoTitle = "setOfCrime[buttonIndex].name";
+      var newInfoTitle = setOfCrime[buttonIndex].name;
       var newInfoText = "and it's been done<br>praise the lord";
+      updateGoButton("CRIMEGRATULATIONS");
       break;
+    case 3:
+      var newInfoTitle = "COMMIT MORE CRIME";
+      var newInfoText =
+        setOfCrime[buttonIndex].requiredNoto + " NOTOREITY required";
+      updateGoButton("COMMIT MORE CRIME");
   }
   document.getElementById("infoID").innerHTML = newInfoTitle;
   document.getElementById("infotextID").innerHTML = newInfoText;
 }
 
+function updateGoButton(newText) {
+  document.getElementById("buttonLocationID").innerHTML = newText;
+}
 //
 //
 // starts crime
 function commitCrime(buttonIndex) {
+  // this is just laziness lol
   buttonIndex = globalButtonIndex;
   if (setOfCrime[buttonIndex].state == 0) {
     setDatetimes(buttonIndex);
@@ -133,6 +158,7 @@ function commitCrime(buttonIndex) {
     refreshSingleButton("", buttonIndex);
     addToLog(logEntry);
   }
+  refreshInfoPanel(globalButtonIndex);
 }
 
 function refreshSingleButton(structOfCrimes, buttonIndex) {
@@ -175,6 +201,9 @@ function refreshSingleButton(structOfCrimes, buttonIndex) {
       document
         .getElementById(setOfCrime[buttonIndex].buttonid)
         .setAttribute("state", "complete");
+      break;
+    case 3:
+      refreshedButtonText = "COMMIT MORE CRIMES";
   }
   document.getElementById(setOfCrime[buttonIndex].buttonid).innerHTML =
     refreshedButtonText;
@@ -196,7 +225,19 @@ function hasCrimeFinished(structOfCrimes, buttonIndex) {
   if (setOfCrime[buttonIndex].state == 1) {
     if (dayjs().isAfter(setOfCrime[buttonIndex].datetimeCrimeWillEnd)) {
       setOfCrime[buttonIndex].state = 2;
+      refreshInfoPanel(globalButtonIndex);
     }
+  }
+}
+
+// this takes any crime out of state 3 (not ready) if it's noto is high enough
+function checkNotoRequired(structOfCrimes, crimeIndex) {
+  if (
+    setOfCrime[crimeIndex].state == 3 &&
+    noto >= setOfCrime[crimeIndex].requiredNoto
+  ) {
+    setOfCrime[crimeIndex].state = 0;
+    console.log("yes");
   }
 }
 
@@ -239,8 +280,11 @@ function refreshLoop(timestamp) {
 addToLog(dayjs().format("YY.MM.DD HH:mm") + " the crimespree has begun");
 setOfCrime.forEach(createCrimeButtons);
 
+// call this initially to set initial crime state to 0
+setOfCrime.forEach(checkNotoRequired);
+
 // assign eventlistener to the go button
-document.getElementById("infoID").textContent = "Welcome to Crime Committer";
+document.getElementById("infoID").textContent = "LETS GO";
 document
   .getElementById("buttonLocationID")
   .addEventListener("click", () => commitCrime());

@@ -91,7 +91,8 @@ these are comments
 }
 
 #buttonLocationID {
-  font-size: 15px;
+  font-size: 20px;
+  text-align: center;
 }
 
 [state="ready"] {
@@ -136,7 +137,7 @@ these are comments
 }
 
 .information_text {
-  font-size: 10pt;
+  font-size: 15pt;
   background: darkviolet;
   color: white;
   height: 50%;
