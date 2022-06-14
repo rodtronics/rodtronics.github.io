@@ -62,16 +62,16 @@ these are comments
   margin: 2px;
   flex-flow: row;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .crime {
-  background: rgb(0, 0, 0);
   display: flex;
   width: 150px;
   height: 80px;
   color: white;
   font-size: 15px;
-  margin: 2px;
+  margin: 5px;
   padding: 10px;
   text-align: left;
   flex-grow: 0;
@@ -93,6 +93,10 @@ these are comments
 #buttonLocationID {
   font-size: 20px;
   text-align: center;
+  background-color: crimson;
+  border: 0px;
+  border-color: black;
+  border-style: solid;
 }
 
 [state="ready"] {
@@ -118,8 +122,8 @@ these are comments
 .side_wrapper {
   display: flex;
   flex-direction: column;
-  width: 30%;
-  justify-content: space-around;
+  width: 400px;
+  justify-content: space-between;
   background: darkviolet;
   color: white;
 }
@@ -134,6 +138,7 @@ these are comments
   margin-left: 0px;
   text-align: right;
   justify-content: flex-start;
+  line-height: 75%;
 }
 
 .information_text {

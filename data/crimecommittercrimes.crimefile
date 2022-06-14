@@ -1,0 +1,8 @@
+new structOfCrimes("buttonid","name",cost,requiredNoto,moneyEarned,notoEarned,timeToCompleteInSeconds,timeToCompleteInHours,0, 0, 0),
+new structOfCrimes("loit","Loitering",0,0,0,2,12,0,0, 0, 0),
+new structOfCrimes("skate","Skateboarding",0,10,0,5,45,0,0, 0, 0),
+new structOfCrimes("litt","Littering",0,2,0,1,4,0,0, 0, 0),
+new structOfCrimes("watch","Selling Counterfeit Watches",0,20,5,2,60,0,0, 0, 0),
+new structOfCrimes("baby","Candy from a Baby",0,12,0,3,28,0,0, 0, 0),
+new structOfCrimes("jorts","Wearing Jorts",5,17,0,-5,60,0,0, 0, 0),
+

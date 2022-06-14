@@ -1,7 +1,6 @@
 //globals
 var globalButtonIndex;
 const logLength = 4;
-//var logOfCrimes = ["","","",""];
 var logOfCrimes = new Array(logLength).fill("");
 var noto = 0;
 var money = 0;
@@ -12,6 +11,8 @@ var money = 0;
 function structOfCrimes(
   buttonid,
   name,
+  cost,
+
   requiredNoto,
   moneyEarned,
   notoEarned,
@@ -23,6 +24,7 @@ function structOfCrimes(
 ) {
   this.buttonid = buttonid;
   this.name = name;
+  this.cost = cost;
   this.requiredNoto = requiredNoto;
   this.moneyEarned = moneyEarned;
   this.notoEarned = notoEarned;
@@ -41,12 +43,35 @@ function structOfCrimes(
   this.datetimeCrimeWillEnd = 0;
 }
 
+// struct for accumulated data (I expect to add more as time goes on)
+function structOfAccumulatedData(numberTimesCommitted) {
+  this.numberTimesCommitted = numberTimesCommitted;
+}
+
 // this creates an array "setOfCrime" that contains different crimes
 var setOfCrime = [
-  new structOfCrimes("loit", "Loitering", 0, 0, 2, 15, 0, 0, 0, 0),
-  new structOfCrimes("skate", "Skateboarding", 10, 0, 5, 100, 0, 0, 0, 0),
-  new structOfCrimes("litt", "Littering", 2, 0, 3, 10, 0, 0, 0, 0),
+  new structOfCrimes("loit", "Loitering", 0, 0, 0, 2, 12, 0, 0, 0, 0),
+  new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0, 0, 0, 0),
+  new structOfCrimes("litt", "Littering", 0, 2, 0, 1, 4, 0, 0, 0, 0),
+  new structOfCrimes(
+    "watch",
+    "Selling Counterfeit Watches",
+    0,
+    20,
+    5,
+    2,
+    60,
+    0,
+    0,
+    0,
+    0
+  ),
+  new structOfCrimes("baby", "Candy from a Baby", 0, 12, 0, 3, 28, 0, 0, 0, 0),
+  new structOfCrimes("jorts", "Wearing Jorts", 5, 17, 0, -5, 60, 0, 0, 0, 0),
 ];
+
+// initialise the accumulated data array
+var setOfAccumlatedData = new Array(setOfCrime.length).fill(0);
 
 // this function builds the crime windows and places them in the flexbox
 function createCrimeButtons(structOfCrimesIterator, buttonIndex) {
@@ -70,9 +95,20 @@ function createCrimeButtons(structOfCrimesIterator, buttonIndex) {
   document
     .getElementById(structOfCrimesIterator.buttonid)
     .addEventListener("click", () => clickOnCrimeButton(buttonIndex));
+  // and a double click tries to commit crime straight away
+  document
+    .getElementById(structOfCrimesIterator.buttonid)
+    .addEventListener("dblclick", () => doubleClickOnCrimeButton(buttonIndex));
+}
+
+function doubleClickOnCrimeButton(buttonIndex) {
+  clickOnCrimeButton(buttonIndex);
+  commitCrime(buttonIndex);
 }
 
 //end of init functions
+//
+//
 
 // this function is called when a crime button is clicked
 // and largely makes sure the info panel is relevant
@@ -81,21 +117,27 @@ function clickOnCrimeButton(buttonIndex) {
   globalButtonIndex = buttonIndex;
 
   // first off, if they've clicked on it because the crime was ready to reap rewards
+  // state of 2 means comple
   if (setOfCrime[buttonIndex].state == 2) {
-    noto += setOfCrime[buttonIndex].notoEarned;
-    money += setOfCrime[buttonIndex].moneyEarned;
-    addToLog(
-      setOfCrime[buttonIndex].notoEarned +
-        " noto & " +
-        setOfCrime[buttonIndex].moneyEarned +
-        " $ earned"
-    );
-    setOfCrime[buttonIndex].state = 0;
-    // refresh the noto requireds
-    setOfCrime.forEach(checkNotoRequired);
+    successfulCrime(buttonIndex);
   }
   // refresh the panel
   refreshInfoPanel(buttonIndex);
+}
+
+// what happens when a crime was successful
+function successfulCrime(buttonIndex) {
+  noto += setOfCrime[buttonIndex].notoEarned;
+  money += setOfCrime[buttonIndex].moneyEarned;
+  addToLog(
+    setOfCrime[buttonIndex].notoEarned +
+      " noto & " +
+      setOfCrime[buttonIndex].moneyEarned +
+      " $ earned"
+  );
+  setOfCrime[buttonIndex].state = 0;
+  // refresh the noto requireds
+  setOfCrime.forEach(checkNotoRequired);
 }
 
 function refreshInfoPanel(buttonIndex) {
@@ -105,13 +147,12 @@ function refreshInfoPanel(buttonIndex) {
     case 0:
       var newInfoTitle = setOfCrime[buttonIndex].name;
       var newInfoText =
-        setOfCrime[buttonIndex].requiredNoto +
-        " NOTOREITY required" +
+        setOfCrime[buttonIndex].requiredNoto + " NOTOREITY required"; /*+
         "<br>gain<br>" +
         setOfCrime[buttonIndex].notoEarned +
         "N<br>" +
         setOfCrime[buttonIndex].moneyEarned +
-        "$";
+        "$";*/ // maybe make it so you have to commit the crime to see what happens
       updateGoButton("CLICK TO COMMIT");
       break;
     case 1:
@@ -231,13 +272,13 @@ function hasCrimeFinished(structOfCrimes, buttonIndex) {
 }
 
 // this takes any crime out of state 3 (not ready) if it's noto is high enough
+// and will have been called with a foreach
 function checkNotoRequired(structOfCrimes, crimeIndex) {
   if (
     setOfCrime[crimeIndex].state == 3 &&
     noto >= setOfCrime[crimeIndex].requiredNoto
   ) {
     setOfCrime[crimeIndex].state = 0;
-    console.log("yes");
   }
 }
 
@@ -263,6 +304,14 @@ function refreshBanner() {
   document.getElementById("statsBannerID").innerHTML = updatedBannerHTML;
 }
 
+function cheat(keyPressKey) {
+  noto += 2;
+  money += 1;
+  updatedBannerHTML;
+  setOfCrime.forEach(checkNotoRequired);
+}
+
+// the main loop
 // this function is called every frame, and will call a couple other functions
 function refreshLoop(timestamp) {
   // refresh the banner at the time
@@ -276,12 +325,18 @@ function refreshLoop(timestamp) {
   window.requestAnimationFrame(refreshLoop);
 }
 
-//
+// start up the log
 addToLog(dayjs().format("YY.MM.DD HH:mm") + " the crimespree has begun");
+
+// make the crime buttons
 setOfCrime.forEach(createCrimeButtons);
 
 // call this initially to set initial crime state to 0
 setOfCrime.forEach(checkNotoRequired);
+
+// of course you can cheat lol ;)
+//cheatCodeKeyboardEvent = new KeyboardEvent("keydown");
+//document.addEventListener("keydown", () => cheat());
 
 // assign eventlistener to the go button
 document.getElementById("infoID").textContent = "LETS GO";
