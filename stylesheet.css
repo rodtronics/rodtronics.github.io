@@ -28,7 +28,7 @@ these are comments
 }
 
 .stats_banner {
-  font-size: 30pt;
+  font-size: 20pt;
 }
 
 .mini_stats {
@@ -68,7 +68,7 @@ these are comments
   background: rgb(0, 0, 0);
   display: flex;
   width: 150px;
-  height: 50px;
+  height: 80px;
   color: white;
   font-size: 15px;
   margin: 2px;

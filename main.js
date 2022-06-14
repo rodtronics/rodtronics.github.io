@@ -1,9 +1,13 @@
 //globals
-
 var globalButtonIndex;
-const logLength = 10;
+const logLength = 4;
 //var logOfCrimes = ["","","",""];
 var logOfCrimes = new Array(logLength).fill("");
+var noto = 0;
+var money = 0;
+var timeUntilComplete = new dayjs();
+var relativeTime = require("dayjs/plugin/relativeTime");
+dayjs.extend(relativeTime);
 
 // this function stores information in itself, and defines our main object
 function structOfCrimes(
@@ -27,9 +31,15 @@ function structOfCrimes(
   this.timeToCompleteInHours = timeToCompleteInHours;
   this.timeToCompleteInMilliseconds =
     timeToCompleteInHours * 60 * 60 * 1000 + timeToCompleteInSeconds * 1000;
+  // state refers to where the crime is at
+  // 0 = ready to run
+  // 1 = running
+  // 2 = completed but haven't collected resources
+  // 3 = unavailable (need more noto)
   this.state = state;
-  this.datetimeCrimeStarted = datetimeCrimeStarted;
-  this.datetimeCrimeWillEnd = datetimeCrimeWillEnd;
+  this.datetimeCrimeStarted = new dayjs();
+
+  this.datetimeCrimeWillEnd = new dayjs();
 }
 
 // this creates an array "setOfCrime" that contains different crimes
@@ -90,29 +100,55 @@ function clickOnCrimeButton(buttonIndex) {
 
 // starts crime
 function commitCrime(buttonIndex) {
-  //setDatetimes(globalButtonIndex);
-  //setOfCrime[globalButtonIndex].state = 1;
-  // send message to log
-  addToLog(setOfCrime[buttonIndex].name);
+  if (setOfCrime[buttonIndex].state == 0) {
+    setDatetimes(globalButtonIndex);
+    setOfCrime[globalButtonIndex].state = 1;
+    // send message to log
+    logEntry =
+      setOfCrime[globalButtonIndex].name +
+      " will finish at: <br>" +
+      setOfCrime[globalButtonIndex].datetimeCrimeStarted.format(
+        "DD/MM/YY HH:ss"
+      );
+    refreshSingleButton(buttonIndex);
+    addToLog(logEntry);
+  }
+}
+
+function refreshSingleButton(buttonIndex) {
+  if ((setOfCrime[buttonIndex].state = 1)) {
+    timeUntilComplete = setOfCrime[buttonIndex].datetimeCrimeWillEnd.toNow();
+    console.log(timeUntilComplete);
+    formattedTime = timeUntilComplete;
+    refreshedButtonText = setOfCrime[buttonIndex].name + "<br>" + formattedTime;
+  } else {
+    refreshedButtonText = setOfCrime[buttonIndex].name;
+  }
+
+  document.getElementById(setOfCrime[buttonIndex].buttonid).innerHTML =
+    refreshedButtonText;
+  console.log(refreshedButtonText);
 }
 
 // sets dates and times of crime start and finish
 function setDatetimes(buttonIndex) {
-  setOfCrime[globalButtonIndex].datetimeCrimeStarted = date.now();
-  setOfCrime[globalButtonIndex].datetimeCrimeWillEnd =
-    date.now() + setOfCrime[globalButtonIndex].datetimetocompleteinmilliseconds;
+  // set time crime initiated
+  setOfCrime[globalButtonIndex].datetimeCrimeStarted = dayjs();
+
+  // set time the crime will be completed
+  setOfCrime[globalButtonIndex].datetimeCrimeWillEnd = dayjs().fromNow(
+    setOfCrime[globalButtonIndex].datetimetocompleteinmilliseconds,
+    "millisecond"
+  );
 }
 
-// this function is called every frame, and will call a couple other functions
-function refreshLoop(timestamp) {
-  //var timeUntilComplete = setOfCrime[globalButtonIndex].datetimeCrimeWillEnd - date.now();
-  //document.getElementById("infoID").textContent = timeUntilComplete;
-
-  // and set up the refresh loop to start next repaint of the frame
-  window.requestAnimationFrame(refreshLoop);
+function hasCrimeFinished(crimeIndex) {
+  if (dayjs() > setOfCrime[crimeIndex].datetimeCrimeWillEnd) {
+    return true;
+  } else {
+    return false;
+  }
 }
-
-function refreshButtons(structOfCrimesIterator, buttonIndex) {}
 
 // this function updates the log
 function addToLog(text) {
@@ -129,6 +165,18 @@ function addToLog(text) {
     newLogText = newLogText + logOfCrimes[logAddIndex] + "<br>";
   }
   document.getElementById("logID").innerHTML = newLogText;
+}
+
+function refreshBanner() {
+  updatedBannerHTML = noto + "N<br>" + money + "$";
+  document.getElementById("statsBannerID").innerHTML = updatedBannerHTML;
+}
+
+// this function is called every frame, and will call a couple other functions
+function refreshLoop(timestamp) {
+  refreshBanner();
+  // and set up the refresh loop to start next repaint of the frame
+  window.requestAnimationFrame(refreshLoop);
 }
 
 //
