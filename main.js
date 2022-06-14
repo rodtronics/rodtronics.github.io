@@ -27,7 +27,7 @@ function structOfCrimes(
   this.timeToCompleteInSeconds = timeToCompleteInSeconds;
   this.timeToCompleteInHours = timeToCompleteInHours;
   this.timeToCompleteInMilliseconds =
-    timeToCompleteInHours * 60 * 60 * 1000 + timeToCompleteInSeconds * 1000;
+    timeToCompleteInHours * 60 * 60 * 1000 + timeToCompleteInSeconds * 100;
   // state refers to where the crime is at
   // 0 = ready to run
   // 1 = running
@@ -75,8 +75,12 @@ function clickOnCrimeButton(buttonIndex) {
   globalButtonIndex = buttonIndex;
 
   // add the name
-  var newInfoText = setOfCrime[buttonIndex].name;
-  document.getElementById("infoID").textContent = newInfoText;
+  var newInfoText =
+    setOfCrime[buttonIndex].name +
+    "<br>time to complete<br>" +
+    dayjs(setOfCrime[buttonIndex].timeToCompleteInMilliseconds);
+
+  document.getElementById("infoID").innerHTML = newInfoText;
 
   // make a new button that you can click to start the crime and style it
   var newGoButton = document.createElement("button");
@@ -114,7 +118,7 @@ function commitCrime(buttonIndex) {
 
 function refreshSingleButton(buttonIndex) {
   if ((setOfCrime[buttonIndex].state = 1)) {
-    timeUntilComplete = setOfCrime[buttonIndex].datetimeCrimeWillEnd.toNow();
+    timeUntilComplete = setOfCrime[buttonIndex].datetimeCrimeWillEn.toNow();
     console.log(timeUntilComplete);
     formattedTime = timeUntilComplete;
     refreshedButtonText = setOfCrime[buttonIndex].name + "<br>" + formattedTime;
@@ -133,9 +137,19 @@ function setDatetimes(buttonIndex) {
   setOfCrime[globalButtonIndex].datetimeCrimeStarted = dayjs();
 
   // set time the crime will be completed
-  setOfCrime[globalButtonIndex].datetimeCrimeWillEnd = dayjs().fromNow(
-    setOfCrime[globalButtonIndex].datetimetocompleteinmilliseconds,
-    "millisecond"
+  setOfCrime[globalButtonIndex].datetimeCrimeWillEnd = dayjs().add(
+    dayjs(
+      setOfCrime[globalButtonIndex].datetimetocompleteinmilliseconds,
+      "millisecond"
+    )
+  );
+  console.log(
+    "current time " +
+      dayjs().format("HH:mm:ss") +
+      " and finish time " +
+      dayjs(setOfCrime[globalButtonIndex].datetimeCrimeWillEnd).format(
+        "HH:mm:ss"
+      )
   );
 }
 
