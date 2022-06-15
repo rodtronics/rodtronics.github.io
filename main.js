@@ -71,7 +71,9 @@ var setOfCrime = [
 ];
 
 // initialise the accumulated data array
-var setOfAccumlatedData = new Array(setOfCrime.length).fill(0);
+var setOfAccumlatedData = new Array(setOfCrime.length).fill(
+  new structOfAccumulatedData(0)
+);
 
 // this function builds the crime windows and places them in the flexbox
 function createCrimeButtons(structOfCrimesIterator, buttonIndex) {
@@ -135,7 +137,11 @@ function successfulCrime(buttonIndex) {
       setOfCrime[buttonIndex].moneyEarned +
       " $ earned"
   );
+  // set the crime back to ready
   setOfCrime[buttonIndex].state = 0;
+  //update accumulated data
+  setOfAccumlatedData[buttonIndex].numberTimesCommitted += 1;
+
   // refresh the noto requireds
   setOfCrime.forEach(checkNotoRequired);
 }
@@ -147,18 +153,37 @@ function refreshInfoPanel(buttonIndex) {
     case 0:
       var newInfoTitle = setOfCrime[buttonIndex].name;
       var newInfoText =
-        setOfCrime[buttonIndex].requiredNoto + " NOTOREITY required"; /*+
-        "<br>gain<br>" +
-        setOfCrime[buttonIndex].notoEarned +
-        "N<br>" +
-        setOfCrime[buttonIndex].moneyEarned +
-        "$";*/ // maybe make it so you have to commit the crime to see what happens
+        setOfCrime[buttonIndex].requiredNoto + " NOTOREITY required";
+      console.log(setOfAccumlatedData[buttonIndex].numberTimesCommitted);
+      if (setOfAccumlatedData[buttonIndex].numberTimesCommitted < 1) {
+        newInfoText += "<br><br>YOU HAVENT COMMITTED THIS CRIME YET";
+      } else {
+        newInfoText +=
+          "<br><br>YOU'VE COMMITTED THIS CRIME " +
+          setOfAccumlatedData[buttonIndex].numberTimesCommitted +
+          " TIMES<br>" +
+          "AND EARNED<br>" +
+          setOfCrime[buttonIndex].notoEarned *
+            setOfAccumlatedData[buttonIndex].numberTimesCommitted +
+          " NOTOREITY<br>" +
+          setOfCrime[buttonIndex].moneyEarned *
+            setOfAccumlatedData[buttonIndex].numberTimesCommitted +
+          " $<BR>AND SPENT " +
+          dayjs
+            .duration(
+              setOfCrime[buttonIndex].timeToCompleteInMilliseconds *
+                setOfAccumlatedData[buttonIndex].numberTimesCommitted,
+              "millisecond"
+            )
+            .format("DD HH:mm:ss") +
+          " DOING SO";
+      }
       updateGoButton("CLICK TO COMMIT");
       break;
     case 1:
       var newInfoTitle = setOfCrime[buttonIndex].name;
       var newInfoText =
-        "and it's being committed<br>until " +
+        "in progress<br>until " +
         setOfCrime[buttonIndex].datetimeCrimeWillEnd.format(
           "DD/MM/YY HH:mm:ss"
         );
