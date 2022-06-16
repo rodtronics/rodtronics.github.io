@@ -9,18 +9,7 @@ var accumDataText = "";
 //these functions are initialistion based
 
 // this function stores information in itself, and defines our main object
-function structOfCrimes(
-  buttonid,
-  name,
-  cost,
-  requiredNoto,
-  moneyEarned,
-  notoEarned,
-  timeToCompleteInSeconds,
-  timeToCompleteInHours,
-  datetimeCrimeStarted,
-  datetimeCrimeWillEnd
-) {
+function structOfCrimes(buttonid, name, cost, requiredNoto, moneyEarned, notoEarned, timeToCompleteInSeconds, timeToCompleteInHours) {
   this.buttonid = buttonid;
   this.name = name;
   this.cost = cost;
@@ -30,21 +19,19 @@ function structOfCrimes(
   this.timeToCompleteInSeconds = timeToCompleteInSeconds;
   this.timeToCompleteInHours = timeToCompleteInHours;
   this.timeToCompleteInMilliseconds = timeToCompleteInHours * 60 * 60 * 1000 + timeToCompleteInSeconds * 1000;
+}
+
+// struct for accumulated data (I expect to add more as time goes on)
+function structOfGameState(state, numberTimesCommitted, datetimeCrimeWillEnd, datetimeCrimeStarted) {
   // state refers to where the crime is at
   // 0 = ready to run
   // 1 = running
   // 2 = completed but haven't collected resources
   // 3 = unavailable (need more noto)
-  this.datetimeCrimeStarted = 0;
-
-  this.datetimeCrimeWillEnd = 0;
-}
-
-// struct for accumulated data (I expect to add more as time goes on)
-function structOfGameState(state, numberTimesCommitted, datetimeCrimeWillEnd) {
   this.state = state;
   this.numberTimesCommitted = numberTimesCommitted;
   this.datetimeCrimeWillEnd = datetimeCrimeWillEnd;
+  this.datetimeCrimeStarted = datetimeCrimeStarted;
 }
 
 // this creates an array "setOfCrime" that contains different crimes
@@ -253,13 +240,12 @@ function refreshSingleButton(structOfCrimes, buttonIndex) {
       refreshedButtonText = "COMMIT MORE CRIMES";
   }
   document.getElementById(setOfCrime[buttonIndex].buttonid).innerHTML = refreshedButtonText;
-  //console.log(refreshedButtonText);
 }
 
 // sets dates and times of crime start and finish
 function setDatetimes(buttonIndex) {
   // set time crime initiated
-  setOfCrime[buttonIndex].datetimeCrimeStarted = dayjs();
+  gameState[buttonIndex].datetimeCrimeStarted = dayjs();
   completionMS = setOfCrime[buttonIndex].timeToCompleteInMilliseconds;
   // set time the crime will be completed
   gameState[buttonIndex].datetimeCrimeWillEnd = dayjs().add(dayjs(completionMS, "millisecond"));
@@ -311,6 +297,59 @@ function cheat(keyPressKey) {
   setOfCrime.forEach(checkNotoRequired);
 }
 
+// run at the start of a session, and updates the certain gamestate variables
+function readCookies() {
+  tempnoto = Cookies.get("noto");
+  if (tempnoto == undefined) {
+    console.log("no money or noto cookies");
+  } else {
+    noto = parseInt(Cookies.get("noto"));
+
+    money = parseInt(Cookies.get("money"));
+    log.console("from cookies: " + noto + "N&" + money + "$");
+
+    for (let cookieReadIndex = 0; cookieReadIndex < setOfCrime.length; cookieReadIndex++) {
+      tempCookieReadout = Cookies.get("'cookie" + cookieReadIndex + "'");
+      if (tempCookieReadout == undefined) {
+        console.log("no gamestate cookie for crime number: " + cookieReadIndex);
+      } else {
+        arrayFromTempCookieReadout = tempCookieReadout.split(";");
+        console.log("cookie read: ", arrayFromTempCookieReadout);
+        gameState[cookieReadIndex].state = parseInt(arrayFromTempCookieReadout[0]);
+        gameState[cookieReadIndex].numberTimesCommitted = parseInt(arrayFromTempCookieReadout[1]);
+        gameState[cookieReadIndex].datetimeCrimeWillEnd = parseInt(arrayFromTempCookieReadout[2]);
+        gameState[cookieReadIndex].datetimeCrimeStarted = parseInt(arrayFromTempCookieReadout[3]);
+      }
+    }
+    newLogText = Cookies.get("log");
+    document.getElementById("logID").innerHTML = newLogText;
+  }
+  buttonIndex = 0;
+}
+
+// called whenever a crime is started, or completed,
+// and will always update the money / noto
+// and updates the cookie related to the crime
+function setCookie(buttonIndex) {
+  // always refresh money and noto
+  Cookies.set("noto", noto, { expires: 365 });
+  Cookies.set("money", money, { expires: 365 });
+  console.log("wrote to cookie: " + noto + "N&" + money + "$");
+  // set the cookiename
+  cookieName = "'cookie" + buttonIndex + "'";
+  // set the cookie contnent
+  cookieContent =
+    gameState[buttonIndex].state +
+    ";" +
+    gameState[buttonIndex].numberTimesCommitted +
+    ";" +
+    gameState[buttonIndex].datetimeCrimeWillEnd +
+    ";" +
+    gameState[buttonIndex].datetimeCrimeStarted;
+  Cookies.set(cookieName, cookieContent, { expires: 365 });
+  console.log("wrote to cookie: " + cookieName + "," + cookieContent);
+}
+
 // the main loop
 // this function is called every frame, and will call a couple other functions
 function refreshLoop(timestamp) {
@@ -322,46 +361,6 @@ function refreshLoop(timestamp) {
   setOfCrime.forEach(hasCrimeFinished);
   // and set up the refresh loop to start next repaint of the frame
   window.requestAnimationFrame(refreshLoop);
-}
-
-function readCookies() {
-  tempnoto = Cookies.get("noto");
-  if (tempnoto == undefined) {
-    console.log("no money or noto cookies");
-  } else {
-    noto = parseInt(Cookies.get("noto"));
-
-    money = parseInt(Cookies.get("money"));
-
-    for (let cookieReadIndex = 0; cookieReadIndex < setOfCrime.length; cookieReadIndex++) {
-      tempCookieReadout = Cookies.get("'cookie" + cookieReadIndex + "'");
-      if (tempCookieReadout == undefined) {
-        console.log("no gamestate cookies");
-      } else {
-        arrayFromTempCookieReadout = tempCookieReadout.split(";");
-        console.log("cookie read: ", arrayFromTempCookieReadout);
-        gameState[cookieReadIndex].state = parseInt(arrayFromTempCookieReadout[0]);
-        gameState[cookieReadIndex].numberTimesCommitted = parseInt(arrayFromTempCookieReadout[1]);
-        gameState[cookieReadIndex].datetimeCrimeWillEnd = parseInt(arrayFromTempCookieReadout[2]);
-      }
-    }
-    newLogText = Cookies.get("log");
-    document.getElementById("logID").innerHTML = newLogText;
-  }
-  buttonIndex = 0;
-}
-
-function setCookie(buttonIndex) {
-  // always refresh money and noto
-  Cookies.set("noto", noto, { expires: 365 });
-  Cookies.set("money", money, { expires: 365 });
-  // set the cookiename
-  cookieName = "'cookie" + buttonIndex + "'";
-  console.log(cookieName);
-  cookieContent = gameState[buttonIndex].state + ";" + gameState[buttonIndex].numberTimesCommitted + ";" + gameState[buttonIndex].datetimeCrimeWillEnd;
-  console.log(cookieContent);
-  Cookies.set(cookieName, cookieContent, { expires: 365 });
-  Cookies.set("log", newLogText);
 }
 
 // start up the log
