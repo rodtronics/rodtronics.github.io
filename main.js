@@ -18,7 +18,6 @@ function structOfCrimes(
   notoEarned,
   timeToCompleteInSeconds,
   timeToCompleteInHours,
-  state,
   datetimeCrimeStarted,
   datetimeCrimeWillEnd
 ) {
@@ -36,7 +35,6 @@ function structOfCrimes(
   // 1 = running
   // 2 = completed but haven't collected resources
   // 3 = unavailable (need more noto)
-  this.state = 3;
   this.datetimeCrimeStarted = 0;
 
   this.datetimeCrimeWillEnd = 0;
@@ -51,19 +49,19 @@ function structOfGameState(state, numberTimesCommitted, datetimeCrimeWillEnd) {
 
 // this creates an array "setOfCrime" that contains different crimes
 var setOfCrime = [
-  new structOfCrimes("loit", "Loitering", 0, 0, 0, 2, 12, 0, 0, 0, 0),
-  new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0, 0, 0, 0),
-  new structOfCrimes("litt", "Littering", 0, 2, 0, 1, 4, 0, 0, 0, 0),
-  new structOfCrimes("watch", "Selling Counterfeit Watches", 0, 20, 5, 2, 60, 0, 0, 0, 0),
-  new structOfCrimes("baby", "Candy from a Baby", 0, 12, 0, 3, 28, 0, 0, 0, 0),
-  new structOfCrimes("jorts", "Wearing Jorts", 5, 17, 0, -5, 60, 0, 0, 0, 0),
+  new structOfCrimes("loit", "Loitering", 0, 0, 0, 2, 12, 0, 0, 0),
+  new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0, 0, 0),
+  new structOfCrimes("litt", "Littering", 0, 2, 0, 1, 4, 0, 0, 0),
+  new structOfCrimes("watch", "Selling Counterfeit Watches", 0, 20, 5, 2, 60, 0, 0, 0),
+  new structOfCrimes("baby", "Candy from a Baby", 0, 12, 0, 3, 28, 0, 0, 0),
+  new structOfCrimes("jorts", "Wearing Jorts", 5, 17, 0, -5, 60, 0, 0, 0),
 ];
 
 // initialise the accumulated data array
 var gameState = new Array(setOfCrime.length);
 // use a for loop to fill them
 for (let gameStateDataIndex = 0; gameStateDataIndex < setOfCrime.length; gameStateDataIndex++) {
-  gameState[gameStateDataIndex] = new structOfGameState(0, 0, 0);
+  gameState[gameStateDataIndex] = new structOfGameState(3, 0, 0);
 }
 
 // this function builds the crime windows and places them in the flexbox
@@ -107,7 +105,7 @@ function clickOnCrimeButton(buttonIndex) {
 
   // first off, if they've clicked on it because the crime was ready to reap rewards
   // state of 2 means comple
-  if (setOfCrime[buttonIndex].state == 2) {
+  if (gameState[buttonIndex].state == 2) {
     successfulCrime(buttonIndex);
   }
   // refresh the panel
@@ -120,7 +118,7 @@ function successfulCrime(buttonIndex) {
   money += setOfCrime[buttonIndex].moneyEarned;
   addToLog(setOfCrime[buttonIndex].name + "committed, " + setOfCrime[buttonIndex].notoEarned + " noto & " + setOfCrime[buttonIndex].moneyEarned + " $ earned");
   // set the crime back to ready
-  setOfCrime[buttonIndex].state = 0;
+  gameState[buttonIndex].state = 0;
   //update accumulated data
   gameState[buttonIndex].numberTimesCommitted += 1;
 
@@ -133,7 +131,7 @@ function successfulCrime(buttonIndex) {
 
 function refreshInfoPanel(buttonIndex) {
   // work on the assumption that the button index passed is the msot recently pressed button
-  switch (setOfCrime[buttonIndex].state) {
+  switch (gameState[buttonIndex].state) {
     //
     // case 0 means is ready to go but hasn't been done
     case 0:
@@ -205,11 +203,12 @@ function commitCrime(buttonIndex) {
   // this is just laziness lol
   buttonIndex = globalButtonIndex;
   //is the crime ready to go?
-  if (setOfCrime[buttonIndex].state == 0) {
+  if (gameState[buttonIndex].state == 0) {
     // can the player afford it?
     if (money >= setOfCrime[buttonIndex].cost) {
+      // ok go ahead commit crimes
       setDatetimes(buttonIndex);
-      setOfCrime[buttonIndex].state = 1;
+      gameState[buttonIndex].state = 1;
       // send message to log
       logEntry = setOfCrime[buttonIndex].name + " will finish at: <br>" + gameState[buttonIndex].datetimeCrimeWillEnd.format("DD/MM/YY HH:mm:ss");
       refreshSingleButton("", buttonIndex);
@@ -222,7 +221,7 @@ function commitCrime(buttonIndex) {
 
 function refreshSingleButton(structOfCrimes, buttonIndex) {
   // check to see what state button in
-  switch (setOfCrime[buttonIndex].state) {
+  switch (gameState[buttonIndex].state) {
     // case 0 means ready to go
     case 0:
       refreshedButtonText = setOfCrime[buttonIndex].name;
@@ -269,9 +268,9 @@ function setDatetimes(buttonIndex) {
 }
 
 function hasCrimeFinished(structOfCrimes, buttonIndex) {
-  if (setOfCrime[buttonIndex].state == 1) {
+  if (gameState[buttonIndex].state == 1) {
     if (dayjs().isAfter(gameState[buttonIndex].datetimeCrimeWillEnd)) {
-      setOfCrime[buttonIndex].state = 2;
+      gameState[buttonIndex].state = 2;
       refreshInfoPanel(globalButtonIndex);
     }
   }
@@ -280,8 +279,8 @@ function hasCrimeFinished(structOfCrimes, buttonIndex) {
 // this takes any crime out of state 3 (not ready) if it's noto is high enough
 // and will have been called with a foreach
 function checkNotoRequired(structOfCrimes, crimeIndex) {
-  if (setOfCrime[crimeIndex].state == 3 && noto >= setOfCrime[crimeIndex].requiredNoto) {
-    setOfCrime[crimeIndex].state = 0;
+  if (gameState[crimeIndex].state == 3 && noto >= setOfCrime[crimeIndex].requiredNoto) {
+    gameState[crimeIndex].state = 0;
   }
 }
 
