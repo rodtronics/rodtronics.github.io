@@ -155,7 +155,7 @@ function refreshInfoPanel(buttonIndex) {
     // case 1 means activelyt committing
     case 1:
       var newInfoTitle = setOfCrime[buttonIndex].name;
-      var newInfoText = "in progress<br>until " + setOfCrime[buttonIndex].datetimeCrimeWillEnd.format("DD/MM/YY HH:mm:ss" + "<br>");
+      var newInfoText = "in progress<br>until " + gameState[buttonIndex].datetimeCrimeWillEnd.format("DD/MM/YY HH:mm:ss" + "<br>");
       // add text with accumulated data
       newInfoText += generateGameStateDataText(buttonIndex);
       updateGoButton("COMMITTING");
@@ -213,7 +213,7 @@ function commitCrime(buttonIndex) {
       setDatetimes(buttonIndex);
       setOfCrime[buttonIndex].state = 1;
       // send message to log
-      logEntry = setOfCrime[buttonIndex].name + " will finish at: <br>" + setOfCrime[buttonIndex].datetimeCrimeWillEnd.format("DD/MM/YY HH:mm:ss");
+      logEntry = setOfCrime[buttonIndex].name + " will finish at: <br>" + gameState[buttonIndex].datetimeCrimeWillEnd.format("DD/MM/YY HH:mm:ss");
       refreshSingleButton("", buttonIndex);
       addToLog(logEntry);
       money -= setOfCrime[buttonIndex].cost;
@@ -235,7 +235,7 @@ function refreshSingleButton(structOfCrimes, buttonIndex) {
 
     // case 1 means running
     case 1:
-      timeUntilComplete = dayjs(setOfCrime[buttonIndex].datetimeCrimeWillEnd).diff(dayjs());
+      timeUntilComplete = dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).diff(dayjs());
       formattedTime = dayjs(timeUntilComplete).format("mm:ss");
       formattedTimehuman = dayjs.duration(timeUntilComplete).humanize(true);
       refreshedButtonText =
@@ -267,12 +267,12 @@ function setDatetimes(buttonIndex) {
   setOfCrime[buttonIndex].datetimeCrimeStarted = dayjs();
   completionMS = setOfCrime[buttonIndex].timeToCompleteInMilliseconds;
   // set time the crime will be completed
-  setOfCrime[buttonIndex].datetimeCrimeWillEnd = dayjs().add(dayjs(completionMS, "millisecond"));
+  gameState[buttonIndex].datetimeCrimeWillEnd = dayjs().add(dayjs(completionMS, "millisecond"));
 }
 
 function hasCrimeFinished(structOfCrimes, buttonIndex) {
   if (setOfCrime[buttonIndex].state == 1) {
-    if (dayjs().isAfter(setOfCrime[buttonIndex].datetimeCrimeWillEnd)) {
+    if (dayjs().isAfter(gameState[buttonIndex].datetimeCrimeWillEnd)) {
       setOfCrime[buttonIndex].state = 2;
       refreshInfoPanel(globalButtonIndex);
     }
