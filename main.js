@@ -330,30 +330,27 @@ function refreshLoop(timestamp) {
 }
 
 function readCookies() {
-  noto = parseInt(Cookies.get("noto"));
-  if (noto == undefined || noto == NaN) {
+  tempnoto = Cookies.get("noto");
+  if (tempnoto == undefined) {
     console.log("no money or noto cookies");
-    noto = 0;
-  }
-  money = parseInt(Cookies.get("money"));
-  if (money == undefined || money == NaN) {
-    money = 0;
-  }
-  for (let cookieReadIndex = 0; cookieReadIndex < setOfCrime.length; cookieReadIndex++) {
-    tempCookieReadout = Cookies.get("'cookie" + cookieReadIndex + "'");
-    if (tempCookieReadout == undefined) {
-      console.log("no gamestate cookies");
-    } else {
-      arrayFromTempCookieReadout = tempCookieReadout.split(";");
-      console.log("cookie read: ", arrayFromTempCookieReadout);
-      gameState[cookieReadIndex].state = parseInt(arrayFromTempCookieReadout[0]);
-      gameState[cookieReadIndex].numberTimesCommitted = parseInt(arrayFromTempCookieReadout[1]);
-      gameState[cookieReadIndex].datetimeCrimeWillEnd = arrayFromTempCookieReadout[2];
-    }
-  }
-  newLogText = Cookies.get("log");
-  if (newLogText == undefined) {
   } else {
+    noto = parseInt(Cookies.get("noto"));
+
+    money = parseInt(Cookies.get("money"));
+
+    for (let cookieReadIndex = 0; cookieReadIndex < setOfCrime.length; cookieReadIndex++) {
+      tempCookieReadout = Cookies.get("'cookie" + cookieReadIndex + "'");
+      if (tempCookieReadout == undefined) {
+        console.log("no gamestate cookies");
+      } else {
+        arrayFromTempCookieReadout = tempCookieReadout.split(";");
+        console.log("cookie read: ", arrayFromTempCookieReadout);
+        gameState[cookieReadIndex].state = parseInt(arrayFromTempCookieReadout[0]);
+        gameState[cookieReadIndex].numberTimesCommitted = parseInt(arrayFromTempCookieReadout[1]);
+        gameState[cookieReadIndex].datetimeCrimeWillEnd = arrayFromTempCookieReadout[2];
+      }
+    }
+    newLogText = Cookies.get("log");
     document.getElementById("logID").innerHTML = newLogText;
   }
 }
