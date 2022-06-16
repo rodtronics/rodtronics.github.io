@@ -6,21 +6,9 @@ these are comments
   --background-color: black;
   --color-A: darkviolet;
   --color-B: #f44174;
-  --hover-color: linear-gradient(
-    0deg,
-    rgba(251, 141, 63, 1) 0%,
-    rgba(252, 70, 107, 1) 100%
-  );
-  --running-color: linear-gradient(
-    0deg,
-    rgba(34, 118, 195, 1) 0%,
-    rgba(119, 202, 255, 1) 100%
-  );
-  --complete-color: linear-gradient(
-    0deg,
-    rgba(195, 53, 34, 1) 0%,
-    rgba(255, 119, 161, 1) 100%
-  );
+  --hover-color: linear-gradient(0deg, rgba(251, 141, 63, 1) 0%, rgba(252, 70, 107, 1) 100%);
+  --running-color: linear-gradient(0deg, rgba(34, 118, 195, 1) 0%, rgba(119, 202, 255, 1) 100%);
+  --complete-color: linear-gradient(0deg, rgba(195, 53, 34, 1) 0%, rgba(255, 119, 161, 1) 100%);
   --border-color: white;
 }
 
@@ -146,7 +134,7 @@ these are comments
   font-size: 25pt;
   letter-spacing: 2px;
   background: var(--color-A);
-  height: 10%;
+  height: 80px;
   padding: 15px;
   margin: 2px;
   margin-left: 0px;
@@ -159,8 +147,9 @@ these are comments
   font-size: 15pt;
   background: var(--color-A);
   color: white;
-  height: 30%;
+  height: 50%;
   padding: 15px;
+  justify-content: flex-start;
 }
 
 .log {
