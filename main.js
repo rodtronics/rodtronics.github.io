@@ -214,6 +214,9 @@ function commitCrime(buttonIndex) {
       refreshSingleButton("", buttonIndex);
       addToLog(logEntry);
       money -= setOfCrime[buttonIndex].cost;
+
+      // once new times have been set and money taken away, update the cookie so if refresh happens during a cookie countdown it's still happening
+      setCookie(buttonIndex);
     }
   }
   refreshInfoPanel(globalButtonIndex);
@@ -348,6 +351,11 @@ function readCookies() {
       gameState[cookieReadIndex].datetimeCrimeWillEnd = arrayFromTempCookieReadout[2];
     }
   }
+  newLogText = Cookies.get("log");
+  if (newLogText == undefined) {
+  } else {
+    document.getElementById("logID").innerHTML = newLogText;
+  }
 }
 
 function setCookie(buttonIndex) {
@@ -360,6 +368,7 @@ function setCookie(buttonIndex) {
   cookieContent = gameState[buttonIndex].state + ";" + gameState[buttonIndex].numberTimesCommitted + ";" + gameState[buttonIndex].datetimeCrimeWillEnd;
   console.log(cookieContent);
   Cookies.set(cookieName, cookieContent, { expires: 365 });
+  Cookies.set("log", newLogText);
 }
 
 // start up the log
