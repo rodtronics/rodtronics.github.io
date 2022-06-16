@@ -151,7 +151,7 @@ function refreshInfoPanel(buttonIndex) {
     // case 1 means activelyt committing
     case 1:
       var newInfoTitle = setOfCrime[buttonIndex].name;
-      var newInfoText = "in progress<br>until " + gameState[buttonIndex].datetimeCrimeWillEnd.format("DD/MM/YY HH:mm:ss" + "<br>");
+      var newInfoText = "in progress<br>until " + dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).format("DD/MM/YY HH:mm:ss" + "<br>");
       // add text with accumulated data
       newInfoText += generateGameStateDataText(buttonIndex);
       updateGoButton("COMMITTING");
@@ -347,7 +347,7 @@ function readCookies() {
         console.log("cookie read: ", arrayFromTempCookieReadout);
         gameState[cookieReadIndex].state = parseInt(arrayFromTempCookieReadout[0]);
         gameState[cookieReadIndex].numberTimesCommitted = parseInt(arrayFromTempCookieReadout[1]);
-        gameState[cookieReadIndex].datetimeCrimeWillEnd = arrayFromTempCookieReadout[2];
+        gameState[cookieReadIndex].datetimeCrimeWillEnd = dayjs(parseInt(arrayFromTempCookieReadout[2]));
       }
     }
     newLogText = Cookies.get("log");
