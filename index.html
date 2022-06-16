@@ -1,55 +1,63 @@
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crime Committer</title>
-    <link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="stylesheet.css"
+      media="screen"
+    />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
 
     <!-- link the google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="scripts/js.cookie.js"></script>
     <script src="scripts/dayjs.js"></script>
     <script src="scripts/relativeTime.js"></script>
     <script src="scripts/Duration.js"></script>
 
     <script>
-        dayjs.extend(dayjs_plugin_relativeTime);
+      dayjs.extend(dayjs_plugin_relativeTime);
     </script>
     <script>
-        dayjs.extend(dayjs_plugin_duration);
+      dayjs.extend(dayjs_plugin_duration);
     </script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="header_wrapper">
-        <div class="stats_banner" id="statsBannerID">notoriety 12 money $56</div>
-        <div class="mini_stats"></div>
-        <div class="title">crime committer <br />v0.7 devine beta</div>
+      <div class="stats_banner" id="statsBannerID">notoriety 12 money $56</div>
+      <div class="mini_stats"></div>
+      <div class="title">crime committer <br />v0.7 devine beta</div>
     </div>
     <br />
 
     <div class="main_wrapper">
-        <div class="crime_wrapper" id="crimeID">
-            <!-- this is where the crime buttons go    -->
-        </div>
+      <div class="crime_wrapper" id="crimeID">
+        <!-- this is where the crime buttons go    -->
+      </div>
 
-        <div class="side_wrapper">
-            <button type="button" id="buttonLocationID">CHOOSE A CRIME</button>
-            <div class="information_title" id="infoID"></div>
-            <div class="information_text" id="infotextID">this is a game</div>
-            <div class="log" id="currentTimeID"></div>
-            disclaimer: don't commit crimes
+      <div class="side_wrapper">
+        <button type="button" id="buttonLocationID">CHOOSE A CRIME</button>
+        <div class="information_title" id="infoID"></div>
+        <div class="information_text" id="infotextID">this is a game</div>
+        <div class="log" id="currentTimeID"></div>
+        disclaimer: don't commit crimes
 
-            <div class="log" id="logID">
-                14.06.2022 13:54<br />murder was the case
-            </div>
+        <div class="log" id="logID">
+          14.06.2022 13:54<br />murder was the case
         </div>
+      </div>
     </div>
-</body>
-<script type="text/javascript" src="main.js"></script>
-
+  </body>
+  <script type="text/javascript" src="main.js"></script>
 </html>
