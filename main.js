@@ -13,7 +13,6 @@ function structOfCrimes(
   buttonid,
   name,
   cost,
-
   requiredNoto,
   moneyEarned,
   notoEarned,
@@ -31,8 +30,7 @@ function structOfCrimes(
   this.notoEarned = notoEarned;
   this.timeToCompleteInSeconds = timeToCompleteInSeconds;
   this.timeToCompleteInHours = timeToCompleteInHours;
-  this.timeToCompleteInMilliseconds =
-    timeToCompleteInHours * 60 * 60 * 1000 + timeToCompleteInSeconds * 1000;
+  this.timeToCompleteInMilliseconds = timeToCompleteInHours * 60 * 60 * 1000 + timeToCompleteInSeconds * 1000;
   // state refers to where the crime is at
   // 0 = ready to run
   // 1 = running
@@ -56,19 +54,7 @@ var setOfCrime = [
   new structOfCrimes("loit", "Loitering", 0, 0, 0, 2, 12, 0, 0, 0, 0),
   new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0, 0, 0, 0),
   new structOfCrimes("litt", "Littering", 0, 2, 0, 1, 4, 0, 0, 0, 0),
-  new structOfCrimes(
-    "watch",
-    "Selling Counterfeit Watches",
-    0,
-    20,
-    5,
-    2,
-    60,
-    0,
-    0,
-    0,
-    0
-  ),
+  new structOfCrimes("watch", "Selling Counterfeit Watches", 0, 20, 5, 2, 60, 0, 0, 0, 0),
   new structOfCrimes("baby", "Candy from a Baby", 0, 12, 0, 3, 28, 0, 0, 0, 0),
   new structOfCrimes("jorts", "Wearing Jorts", 5, 17, 0, -5, 60, 0, 0, 0, 0),
 ];
@@ -76,11 +62,7 @@ var setOfCrime = [
 // initialise the accumulated data array
 var gameState = new Array(setOfCrime.length);
 // use a for loop to fill them
-for (
-  let gameStateDataIndex = 0;
-  gameStateDataIndex < setOfCrime.length;
-  gameStateDataIndex++
-) {
+for (let gameStateDataIndex = 0; gameStateDataIndex < setOfCrime.length; gameStateDataIndex++) {
   gameState[gameStateDataIndex] = new structOfGameState(0, 0, 0);
 }
 
@@ -103,13 +85,9 @@ function createCrimeButtons(structOfCrimesIterator, buttonIndex) {
   document.getElementById("crimeID").appendChild(newCrimeButton);
 
   // add function to the button for when it is clicked
-  document
-    .getElementById(structOfCrimesIterator.buttonid)
-    .addEventListener("click", () => clickOnCrimeButton(buttonIndex));
+  document.getElementById(structOfCrimesIterator.buttonid).addEventListener("click", () => clickOnCrimeButton(buttonIndex));
   // and a double click tries to commit crime straight away
-  document
-    .getElementById(structOfCrimesIterator.buttonid)
-    .addEventListener("dblclick", () => doubleClickOnCrimeButton(buttonIndex));
+  document.getElementById(structOfCrimesIterator.buttonid).addEventListener("dblclick", () => doubleClickOnCrimeButton(buttonIndex));
 }
 
 function doubleClickOnCrimeButton(buttonIndex) {
@@ -140,14 +118,7 @@ function clickOnCrimeButton(buttonIndex) {
 function successfulCrime(buttonIndex) {
   noto += setOfCrime[buttonIndex].notoEarned;
   money += setOfCrime[buttonIndex].moneyEarned;
-  addToLog(
-    setOfCrime[buttonIndex].name +
-      "committed, " +
-      setOfCrime[buttonIndex].notoEarned +
-      " noto & " +
-      setOfCrime[buttonIndex].moneyEarned +
-      " $ earned"
-  );
+  addToLog(setOfCrime[buttonIndex].name + "committed, " + setOfCrime[buttonIndex].notoEarned + " noto & " + setOfCrime[buttonIndex].moneyEarned + " $ earned");
   // set the crime back to ready
   setOfCrime[buttonIndex].state = 0;
   //update accumulated data
@@ -169,8 +140,7 @@ function refreshInfoPanel(buttonIndex) {
     // case 0 means is ready to go but hasn't been done
     case 0:
       var newInfoTitle = setOfCrime[buttonIndex].name;
-      var newInfoText =
-        setOfCrime[buttonIndex].requiredNoto + " NOTORIETY required";
+      var newInfoText = setOfCrime[buttonIndex].requiredNoto + " NOTORIETY required";
       if (setOfCrime[buttonIndex].cost > 0) {
         newInfoText += "<br>AND COSTS<br>" + setOfCrime[buttonIndex].cost + "$";
       }
@@ -185,11 +155,7 @@ function refreshInfoPanel(buttonIndex) {
     // case 1 means activelyt committing
     case 1:
       var newInfoTitle = setOfCrime[buttonIndex].name;
-      var newInfoText =
-        "in progress<br>until " +
-        setOfCrime[buttonIndex].datetimeCrimeWillEnd.format(
-          "DD/MM/YY HH:mm:ss" + "<br>"
-        );
+      var newInfoText = "in progress<br>until " + setOfCrime[buttonIndex].datetimeCrimeWillEnd.format("DD/MM/YY HH:mm:ss" + "<br>");
       // add text with accumulated data
       newInfoText += generateGameStateDataText(buttonIndex);
       updateGoButton("COMMITTING");
@@ -205,8 +171,7 @@ function refreshInfoPanel(buttonIndex) {
     // case three means unavailable yet
     case 3:
       var newInfoTitle = "COMMIT MORE CRIME";
-      var newInfoText =
-        setOfCrime[buttonIndex].requiredNoto + " NOTORIETY required";
+      var newInfoText = setOfCrime[buttonIndex].requiredNoto + " NOTORIETY required";
       updateGoButton("COMMIT MORE CRIME");
   }
   document.getElementById("infoID").innerHTML = newInfoTitle;
@@ -222,19 +187,11 @@ function generateGameStateDataText(buttonIndex) {
       gameState[buttonIndex].numberTimesCommitted +
       " TIMES<br>" +
       "earning:<br>" +
-      setOfCrime[buttonIndex].notoEarned *
-        gameState[buttonIndex].numberTimesCommitted +
+      setOfCrime[buttonIndex].notoEarned * gameState[buttonIndex].numberTimesCommitted +
       " NOTORIETY<br>" +
-      setOfCrime[buttonIndex].moneyEarned *
-        gameState[buttonIndex].numberTimesCommitted +
+      setOfCrime[buttonIndex].moneyEarned * gameState[buttonIndex].numberTimesCommitted +
       " $<BR>AND SPENT<br> " +
-      dayjs
-        .duration(
-          setOfCrime[buttonIndex].timeToCompleteInMilliseconds *
-            gameState[buttonIndex].numberTimesCommitted,
-          "millisecond"
-        )
-        .format("DD HH:mm:ss") +
+      dayjs.duration(setOfCrime[buttonIndex].timeToCompleteInMilliseconds * gameState[buttonIndex].numberTimesCommitted, "millisecond").format("DD HH:mm:ss") +
       " DOING SO";
   }
   return accumDataText;
@@ -256,12 +213,7 @@ function commitCrime(buttonIndex) {
       setDatetimes(buttonIndex);
       setOfCrime[buttonIndex].state = 1;
       // send message to log
-      logEntry =
-        setOfCrime[buttonIndex].name +
-        " will finish at: <br>" +
-        setOfCrime[buttonIndex].datetimeCrimeWillEnd.format(
-          "DD/MM/YY HH:mm:ss"
-        );
+      logEntry = setOfCrime[buttonIndex].name + " will finish at: <br>" + setOfCrime[buttonIndex].datetimeCrimeWillEnd.format("DD/MM/YY HH:mm:ss");
       refreshSingleButton("", buttonIndex);
       addToLog(logEntry);
       money -= setOfCrime[buttonIndex].cost;
@@ -277,17 +229,13 @@ function refreshSingleButton(structOfCrimes, buttonIndex) {
     case 0:
       refreshedButtonText = setOfCrime[buttonIndex].name;
       // set attribute for css
-      document
-        .getElementById(setOfCrime[buttonIndex].buttonid)
-        .setAttribute("state", "ready");
+      document.getElementById(setOfCrime[buttonIndex].buttonid).setAttribute("state", "ready");
 
       break;
 
     // case 1 means running
     case 1:
-      timeUntilComplete = dayjs(
-        setOfCrime[buttonIndex].datetimeCrimeWillEnd
-      ).diff(dayjs());
+      timeUntilComplete = dayjs(setOfCrime[buttonIndex].datetimeCrimeWillEnd).diff(dayjs());
       formattedTime = dayjs(timeUntilComplete).format("mm:ss");
       formattedTimehuman = dayjs.duration(timeUntilComplete).humanize(true);
       refreshedButtonText =
@@ -297,25 +245,19 @@ function refreshSingleButton(structOfCrimes, buttonIndex) {
         "<br>" +
         formattedTime;
       // set the class of the element to get it to go blue
-      document
-        .getElementById(setOfCrime[buttonIndex].buttonid)
-        .setAttribute("state", "running");
+      document.getElementById(setOfCrime[buttonIndex].buttonid).setAttribute("state", "running");
       break;
 
     // case 2 means complete and ready to collect goods
     case 2:
-      refreshedButtonText =
-        setOfCrime[buttonIndex].name + " complete<br>collect reward";
+      refreshedButtonText = setOfCrime[buttonIndex].name + " complete<br>collect reward";
 
-      document
-        .getElementById(setOfCrime[buttonIndex].buttonid)
-        .setAttribute("state", "complete");
+      document.getElementById(setOfCrime[buttonIndex].buttonid).setAttribute("state", "complete");
       break;
     case 3:
       refreshedButtonText = "COMMIT MORE CRIMES";
   }
-  document.getElementById(setOfCrime[buttonIndex].buttonid).innerHTML =
-    refreshedButtonText;
+  document.getElementById(setOfCrime[buttonIndex].buttonid).innerHTML = refreshedButtonText;
   //console.log(refreshedButtonText);
 }
 
@@ -325,9 +267,7 @@ function setDatetimes(buttonIndex) {
   setOfCrime[buttonIndex].datetimeCrimeStarted = dayjs();
   completionMS = setOfCrime[buttonIndex].timeToCompleteInMilliseconds;
   // set time the crime will be completed
-  setOfCrime[buttonIndex].datetimeCrimeWillEnd = dayjs().add(
-    dayjs(completionMS, "millisecond")
-  );
+  setOfCrime[buttonIndex].datetimeCrimeWillEnd = dayjs().add(dayjs(completionMS, "millisecond"));
 }
 
 function hasCrimeFinished(structOfCrimes, buttonIndex) {
@@ -342,10 +282,7 @@ function hasCrimeFinished(structOfCrimes, buttonIndex) {
 // this takes any crime out of state 3 (not ready) if it's noto is high enough
 // and will have been called with a foreach
 function checkNotoRequired(structOfCrimes, crimeIndex) {
-  if (
-    setOfCrime[crimeIndex].state == 3 &&
-    noto >= setOfCrime[crimeIndex].requiredNoto
-  ) {
+  if (setOfCrime[crimeIndex].state == 3 && noto >= setOfCrime[crimeIndex].requiredNoto) {
     setOfCrime[crimeIndex].state = 0;
   }
 }
@@ -384,8 +321,7 @@ function cheat(keyPressKey) {
 function refreshLoop(timestamp) {
   // refresh the banner at the time
   refreshBanner();
-  document.getElementById("currentTimeID").innerHTML =
-    "its " + dayjs().format("YY.MM.DD HH:mm:ss");
+  document.getElementById("currentTimeID").innerHTML = "its " + dayjs().format("YY.MM.DD HH:mm:ss");
   // refresh info on each button
   setOfCrime.forEach(refreshSingleButton);
   setOfCrime.forEach(hasCrimeFinished);
@@ -396,38 +332,29 @@ function refreshLoop(timestamp) {
 function readCookies() {
   noto = Cookies.get("noto");
   if (noto == undefined) {
+    console.log("undefined :(");
     noto = 0;
   }
   money = Cookies.get("money");
   if (money == undefined) {
     money = 0;
   }
-  for (
-    let cookieReadIndex = 0;
-    cookieReadIndex < setOfCrime.length;
-    cookieReadIndex++
-  ) {
+  for (let cookieReadIndex = 0; cookieReadIndex < setOfCrime.length; cookieReadIndex++) {
     tempCookieReadout = Cookies.get("'cookie" + cookieReadIndex + "'");
     if (tempCookieReadout == undefined) {
+      console.log("cookes undefined :(");
     } else {
       arrayFromTempCookieReadout = tempCookieReadout.split(";");
       gameState[cookieReadIndex].state = arrayFromTempCookieReadout[0];
-      gameState[cookieReadIndex].numberTimesCommitted =
-        arrayFromTempCookieReadout[1];
-      gameState[cookieReadIndex].datetimeCrimeWillEnd =
-        arrayFromTempCookieReadout[2];
+      gameState[cookieReadIndex].numberTimesCommitted = arrayFromTempCookieReadout[1];
+      gameState[cookieReadIndex].datetimeCrimeWillEnd = arrayFromTempCookieReadout[2];
     }
   }
 }
 
 function setCookie(buttonIndex) {
   cookieName = "'cookie" + buttonindex + "'";
-  cookieContent =
-    gameState[buttonIndex].state +
-    ";" +
-    gameState[buttonIndex].numberTimesCommitted +
-    ";" +
-    gameState[buttonIndex].datetimeCrimeWillEnd;
+  cookieContent = gameState[buttonIndex].state + ";" + gameState[buttonIndex].numberTimesCommitted + ";" + gameState[buttonIndex].datetimeCrimeWillEnd;
   Cookies.set(cookieName, cookieContent, { expires: 365 });
 }
 
@@ -449,8 +376,6 @@ setOfCrime.forEach(checkNotoRequired);
 
 // assign eventlistener to the go button
 document.getElementById("infoID").textContent = "LETS GO";
-document
-  .getElementById("buttonLocationID")
-  .addEventListener("click", () => commitCrime());
+document.getElementById("buttonLocationID").addEventListener("click", () => commitCrime());
 // finally we initiate the refreshLoop
 window.requestAnimationFrame(refreshLoop);
