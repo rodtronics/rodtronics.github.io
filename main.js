@@ -138,7 +138,7 @@ function refreshInfoPanel(buttonIndex) {
     // case 1 means activelyt committing
     case 1:
       var newInfoTitle = setOfCrime[buttonIndex].name;
-      var newInfoText = "in progress<br>until " + dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).format("DD/MM/YY HH:mm:ss" + "<br>");
+      var newInfoText = "in progress until<br>" + dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).format("DD/MM/YY HH:mm:ss" + "<br>");
       // add text with accumulated data
       newInfoText += generateGameStateDataText(buttonIndex);
       updateGoButton("COMMITTING");
@@ -225,7 +225,7 @@ function refreshSingleButton(structOfCrimes, buttonIndex) {
       timeUntilComplete = dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).diff(dayjs());
       formattedTime = dayjs(timeUntilComplete).format("mm:ss");
       formattedTimehuman = dayjs.duration(timeUntilComplete).humanize(true);
-      refreshedButtonText = setOfCrime[buttonIndex].name + "<br>" + formattedTime;
+      refreshedButtonText = setOfCrime[buttonIndex].name + "<br><br>" + formattedTime;
       // set the class of the element to get it to go blue
       document.getElementById(setOfCrime[buttonIndex].buttonid).setAttribute("state", "running");
       break;
@@ -255,6 +255,13 @@ function hasCrimeFinished(structOfCrimes, buttonIndex) {
   if (gameState[buttonIndex].state == 1) {
     if (dayjs().isAfter(gameState[buttonIndex].datetimeCrimeWillEnd)) {
       gameState[buttonIndex].state = 2;
+      // this has to point to the global button index, because this
+      // function is called from a foreach and cycles through each
+      // crime to see if it's finished, but the panel
+      // should stay on the selected crime button, which
+      // the global button index points to
+      // it could probably be set to only update if
+      // button index == global button index but lol
       refreshInfoPanel(globalButtonIndex);
     }
   }
