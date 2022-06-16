@@ -5,6 +5,7 @@ var logOfCrimes = new Array(logLength).fill("");
 var noto = 0;
 var money = 0;
 var accumDataText = "";
+var buttonIndex = 0;
 
 //these functions are initialistion based
 
@@ -131,7 +132,6 @@ function successfulCrime(buttonIndex) {
 
 function refreshInfoPanel(buttonIndex) {
   // work on the assumption that the button index passed is the msot recently pressed button
-  console.log("why wont this work? " + buttonIndex);
   switch (gameState[buttonIndex].state) {
     //
     // case 0 means is ready to go but hasn't been done
@@ -211,7 +211,7 @@ function commitCrime(buttonIndex) {
       setDatetimes(buttonIndex);
       gameState[buttonIndex].state = 1;
       // send message to log
-      logEntry = setOfCrime[buttonIndex].name + " will finish at: <br>" + gameState[buttonIndex].datetimeCrimeWillEnd.format("DD/MM/YY HH:mm:ss");
+      logEntry = setOfCrime[buttonIndex].name + " will finish at: <br>" + dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).format("DD/MM/YY HH:mm:ss");
       refreshSingleButton("", buttonIndex);
       addToLog(logEntry);
       money -= setOfCrime[buttonIndex].cost;
@@ -239,12 +239,7 @@ function refreshSingleButton(structOfCrimes, buttonIndex) {
       timeUntilComplete = dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).diff(dayjs());
       formattedTime = dayjs(timeUntilComplete).format("mm:ss");
       formattedTimehuman = dayjs.duration(timeUntilComplete).humanize(true);
-      refreshedButtonText =
-        setOfCrime[buttonIndex].name +
-        // "<br>" +
-        // formattedTimehuman +
-        "<br>" +
-        formattedTime;
+      refreshedButtonText = setOfCrime[buttonIndex].name + "<br>" + formattedTime;
       // set the class of the element to get it to go blue
       document.getElementById(setOfCrime[buttonIndex].buttonid).setAttribute("state", "running");
       break;
@@ -348,7 +343,7 @@ function readCookies() {
         console.log("cookie read: ", arrayFromTempCookieReadout);
         gameState[cookieReadIndex].state = parseInt(arrayFromTempCookieReadout[0]);
         gameState[cookieReadIndex].numberTimesCommitted = parseInt(arrayFromTempCookieReadout[1]);
-        gameState[cookieReadIndex].datetimeCrimeWillEnd = dayjs(parseInt(arrayFromTempCookieReadout[2]));
+        gameState[cookieReadIndex].datetimeCrimeWillEnd = parseInt(arrayFromTempCookieReadout[2]);
       }
     }
     newLogText = Cookies.get("log");
