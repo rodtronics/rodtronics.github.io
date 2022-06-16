@@ -331,12 +331,12 @@ function refreshLoop(timestamp) {
 
 function readCookies() {
   noto = parseInt(Cookies.get("noto"));
-  if (noto == undefined) {
+  if (noto == undefined || noto == NaN) {
     console.log("no money or noto cookies");
     noto = 0;
   }
   money = parseInt(Cookies.get("money"));
-  if (money == undefined) {
+  if (money == undefined || money == NaN) {
     money = 0;
   }
   for (let cookieReadIndex = 0; cookieReadIndex < setOfCrime.length; cookieReadIndex++) {
@@ -346,8 +346,8 @@ function readCookies() {
     } else {
       arrayFromTempCookieReadout = tempCookieReadout.split(";");
       console.log("cookie read: ", arrayFromTempCookieReadout);
-      gameState[cookieReadIndex].state = arrayFromTempCookieReadout[0];
-      gameState[cookieReadIndex].numberTimesCommitted = arrayFromTempCookieReadout[1];
+      gameState[cookieReadIndex].state = parseInt(arrayFromTempCookieReadout[0]);
+      gameState[cookieReadIndex].numberTimesCommitted = parseInt(arrayFromTempCookieReadout[1]);
       gameState[cookieReadIndex].datetimeCrimeWillEnd = arrayFromTempCookieReadout[2];
     }
   }
