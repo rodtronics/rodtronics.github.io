@@ -93,7 +93,7 @@ these are comments
 #buttonLocationID {
   font-size: 20px;
   text-align: center;
-  background-color: crimson;
+  background-color: #f44174;
   border: 0px;
   border-color: black;
   border-style: solid;
@@ -103,12 +103,14 @@ these are comments
   background: black;
 }
 [state="running"] {
-  background: rgb(34, 118, 195);
   background: linear-gradient(
     0deg,
     rgba(34, 118, 195, 1) 0%,
-    rgba(119, 202, 255, 1) 100%
+    rgba(119, 202, 255, 1) 100%;
   );
+  background: rgb(34, 118, 195);
+  background: MediumSpringGreen;
+  color: black;
 }
 [state="complete"] {
   background: rgb(195, 53, 34);
