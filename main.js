@@ -125,9 +125,7 @@ function successfulCrime(buttonIndex) {
   gameState[buttonIndex].numberTimesCommitted += 1;
 
   //update cookies
-
-  Cookies.set("noto", noto, { expires: 365 });
-  Cookies.set("money", money, { expires: 365 });
+  setCookie(buttonIndex);
 
   // refresh the noto requireds
   setOfCrime.forEach(checkNotoRequired);
@@ -330,21 +328,22 @@ function refreshLoop(timestamp) {
 }
 
 function readCookies() {
-  noto = Cookies.get("noto");
+  noto = parseInt(Cookies.get("noto"));
   if (noto == undefined) {
-    console.log("undefined :(");
+    console.log("no money or noto cookies");
     noto = 0;
   }
-  money = Cookies.get("money");
+  money = parseInt(Cookies.get("money"));
   if (money == undefined) {
     money = 0;
   }
   for (let cookieReadIndex = 0; cookieReadIndex < setOfCrime.length; cookieReadIndex++) {
     tempCookieReadout = Cookies.get("'cookie" + cookieReadIndex + "'");
     if (tempCookieReadout == undefined) {
-      console.log("cookes undefined :(");
+      console.log("no gamestate cookies");
     } else {
       arrayFromTempCookieReadout = tempCookieReadout.split(";");
+      console.log("cookie read: ", arrayFromTempCookieReadout);
       gameState[cookieReadIndex].state = arrayFromTempCookieReadout[0];
       gameState[cookieReadIndex].numberTimesCommitted = arrayFromTempCookieReadout[1];
       gameState[cookieReadIndex].datetimeCrimeWillEnd = arrayFromTempCookieReadout[2];
@@ -353,8 +352,14 @@ function readCookies() {
 }
 
 function setCookie(buttonIndex) {
-  cookieName = "'cookie" + buttonindex + "'";
+  // always refresh money and noto
+  Cookies.set("noto", noto, { expires: 365 });
+  Cookies.set("money", money, { expires: 365 });
+  // set the cookiename
+  cookieName = "'cookie" + buttonIndex + "'";
+  console.log(cookieName);
   cookieContent = gameState[buttonIndex].state + ";" + gameState[buttonIndex].numberTimesCommitted + ";" + gameState[buttonIndex].datetimeCrimeWillEnd;
+  console.log(cookieContent);
   Cookies.set(cookieName, cookieContent, { expires: 365 });
 }
 
