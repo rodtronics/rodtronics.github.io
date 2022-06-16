@@ -1,11 +1,10 @@
 //globals
-var globalButtonIndex;
+var globalButtonIndex = 0;
 const logLength = 4;
 var logOfCrimes = new Array(logLength).fill("");
 var noto = 0;
 var money = 0;
 var accumDataText = "";
-var buttonIndex = 0;
 
 //these functions are initialistion based
 
@@ -349,6 +348,7 @@ function readCookies() {
     newLogText = Cookies.get("log");
     document.getElementById("logID").innerHTML = newLogText;
   }
+  buttonIndex = 0;
 }
 
 function setCookie(buttonIndex) {
