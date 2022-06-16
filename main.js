@@ -116,7 +116,7 @@ function clickOnCrimeButton(buttonIndex) {
 function successfulCrime(buttonIndex) {
   noto += setOfCrime[buttonIndex].notoEarned;
   money += setOfCrime[buttonIndex].moneyEarned;
-  addToLog(setOfCrime[buttonIndex].name + "committed, " + setOfCrime[buttonIndex].notoEarned + " noto & " + setOfCrime[buttonIndex].moneyEarned + " $ earned");
+  addToLog(setOfCrime[buttonIndex].name + " committed, " + setOfCrime[buttonIndex].notoEarned + " noto & " + setOfCrime[buttonIndex].moneyEarned + " $ earned");
   // set the crime back to ready
   gameState[buttonIndex].state = 0;
   //update accumulated data
@@ -131,6 +131,7 @@ function successfulCrime(buttonIndex) {
 
 function refreshInfoPanel(buttonIndex) {
   // work on the assumption that the button index passed is the msot recently pressed button
+  console.log("why wont this work? " + buttonIndex);
   switch (gameState[buttonIndex].state) {
     //
     // case 0 means is ready to go but hasn't been done
