@@ -89,7 +89,6 @@ function doubleClickOnCrimeButton(buttonIndex) {
 function clickOnCrimeButton(buttonIndex) {
   // set the global button index
   globalButtonIndex = buttonIndex;
-
   // first off, if they've clicked on it because the crime was ready to reap rewards
   // state of 2 means comple
   if (gameState[buttonIndex].state == 2) {
@@ -131,14 +130,17 @@ function refreshInfoPanel(buttonIndex) {
       if (money >= setOfCrime[buttonIndex].cost) {
         updateGoButton("CLICK TO COMMIT");
       } else {
-        updateGoButton("U CAN'T AFFORD IT");
+        updateGoButton("U CAN'T AFFORD IT", "alert");
       }
       break;
     //
     // case 1 means activelyt committing
     case 1:
       var newInfoTitle = setOfCrime[buttonIndex].name;
-      var newInfoText = "in progress until<br>" + dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).format("DD/MM/YY HH:mm:ss" + "<br>");
+      var newInfoText = "committing until<br>" + dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).format("DD/MM/YY HH:mm:ss" + "<br>");
+      timeUntilComplete = dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).diff(dayjs());
+      formattedTimehuman = dayjs.duration(timeUntilComplete).humanize(true);
+      newInfoText += "<br>It'll be completed<br>" + formattedTimehuman;
       // add text with accumulated data
       newInfoText += generateGameStateDataText(buttonIndex);
       updateGoButton("COMMITTING");
@@ -155,33 +157,125 @@ function refreshInfoPanel(buttonIndex) {
     case 3:
       var newInfoTitle = "COMMIT MORE CRIME";
       var newInfoText = setOfCrime[buttonIndex].requiredNoto + " NOTORIETY required";
-      updateGoButton("COMMIT MORE CRIME");
+      updateGoButton("U NEED 2 COMMIT MORE CRIME");
   }
   document.getElementById("infoID").innerHTML = newInfoTitle;
   document.getElementById("infotextID").innerHTML = newInfoText;
 }
 
+function refreshSingleButton(structOfCrimes, buttonIndex) {
+  // check to see what state button in
+  switch (gameState[buttonIndex].state) {
+    // case 0 means ready to go
+    case 0:
+      refreshedButtonText = setOfCrime[buttonIndex].name;
+      // set attribute for css
+      document.getElementById(setOfCrime[buttonIndex].buttonid).setAttribute("state", "ready");
+      break;
+    // case 1 means running
+    case 1:
+      timeUntilComplete = dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).diff(dayjs());
+      formattedTime = dayjs(timeUntilComplete).format("mm:ss");
+      formattedTimehuman = dayjs.duration(timeUntilComplete).humanize(true);
+      refreshedButtonText = setOfCrime[buttonIndex].name + "<br><br>" + formattedTime;
+      // set the class of the element to get it to go blue
+      document.getElementById(setOfCrime[buttonIndex].buttonid).setAttribute("state", "running");
+      break;
+    // case 2 means complete and ready to collect goods
+    case 2:
+      refreshedButtonText = setOfCrime[buttonIndex].name + " complete<br>collect reward";
+      document.getElementById(setOfCrime[buttonIndex].buttonid).setAttribute("state", "complete");
+      break;
+    // case 3 means not enough notoriety to see
+    case 3:
+      refreshedButtonText = "COMMIT MORE CRIMES<BR>TO UNLOCK";
+  }
+  document.getElementById(setOfCrime[buttonIndex].buttonid).innerHTML = refreshedButtonText;
+}
+
 function generateGameStateDataText(buttonIndex) {
-  if (gameState[buttonIndex].numberTimesCommitted < 1) {
+  localNumberTimesCommitted = gameState[buttonIndex].numberTimesCommitted;
+  if (localNumberTimesCommitted < 1) {
     accumDataText = "<br><br>";
   } else {
-    accumDataText =
-      "<br><br>YOU'VE COMMITTED THIS CRIME <br>" +
-      gameState[buttonIndex].numberTimesCommitted +
-      " TIMES<br>" +
-      "earning:<br>" +
-      setOfCrime[buttonIndex].notoEarned * gameState[buttonIndex].numberTimesCommitted +
+    accumDataText = "<br><br>YOU'VE COMMITTED THIS CRIME ";
+    if (localNumberTimesCommitted == 1) {
+      accumDataText += "ONCE";
+    } else if (localNumberTimesCommitted == 2) {
+      accumDataText += "TWICE";
+    } else if (localNumberTimesCommitted == 3) {
+      accumDataText += "THRICE";
+    } else {
+      accumDataText += localNumberTimesCommitted + " TIMES";
+    }
+    accumDataText +=
+      "<br>earning:<br>" +
+      setOfCrime[buttonIndex].notoEarned * localNumberTimesCommitted +
       " NOTORIETY<br>" +
-      setOfCrime[buttonIndex].moneyEarned * gameState[buttonIndex].numberTimesCommitted +
-      " $<BR>AND SPENT<br> " +
-      dayjs.duration(setOfCrime[buttonIndex].timeToCompleteInMilliseconds * gameState[buttonIndex].numberTimesCommitted, "millisecond").format("DD HH:mm:ss") +
-      " DOING SO";
+      setOfCrime[buttonIndex].moneyEarned * localNumberTimesCommitted +
+      " $<BR>AND SPENT<br> ";
+    // generate some duration values
+    timeSpentDoingCrime = dayjs.duration(setOfCrime[buttonIndex].timeToCompleteInMilliseconds * localNumberTimesCommitted, "millisecond");
+    timeSpentDoingCrime.days = parseInt(timeSpentDoingCrime.format("DD"));
+    timeSpentDoingCrime.hours = parseInt(timeSpentDoingCrime.format("HH"));
+    timeSpentDoingCrime.minutes = parseInt(timeSpentDoingCrime.format("mm"));
+    timeSpentDoingCrime.seconds = parseInt(timeSpentDoingCrime.format("ss"));
+    timeSpentDoingCrime.weeks = parseInt(timeSpentDoingCrime.asWeeks());
+    // long ass series of if statements to make for a tidy output
+    // maybe could have made a function but idk
+    // check for days (and only display if >0)
+    if (timeSpentDoingCrime.weeks > 0) {
+      if (timeSpentDoingCrime.weeks == 1) {
+        accumDataText += timeSpentDoingCrime.weeks + " week<br>";
+      } else {
+        accumDataText += timeSpentDoingCrime.weeks + " weeks<br>";
+      }
+    }
+    // check for days (and only display if >0)
+    if (timeSpentDoingCrime.days > 0) {
+      if (timeSpentDoingCrime.days == 1) {
+        accumDataText += timeSpentDoingCrime.days + " day<br>";
+      } else {
+        accumDataText += timeSpentDoingCrime.days + " days<br>";
+      }
+    }
+    // check for hours (and only display if >0)
+    if (timeSpentDoingCrime.hours > 0) {
+      if (timeSpentDoingCrime.hours == 1) {
+        accumDataText += timeSpentDoingCrime.hours + " hours<br>";
+      } else {
+        accumDataText += timeSpentDoingCrime.hours + " hours<br>";
+      }
+    }
+    // check for minutes (and only display if >0)
+    if (timeSpentDoingCrime.minutes > 0) {
+      if (timeSpentDoingCrime.minutes == 1) {
+        accumDataText += timeSpentDoingCrime.minutes + " minute<br>";
+      } else {
+        accumDataText += timeSpentDoingCrime.minutes + " minutes<br>";
+      }
+    }
+    // check for seconds (and only display if >0)
+    if (timeSpentDoingCrime.seconds > 0) {
+      if (timeSpentDoingCrime.seconds == 1) {
+        accumDataText += timeSpentDoingCrime.seconds + " second<br>";
+      } else {
+        accumDataText += timeSpentDoingCrime.seconds + " seconds<br>";
+      }
+    }
+    accumDataText += "doing so";
+
+    //dayjs.duration(setOfCrime[buttonIndex].timeToCompleteInMilliseconds * gameState[buttonIndex].numberTimesCommitted, "millisecond").format("DD HH:mm:ss") +" DOING SO";
   }
   return accumDataText;
 }
 
-function updateGoButton(newText) {
+function updateGoButton(newText, buttonState) {
+  if (buttonState == undefined || buttonState == NaN) {
+    buttonState = "normal";
+  }
   document.getElementById("buttonLocationID").innerHTML = newText;
+  document.getElementById("buttonLocationID").setAttribute("state", buttonState);
 }
 //
 //
@@ -207,39 +301,6 @@ function commitCrime(buttonIndex) {
     }
   }
   refreshInfoPanel(globalButtonIndex);
-}
-
-function refreshSingleButton(structOfCrimes, buttonIndex) {
-  // check to see what state button in
-  switch (gameState[buttonIndex].state) {
-    // case 0 means ready to go
-    case 0:
-      refreshedButtonText = setOfCrime[buttonIndex].name;
-      // set attribute for css
-      document.getElementById(setOfCrime[buttonIndex].buttonid).setAttribute("state", "ready");
-
-      break;
-
-    // case 1 means running
-    case 1:
-      timeUntilComplete = dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).diff(dayjs());
-      formattedTime = dayjs(timeUntilComplete).format("mm:ss");
-      formattedTimehuman = dayjs.duration(timeUntilComplete).humanize(true);
-      refreshedButtonText = setOfCrime[buttonIndex].name + "<br><br>" + formattedTime;
-      // set the class of the element to get it to go blue
-      document.getElementById(setOfCrime[buttonIndex].buttonid).setAttribute("state", "running");
-      break;
-
-    // case 2 means complete and ready to collect goods
-    case 2:
-      refreshedButtonText = setOfCrime[buttonIndex].name + " complete<br>collect reward";
-
-      document.getElementById(setOfCrime[buttonIndex].buttonid).setAttribute("state", "complete");
-      break;
-    case 3:
-      refreshedButtonText = "COMMIT MORE CRIMES";
-  }
-  document.getElementById(setOfCrime[buttonIndex].buttonid).innerHTML = refreshedButtonText;
 }
 
 // sets dates and times of crime start and finish
