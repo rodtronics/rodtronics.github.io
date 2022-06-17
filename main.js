@@ -374,7 +374,7 @@ function readCookies() {
     noto = parseInt(Cookies.get("noto"));
 
     money = parseInt(Cookies.get("money"));
-    log.console("from cookies: " + noto + "N&" + money + "$");
+    console.log("from cookies: " + noto + "N&" + money + "$");
 
     for (let cookieReadIndex = 0; cookieReadIndex < setOfCrime.length; cookieReadIndex++) {
       tempCookieReadout = Cookies.get("'cookie" + cookieReadIndex + "'");
