@@ -36,7 +36,7 @@ function structOfGameState(state, numberTimesCommitted, datetimeCrimeWillEnd, da
 
 // this creates an array "setOfCrime" that contains different crimes
 var setOfCrime = [
-  new structOfCrimes("loit", "Loitering", 0, 0, 0, 3, 1, 0),
+  new structOfCrimes("loit", "Loitering", 0, 0, 0, 3, 11, 0),
   new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0),
   new structOfCrimes("litt", "Littering", 0, 2, 0, 1, 4, 0, 0, 0),
   new structOfCrimes("watch", "Selling Counterfeit Watches", 0, 20, 5, 2, 60, 0),
