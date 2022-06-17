@@ -36,12 +36,13 @@ function structOfGameState(state, numberTimesCommitted, datetimeCrimeWillEnd, da
 
 // this creates an array "setOfCrime" that contains different crimes
 var setOfCrime = [
-  new structOfCrimes("loit", "Loitering", 0, 0, 0, 2, 12, 0, 0, 0),
-  new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0, 0, 0),
+  new structOfCrimes("loit", "Loitering", 0, 0, 0, 3, 1, 0),
+  new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0),
   new structOfCrimes("litt", "Littering", 0, 2, 0, 1, 4, 0, 0, 0),
-  new structOfCrimes("watch", "Selling Counterfeit Watches", 0, 20, 5, 2, 60, 0, 0, 0),
-  new structOfCrimes("baby", "Candy from a Baby", 0, 12, 0, 3, 28, 0, 0, 0),
-  new structOfCrimes("jorts", "Wearing Jorts", 5, 17, 0, -5, 60, 0, 0, 0),
+  new structOfCrimes("watch", "Selling Counterfeit Watches", 0, 20, 5, 2, 60, 0),
+  new structOfCrimes("baby", "Candy from a Baby", 0, 12, 0, 3, 28, 0),
+  new structOfCrimes("jorts", "Wearing Jorts", 5, 17, 0, -5, 60, 0),
+  new structOfCrimes("xloit", "Extreme Loitering", 0, 1, 0, 200, 0, 24 * 7),
 ];
 
 // initialise the accumulated data array
@@ -174,9 +175,18 @@ function refreshSingleButton(structOfCrimes, buttonIndex) {
       break;
     // case 1 means running
     case 1:
-      timeUntilComplete = dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).diff(dayjs());
-      formattedTime = dayjs(timeUntilComplete).format("mm:ss");
-      formattedTimehuman = dayjs.duration(timeUntilComplete).humanize(true);
+      formattedTime = "";
+      timeUntilComplete = dayjs.duration(dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).diff(dayjs()));
+      timeUntilComplete.days = timeUntilComplete.format("D");
+      timeUntilComplete.hours = timeUntilComplete.format("HH");
+      timeUntilComplete.minutes = timeUntilComplete.format("mm");
+      timeUntilComplete.seconds = timeUntilComplete.format("ss");
+      if (timeUntilComplete.days > 0) {
+        formattedTime += timeUntilComplete.days + "d " + timeUntilComplete.hours + ":";
+      } else if (timeUntilComplete.hours > 0) {
+        formattedTime += timeUntilComplete.hours + ":";
+      }
+      formattedTime += timeUntilComplete.minutes + ":" + timeUntilComplete.seconds;
       refreshedButtonText = setOfCrime[buttonIndex].name + "<br><br>" + formattedTime;
       // set the class of the element to get it to go blue
       document.getElementById(setOfCrime[buttonIndex].buttonid).setAttribute("state", "running");
