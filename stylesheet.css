@@ -34,10 +34,11 @@ these are comments
   color: white;
   justify-content: space-between;
   padding: 10px;
-  width: 1000px;
+  width: 60vw;
   border: 2px;
   border-color: var(--border-color);
   border-style: solid;
+  margin: 0 auto;
 }
 
 .stats_banner {
@@ -49,6 +50,7 @@ these are comments
 .mini_stats {
   font-size: 15pt;
   letter-spacing: 0 px;
+  text-align: end;
 }
 
 .title {
@@ -68,10 +70,11 @@ these are comments
   justify-content: space-between;
   margin: 5px;
   gap: 2px;
-  width: 1000px;
+  width: 60vw;
   height: 800px;
   flex-grow: 0;
   flex-shrink: 0;
+  margin: 0 auto;
 }
 
 .crime_and_words_wrapper {
