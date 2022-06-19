@@ -45,7 +45,6 @@ var setOfCrime = [
   new structOfCrimes("xloit", "Extreme Loitering", 0, 1, 0, 200, 0, 24 * 7),
   new structOfCrimes("jayw", "Jaywalking", 0, 0, 0, 5, 24, 0),
   new structOfCrimes("stealcs", "Stealing Car Stereos", 0, 50, 200, 30, 20 * 60, 0),
-  new structOfCrimes(""),
 ];
 
 // initialise the accumulated data array
