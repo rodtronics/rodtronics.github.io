@@ -2,8 +2,8 @@
 var globalButtonIndex = 0;
 const logLength = 4;
 var logOfCrimes = new Array(logLength).fill("");
-var noto = 0;
-var money = 0;
+playerNoto = 0;
+playerMoney = 0;
 var accumDataText = "";
 
 //these functions are initialistion based
@@ -38,7 +38,7 @@ function structOfGameState(state, numberTimesCommitted, datetimeCrimeWillEnd, da
 var setOfCrime = [
   new structOfCrimes("loit", "Loitering", 0, 0, 0, 3, 11, 0),
   new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0),
-  new structOfCrimes("litt", "Littering", 0, 2, 0, 1, 4, 0, 0, 0),
+  new structOfCrimes("litt", "Littering", 0, 0, 0, 1, 4, 0, 0, 0),
   new structOfCrimes("watch", "Selling Counterfeit Watches", 0, 20, 5, 2, 60, 0),
   new structOfCrimes("baby", "Candy from a Baby", 0, 12, 0, 3, 28, 0),
   new structOfCrimes("jorts", "Wearing Jorts", 5, 17, 0, -5, 60, 0),
@@ -49,7 +49,7 @@ var setOfCrime = [
 
 // initialise the accumulated data array
 var gameState = new Array(setOfCrime.length);
-// use a for loop to fill them
+// use a for loop to fill them, initialise them with state three so
 for (let gameStateDataIndex = 0; gameStateDataIndex < setOfCrime.length; gameStateDataIndex++) {
   gameState[gameStateDataIndex] = new structOfGameState(3, 0, 0);
 }
@@ -103,8 +103,8 @@ function clickOnCrimeButton(buttonIndex) {
 
 // what happens when a crime was successful
 function successfulCrime(buttonIndex) {
-  noto += setOfCrime[buttonIndex].notoEarned;
-  money += setOfCrime[buttonIndex].moneyEarned;
+  playerNoto += setOfCrime[buttonIndex].notoEarned;
+  playerMoney += setOfCrime[buttonIndex].moneyEarned;
   addToLog(setOfCrime[buttonIndex].name + " committed, " + setOfCrime[buttonIndex].notoEarned + " noto & " + setOfCrime[buttonIndex].moneyEarned + " $ earned");
   // set the crime back to ready
   gameState[buttonIndex].state = 0;
@@ -116,6 +116,7 @@ function successfulCrime(buttonIndex) {
 
   // refresh the noto requireds
   setOfCrime.forEach(checkNotoRequired);
+  updateCriminalStatus();
 }
 
 function refreshInfoPanel(buttonIndex) {
@@ -130,7 +131,7 @@ function refreshInfoPanel(buttonIndex) {
         newInfoText += "<br>AND COSTS<br>" + setOfCrime[buttonIndex].cost + "$";
       }
       newInfoText += generateGameStateDataText(buttonIndex);
-      if (money >= setOfCrime[buttonIndex].cost) {
+      if (playerMoney >= setOfCrime[buttonIndex].cost) {
         updateGoButton("CLICK TO COMMIT");
       } else {
         updateGoButton("U CAN'T AFFORD IT", "alert");
@@ -298,7 +299,7 @@ function commitCrime(buttonIndex) {
   //is the crime ready to go?
   if (gameState[buttonIndex].state == 0) {
     // can the player afford it?
-    if (money >= setOfCrime[buttonIndex].cost) {
+    if (playerMoney >= setOfCrime[buttonIndex].cost) {
       // ok go ahead commit crimes
       setDatetimes(buttonIndex);
       gameState[buttonIndex].state = 1;
@@ -306,7 +307,7 @@ function commitCrime(buttonIndex) {
       logEntry = setOfCrime[buttonIndex].name + " will finish at: <br>" + dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).format("DD/MM/YY HH:mm:ss");
       refreshSingleButton("", buttonIndex);
       addToLog(logEntry);
-      money -= setOfCrime[buttonIndex].cost;
+      playerMoney -= setOfCrime[buttonIndex].cost;
 
       // once new times have been set and money taken away, update the cookie so if refresh happens during a cookie countdown it's still happening
       setCookie(buttonIndex);
@@ -343,7 +344,7 @@ function hasCrimeFinished(structOfCrimes, buttonIndex) {
 // this takes any crime out of state 3 (not ready) if it's noto is high enough
 // and will have been called with a foreach
 function checkNotoRequired(structOfCrimes, crimeIndex) {
-  if (gameState[crimeIndex].state == 3 && noto >= setOfCrime[crimeIndex].requiredNoto) {
+  if (gameState[crimeIndex].state == 3 && playerNoto >= setOfCrime[crimeIndex].requiredNoto) {
     gameState[crimeIndex].state = 0;
   }
 }
@@ -366,27 +367,39 @@ function addToLog(text) {
 }
 
 function refreshBanner() {
-  updatedBannerHTML = noto + "N<br>" + money + "$";
+  updatedBannerHTML = playerNoto + "N<br>" + playerMoney + "$";
   document.getElementById("statsBannerID").innerHTML = updatedBannerHTML;
 }
 
+function updateCriminalStatus() {
+  newStatusText = "criminal status:<br>";
+  // remember this falls backwards from highest rank down
+  // thru the if/else branches until it finds one it meets
+  if (playerNoto > 10) {
+    newStatusText += "tripped over";
+  } else if (playerNoto >= 0) {
+    newStatusText += "ignored";
+  }
+  document.getElementById("criminalStatusID").innerHTML = newStatusText;
+}
+
 function cheat(keyPressKey) {
-  noto += 2;
-  money += 1;
+  playerNoto += 2;
+  playerMoney += 1;
   updatedBannerHTML;
   setOfCrime.forEach(checkNotoRequired);
 }
 
 // run at the start of a session, and updates the certain gamestate variables
 function readCookies() {
-  tempnoto = Cookies.get("noto");
+  tempnoto = Cookies.get("playerNoto");
   if (tempnoto == undefined) {
     console.log("no money or noto cookies");
   } else {
-    noto = parseInt(Cookies.get("noto"));
+    playerNoto = parseInt(Cookies.get("playerNoto"));
 
-    money = parseInt(Cookies.get("money"));
-    console.log("from cookies: " + noto + "N&" + money + "$");
+    playerMoney = parseInt(Cookies.get("playerMoney"));
+    console.log("from cookies: " + playerNoto + "N&" + playerMoney + "$");
 
     for (let cookieReadIndex = 0; cookieReadIndex < setOfCrime.length; cookieReadIndex++) {
       tempCookieReadout = Cookies.get("'cookie" + cookieReadIndex + "'");
@@ -412,9 +425,9 @@ function readCookies() {
 // and updates the cookie related to the crime
 function setCookie(buttonIndex) {
   // always refresh money and noto
-  Cookies.set("noto", noto, { expires: 365 });
-  Cookies.set("money", money, { expires: 365 });
-  console.log("wrote to cookie: " + noto + "N&" + money + "$");
+  Cookies.set("playerNoto", playerNoto, { expires: 365 });
+  Cookies.set("playerMoney", playerMoney, { expires: 365 });
+  console.log("wrote to cookie: " + playerNoto + "N&" + playerMoney + "$");
   // set the cookiename
   cookieName = "'cookie" + buttonIndex + "'";
   // set the cookie contnent
