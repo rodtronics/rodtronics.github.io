@@ -1,2 +1,12 @@
-v0.8.72 starting to write changelog
+v0.8.722
+21/June/22
+more css experimenting to get it to do what it shoud do
+
+v0.8.721
+21/June/22
+updateCriminalStatus() now executes after reading cookies
+
+v0.8.72 
+21/June/22
+starting to write changelog
 just experimenting with CSS and trying to get it right, at least for ordinary desktop displays
