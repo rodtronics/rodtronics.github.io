@@ -1,15 +1,17 @@
 //globals
 var globalButtonIndex = 0;
-const logLength = 4;
+const logLength = 20;
 var logOfCrimes = new Array(logLength).fill("");
 playerNoto = 0;
 playerMoney = 0;
 var accumDataText = "";
+versionNumber = 0.9;
+versionCode = "inventory branch"
 
 //these functions are initialistion based
 
 // this function stores information in itself, and defines our main object
-function structOfCrimes(buttonid, name, cost, requiredNoto, moneyEarned, notoEarned, timeToCompleteInSeconds, timeToCompleteInHours) {
+function structOfCrimes(buttonid, name, cost, requiredNoto, moneyEarned, notoEarned, timeToCompleteInSeconds, timeToCompleteInHours, requiredInventory, requiredInventoryMultiplier, gainedInventory, gainedInventoryMultiplier) {
     this.buttonid = buttonid;
     this.name = name;
     this.cost = cost;
@@ -19,6 +21,10 @@ function structOfCrimes(buttonid, name, cost, requiredNoto, moneyEarned, notoEar
     this.timeToCompleteInSeconds = timeToCompleteInSeconds;
     this.timeToCompleteInHours = timeToCompleteInHours;
     this.timeToCompleteInMilliseconds = timeToCompleteInHours * 60 * 60 * 1000 + timeToCompleteInSeconds * 1000;
+    this.requiredInventory = requiredInventory;
+    this.requiredInventoryMultiplier = requiredInventoryMultiplier;
+    this.gainedInventory = gainedInventory;
+    this.gainedInventoryMultiplier = gainedInventoryMultiplier;
 }
 
 // struct for accumulated data (I expect to add more as time goes on)
@@ -34,20 +40,51 @@ function structOfGameState(state, numberTimesCommitted, datetimeCrimeWillEnd, da
     this.datetimeCrimeStarted = datetimeCrimeStarted;
 }
 
+function structOfInventoryItems(inventoryCode, inventoryName, quantityHeld) {
+    this.inventoryCode = inventoryCode;
+    this.inventoryName = inventoryName;
+    this.inventoryQuantityHeld = 0;
+}
+
+function structOfPlayer(playerNoto, playerMoney, playerSTR, playerLUCK, playerINT, playerCHARM) {
+    this.noto = playerNoto;
+    this.money = playerMoney;
+    this.STR = playerSTR;
+    this.LUCK = playerLUCK;
+    this.INT = playerINT;
+    this.CHARM = playerCHARM;
+}
+
+var player = new structOfPlayer(0, 0, 0, 0, 0, 0);
+
+var playerInventory = [
+    new structOfInventoryItems("watch", "watches", 0),
+    new structOfInventoryItems("guns", "Illegal Guns", 0)
+]
+
+function returnInventoryIndex(inventoryCode) {
+    for (let i = 0; i < playerInventory.length; i++) {
+        if (inventoryCode == playerInventory[i].inventoryCode) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 // this creates an array "setOfCrime" that contains different crimes
 var setOfCrime = [
-    new structOfCrimes("loit", "Loitering", 0, 0, 0, 2, 12, 0, 0, 0, 0),
-    new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0, 0, 0, 0),
-    new structOfCrimes("litt", "Littering", 0, 2, 0, 1, 4, 0, 0, 0, 0),
-    new structOfCrimes("watch", "Selling Counterfeit Watches", 0, 20, 5, 2, 60, 0, 0, 0, 0),
-    new structOfCrimes("baby", "Candy from a Baby", 0, 12, 0, 3, 28, 0, 0, 0, 0),
-    new structOfCrimes("jorts", "Wearing Jorts", 15, 17, 0, -5, 60, 0, 0, 0, 0),
-    new structOfCrimes("xloit", "Extreme Loitering", 0, 0, 0, 200, 60, 168, 0, 0, 0),
-    new structOfCrimes("jayw", "Jaywalking", 0, 0, 0, 5, 24, 0, 0, 0, 0),
-    new structOfCrimes("stealc", "Stealing a Car Stereo", 0, 50, 100, 30, 1200, 0, 0, 0, 0),
-    new structOfCrimes("walrus", "Transporting a Walrus without a Licence", 200, 100, 300, 200, 0, 3, 0, 0, 0),
-    new structOfCrimes("scorp", "Enhancing a Scorpion", 150, 35, 200, 100, 0, 2, 0, 0, 0),
-    new structOfCrimes("runr", "Running a Red Light", 0, 12, 0, 20, 60, 0, 0, 0, 0),
+    new structOfCrimes("loit", "Loitering", 0, 0, 0, 2, 12, 0, 0, 0, 0, "", "", 0),
+    new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0, 0, 0, 0, "", "", 0),
+    new structOfCrimes("litt", "Littering", 0, 2, 0, 1, 4, 0, 0, 0, 0), "", "", 0,
+    new structOfCrimes("watch", "Selling Counterfeit Watches", 0, 20, 5, 2, 60, 0, 0, 0, 0, "", "", 0),
+    new structOfCrimes("baby", "Candy from a Baby", 0, 12, 0, 3, 28, 0, 0, 0, 0, "", "", 0),
+    new structOfCrimes("jorts", "Wearing Jorts", 15, 17, 0, -5, 60, 0, 0, 0, 0, "", "", 0),
+    new structOfCrimes("xloit", "Extreme Loitering", 0, 0, 0, 200, 60, 168, 0, 0, 0, "", "", 0),
+    new structOfCrimes("jayw", "Jaywalking", 0, 0, 0, 5, 24, 0, 0, 0, 0, "", "", 0),
+    new structOfCrimes("stealc", "Stealing a Car Stereo", 0, 50, 100, 30, 1200, 0, 0, 0, 0, "", "", 0),
+    new structOfCrimes("walrus", "Transporting a Walrus without a Licence", 200, 100, 300, 200, 0, 3, 0, 0, 0, "", "", 0),
+    new structOfCrimes("scorp", "Enhancing a Scorpion", 150, 35, 200, 100, 0, 2, 0, 0, 0, "", "", 0),
+    new structOfCrimes("runr", "Running a Red Light", 0, 12, 0, 20, 60, 0, 0, 0, 0, "", "", 0),
 ];
 
 var textAboutCrime;
@@ -108,13 +145,15 @@ function clickOnCrimeButton(buttonIndex) {
 
 // what happens when a crime was successful
 function successfulCrime(buttonIndex) {
-    playerNoto += setOfCrime[buttonIndex].notoEarned;
-    playerMoney += setOfCrime[buttonIndex].moneyEarned;
+    player.noto += setOfCrime[buttonIndex].notoEarned;
+    player.money += setOfCrime[buttonIndex].moneyEarned;
     addToLog(setOfCrime[buttonIndex].name + " committed, " + setOfCrime[buttonIndex].notoEarned + " noto & " + setOfCrime[buttonIndex].moneyEarned + " $ earned");
     // set the crime back to ready
     gameState[buttonIndex].state = 0;
     //update accumulated data
     gameState[buttonIndex].numberTimesCommitted += 1;
+
+    addToInventoryCode(setOfCrime[buttonIndex].gainedInventory, gainedInventoryMultiplier)
 
     //update cookies
     setCookie(buttonIndex);
@@ -129,44 +168,52 @@ function refreshInfoPanel(buttonIndex) {
     switch (gameState[buttonIndex].state) {
         //
         // case 0 means is ready to go but hasn't been done
+        case -1:
+            displayInventory
+            break;
         case 0:
-            var newInfoTitle = setOfCrime[buttonIndex].name;
-            var newInfoText = setOfCrime[buttonIndex].requiredNoto + " NOTORIETY required";
+            //var newInfoTitle = setOfCrime[buttonIndex].name;
+
+            var newInfoText = "<h1>" + setOfCrime[buttonIndex].name + "</h1><br>" +
+                setOfCrime[buttonIndex].requiredNoto + " NOTORIETY required";
             if (setOfCrime[buttonIndex].cost > 0) {
                 newInfoText += "<br>AND COSTS<br>" + setOfCrime[buttonIndex].cost + "$";
             }
             newInfoText += generateGameStateDataText(buttonIndex);
-            if (playerMoney >= setOfCrime[buttonIndex].cost) {
-                updateGoButton("CLICK TO COMMIT");
-            } else {
-                updateGoButton("U CAN'T AFFORD IT", "alert");
-            }
+            // if (player.money >= setOfCrime[buttonIndex].cost) {
+            //     updateGoButton("CLICK TO COMMIT");
+            // } else {
+            //     updateGoButton("U CAN'T AFFORD IT", "alert");
+            // }
             break;
             //
             // case 1 means activelyt committing
         case 1:
-            var newInfoTitle = setOfCrime[buttonIndex].name;
-            var newInfoText = "committing until<br>" + dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).format("DD/MM/YY HH:mm:ss" + "<br>");
+            //var newInfoTitle = setOfCrime[buttonIndex].name;
+
+            var newInfoText = "<h1>" + setOfCrime[buttonIndex].name + "</h1><br>" +
+                "committing until<br>" + dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).format("DD/MM/YY HH:mm:ss" + "<br>");
             timeUntilComplete = dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).diff(dayjs());
             formattedTimehuman = dayjs.duration(timeUntilComplete).humanize(true);
             newInfoText += "<br>It'll be completed<br>" + formattedTimehuman;
             // add text with accumulated data
             newInfoText += generateGameStateDataText(buttonIndex);
-            updateGoButton("COMMITTING");
+            //updateGoButton("COMMITTING");
             break;
             //
             // case 2 means it's completed and waiting to be collected
         case 2:
-            var newInfoTitle = setOfCrime[buttonIndex].name;
-            var newInfoText = "and it's been done<br>praise the lord";
-            updateGoButton("CRIMEGRATULATIONS");
+            // var newInfoTitle = setOfCrime[buttonIndex].name;
+            var newInfoText = "<h1>" + setOfCrime[buttonIndex].name + "</h1><br>" +
+                "and it's been done<br>praise the lord";
+            //updateGoButton("CRIMEGRATULATIONS");
             break;
             //
             // case three means unavailable yet
         case 3:
             var newInfoTitle = "COMMIT MORE CRIME TO UNLOCK";
             var newInfoText = setOfCrime[buttonIndex].requiredNoto + " NOTORIETY required";
-            updateGoButton("U NEED 2 COMMIT MORE CRIME");
+            //updateGoButton("U NEED 2 COMMIT MORE CRIME");
     }
     document.getElementById("infoID").innerHTML = newInfoTitle;
     document.getElementById("infotextID").innerHTML = newInfoText;
@@ -304,7 +351,7 @@ function commitCrime(buttonIndex) {
     //is the crime ready to go?
     if (gameState[buttonIndex].state == 0) {
         // can the player afford it?
-        if (playerMoney >= setOfCrime[buttonIndex].cost) {
+        if (player.money >= setOfCrime[buttonIndex].cost) {
             // ok go ahead commit crimes
             setDatetimes(buttonIndex);
             gameState[buttonIndex].state = 1;
@@ -312,7 +359,7 @@ function commitCrime(buttonIndex) {
             logEntry = setOfCrime[buttonIndex].name + " will finish at: <br>" + dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).format("DD/MM/YY HH:mm:ss");
             refreshSingleButton("", buttonIndex);
             addToLog(logEntry);
-            playerMoney -= setOfCrime[buttonIndex].cost;
+            player.money -= setOfCrime[buttonIndex].cost;
 
             // once new times have been set and money taken away, update the cookie so if refresh happens during a cookie countdown it's still happening
             setCookie(buttonIndex);
@@ -349,11 +396,42 @@ function hasCrimeFinished(structOfCrimes, buttonIndex) {
 // this takes any crime out of state 3 (not ready) if it's noto is high enough
 // and will have been called with a foreach
 function checkNotoRequired(structOfCrimes, crimeIndex) {
-    if (gameState[crimeIndex].state == 3 && playerNoto >= setOfCrime[crimeIndex].requiredNoto) {
+    if (gameState[crimeIndex].state == 3 && player.noto >= setOfCrime[crimeIndex].requiredNoto) {
         gameState[crimeIndex].state = 0;
     }
 }
 
+
+
+
+//given the code of an inventory item, checks and returns quantity
+function checkQuantityOfInventoryCode(inventoryCodeToCheck, inventoryItemQuantity) {
+    // in this function I cycle through the player inventory
+    // and when get to that point, check and return the value
+    for (let i = 0; i > playerInventory.length; i++) {
+        if (inventoryItemToCheck == playerInventory[i].inventoryCode) {
+            return playerInventory[i].inventoryItemQuantity;
+        }
+    }
+    return -1;
+}
+
+function getIndexOfInventoryCode(inventoryCodeToCheck) {
+    for (let i = 0; i > playerInventory.length; i++) {
+        if (inventoryCodeToCheck == playerInventory[i].inventoryCode) { return i }
+        return -1;
+    }
+}
+
+function addToInventoryCode(inventoryCodeToAddTo, inventoryItemQuantityToAdd) {
+    for (let i = 0; i > playerInventory.length; i++) {
+        if (inventoryCodeToAddTo == playerInventory[i].code) {
+            playerInventory[i].inventoryItemQuantity += inventoryItemQuantityToAdd;
+            return 1;
+        }
+    }
+    return -1;
+}
 // this function updates the log
 function addToLog(text) {
     // moves each element in the array along one, making space for the new bit of info
@@ -372,7 +450,7 @@ function addToLog(text) {
 }
 
 function refreshBanner() {
-    updatedBannerHTML = playerNoto + "N<br>" + playerMoney + "$";
+    updatedBannerHTML = player.noto + "N<br>" + player.money + "$";
     document.getElementById("statsBannerID").innerHTML = updatedBannerHTML;
 }
 
@@ -380,59 +458,32 @@ function updateCriminalStatus() {
     newStatusText = "criminal status:<br>";
     // remember this falls backwards from highest rank down
     // thru the if/else branches until it finds one it meets
-    if (playerNoto > 10) {
+    if (player.noto > 10) {
         newStatusText += "tripped over";
-    } else if (playerNoto >= 0) {
+    } else if (player.noto >= 0) {
         newStatusText += "ignored";
     }
     document.getElementById("criminalStatusID").innerHTML = newStatusText;
 }
 
 function cheat(keyPressKey) {
-    playerNoto += 2;
-    playerMoney += 1;
+    player.noto += 2;
+    player.money += 1;
     updatedBannerHTML;
     setOfCrime.forEach(checkNotoRequired);
 }
 
-// run at the start of a session, and updates the certain gamestate variables
-function readCookies() {
-    tempnoto = Cookies.get("playerNoto");
-    if (tempnoto == undefined) {
-        console.log("no money or noto cookies");
-    } else {
-        playerNoto = parseInt(Cookies.get("playerNoto"));
 
-        playerMoney = parseInt(Cookies.get("playerMoney"));
-        console.log("from cookies: " + playerNoto + "N&" + playerMoney + "$");
 
-        for (let cookieReadIndex = 0; cookieReadIndex < setOfCrime.length; cookieReadIndex++) {
-            tempCookieReadout = Cookies.get("'cookie" + cookieReadIndex + "'");
-            if (tempCookieReadout == undefined) {
-                console.log("no gamestate cookie for crime number: " + cookieReadIndex);
-            } else {
-                arrayFromTempCookieReadout = tempCookieReadout.split(";");
-                console.log("cookie read: ", arrayFromTempCookieReadout);
-                gameState[cookieReadIndex].state = parseInt(arrayFromTempCookieReadout[0]);
-                gameState[cookieReadIndex].numberTimesCommitted = parseInt(arrayFromTempCookieReadout[1]);
-                gameState[cookieReadIndex].datetimeCrimeWillEnd = parseInt(arrayFromTempCookieReadout[2]);
-                gameState[cookieReadIndex].datetimeCrimeStarted = parseInt(arrayFromTempCookieReadout[3]);
-            }
-        }
-        newLogText = Cookies.get("log");
-        document.getElementById("logID").innerHTML = newLogText;
-    }
-    buttonIndex = 0;
-}
 
 // called whenever a crime is started, or completed,
 // and will always update the money / noto
 // and updates the cookie related to the crime
 function setCookie(buttonIndex) {
     // always refresh money and noto
-    Cookies.set("playerNoto", playerNoto, { expires: 365 });
-    Cookies.set("playerMoney", playerMoney, { expires: 365 });
-    console.log("wrote to cookie: " + playerNoto + "N&" + playerMoney + "$");
+    // Cookies.set("player.noto", player.noto, { expires: 365 });
+    // Cookies.set("player.money", player.money, { expires: 365 });
+    // console.log("wrote to cookie: " + player.noto + "N&" + player.money + "$");
     // set the cookiename
     cookieName = "'cookie" + buttonIndex + "'";
     // set the cookie contnent
@@ -446,6 +497,85 @@ function setCookie(buttonIndex) {
         gameState[buttonIndex].datetimeCrimeStarted;
     Cookies.set(cookieName, cookieContent, { expires: 365 });
     console.log("wrote to cookie: " + cookieName + "," + cookieContent);
+    setPlayerCookie();
+}
+// run at the start of a session, and updates the certain gamestate variables
+function readCookies() {
+
+    for (let cookieReadIndex = 0; cookieReadIndex < setOfCrime.length; cookieReadIndex++) {
+        tempCookieReadout = Cookies.get("'cookie" + cookieReadIndex + "'");
+        if (tempCookieReadout == undefined) {
+            console.log("no gamestate cookie for crime number: " + cookieReadIndex);
+        } else {
+            arrayFromTempCookieReadout = tempCookieReadout.split(";");
+            console.log("cookie read: ", arrayFromTempCookieReadout);
+            gameState[cookieReadIndex].state = parseInt(arrayFromTempCookieReadout[0]);
+            gameState[cookieReadIndex].numberTimesCommitted = parseInt(arrayFromTempCookieReadout[1]);
+            gameState[cookieReadIndex].datetimeCrimeWillEnd = parseInt(arrayFromTempCookieReadout[2]);
+            gameState[cookieReadIndex].datetimeCrimeStarted = parseInt(arrayFromTempCookieReadout[3]);
+        }
+    }
+    newLogText = Cookies.get("log");
+    document.getElementById("logID").innerHTML = newLogText;
+    buttonIndex = 0;
+}
+
+function setInventoryCookie(inventoryCodeToAddTo, inventoryItemQuantityTotal) {
+    inventoryIndex = getIndexOfInventoryCode();
+    if (inventoryIndex == -1) {
+        console.log("illegal inventory name requested for cookie update")
+    } else {
+        cookieName = "'inventoryCookie" + inventoryIndex + "'";
+        cookieValue = inventoryItemQuantityTotal;
+        Cookies.set(cookieName, cookieValue);
+    }
+}
+
+function readInventoryCookies() {
+    for (let i = 0; playerInventory.length; i++) {
+        tempCookieReadout = Cookies.get("'inventoryCookie" + i + "'");
+
+        if (tempCookieReadout == undefined) {
+            console.log("no gamestate cookie for inventory index: " + cookieReadIndex);
+        } else {
+            playerInventory[i].inventoryQuantityHeld = tempCookieReadout;
+        }
+    }
+}
+
+
+// this specifically sets the cookie that holds player data
+function setPlayerCookie() {
+    let playerCookieData =
+        player.noto + ";" +
+        player.money + ";" +
+        player.STR + ";" +
+        player.LUCK + ";" +
+        player.LUCK + ";" +
+        player.CHARM
+    Cookies.set("playerData", playerCookieData);
+    console.log("wrote to cookies: " + playerCookieData);
+}
+
+function readPlayerCookie() {
+    let tempPlayerDataCookieReadout = Cookies.get("playerData");
+    if (tempPlayerDataCookieReadout != undefined) {
+        console.log("player data cookie readout: " + tempPlayerDataCookieReadout);
+
+
+        let arrayFromPlayerDataCookieReadout = tempPlayerDataCookieReadout.split(";");
+        player.Noto = parseInt(arrayFromPlayerDataCookieReadout[0]);
+        player.Money = parseInt(arrayFromPlayerDataCookieReadout[1]);
+        player.STR = parseInt(arrayFromPlayerDataCookieReadout[2]);
+        player.LUCK = parseInt(arrayFromPlayerDataCookieReadout[3]);
+        player.INT = parseInt(arrayFromPlayerDataCookieReadout[4]);
+        player.CHAR = parseInt(arrayFromPlayerDataCookieReadout[5]);
+
+
+
+    } else {
+        console.log("no player data cookies");
+    }
 }
 
 // the main loop
@@ -465,7 +595,9 @@ function refreshLoop(timestamp) {
 addToLog(dayjs().format("YY.MM.DD HH:mm") + " the crimespree has begun");
 
 // get values from prior usage
-readCookies();
+//readPlayerCookie();
+
+//readCookies();
 
 // make the crime buttons
 setOfCrime.forEach(createCrimeButtons);
@@ -474,6 +606,9 @@ setOfCrime.forEach(createCrimeButtons);
 setOfCrime.forEach(checkNotoRequired);
 
 updateCriminalStatus();
+
+document.getElementById("titleID").innerHTML = "crime committer<br>" +
+    versionNumber + " " + versionCode + " <br> made by wfproductionsnz ";
 
 // of course you can cheat lol ;)
 //cheatCodeKeyboardEvent = new KeyboardEvent("keydown");
