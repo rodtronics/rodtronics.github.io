@@ -5,7 +5,7 @@ var logOfCrimes = new Array(logLength).fill("");
 // playerNoto = 0;
 // playerMoney = 0;
 var accumDataText = "";
-versionNumber = "0.9si";
+versionNumber = "0.92si";
 versionCode = "inventory branch";
 
 //these functions are initialistion based
@@ -380,43 +380,53 @@ function commitCrime(buttonIndex) {
     if (player.money >= setOfCrime[buttonIndex].cost) {
       // ok go ahead commit crimes
       //check if player has necessary inventory
-      if (setOfCrime[buttonIndex].requiredInventory.length > 1) {
-        for (let i = 0; i < setOfCrime[buttonIndex].requiredInventory.length; i++) {
-          arrayOfTempNumber[i] = checkQuantityOfInventoryCode(setOfCrime[buttonIndex].requiredInventory[i]);
-          if (arrayOfTempNumber[i] == 0) {
-            document.getElementById("infotextID").innerHTML = "U NEED<br>" + setOfCrime[buttonIndex].requiredInventory[i];
-            console.log("not enough");
+      if (setOfCrime[buttonIndex].requiredInventory == 0) {
+        console.log("inventory==0");
+      } else {
+        //check for inventory
+        if (setOfCrime[buttonIndex].requiredInventory.length > 1) {
+          for (let i = 0; i < setOfCrime[buttonIndex].requiredInventory.length; i++) {
+            arrayOfTempNumber[i] = checkQuantityOfInventoryCode(setOfCrime[buttonIndex].requiredInventory[i]);
+            console.log(arrayOfTempNumber[i]);
+            if (arrayOfTempNumber[i] == 0) {
+              document.getElementById("infotextID").innerHTML =
+                "YOU NEED<br>" + getInventoryNameFromInventoryCode(setOfCrime[buttonIndex].requiredInventory[i]);
+              return;
+            }
+          }
+          // it should have returned from this function if it came across a 0 hence
+          // if the code gets here, it's all 1 or more
+          tempNumber = 1;
+        } else {
+          tempNumber = checkQuantityOfInventoryCode(setOfCrime[buttonIndex].requiredInventory);
+          if (tempNumber == 0) {
+            document.getElementById("infotextID").innerHTML = "YOU NEED<br>" + getInventoryNameFromInventoryCode(setOfCrime[buttonIndex].requiredInventory);
             return;
           }
         }
-        // it should have returned from this function if it came across a 0 hence
-        // if the code gets here, it's all 1 or more
-        tempNumber = 1;
-      } else {
-        tempNumber = checkQuantityOfInventoryCode(setOfCrime[buttonIndex].requiredInventory);
+        //
+        if (tempNumber > 0) {
+          removeItemsFromInventory(buttonIndex);
+        }
       }
+      console.log("player can afford");
+      setDatetimes(buttonIndex);
+      gameState[buttonIndex].state = 1;
+      // send message to log
+      logEntry = setOfCrime[buttonIndex].name + " will finish at: <br>" + dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).format("DD/MM/YY HH:mm:ss");
+      refreshSingleButton("", buttonIndex);
+      addToLog(logEntry);
+      player.money -= setOfCrime[buttonIndex].cost;
 
-      if (tempNumber > 0) {
-        removeItemsFromInventory(buttonIndex);
-
-        setDatetimes(buttonIndex);
-        gameState[buttonIndex].state = 1;
-        // send message to log
-        logEntry = setOfCrime[buttonIndex].name + " will finish at: <br>" + dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).format("DD/MM/YY HH:mm:ss");
-        refreshSingleButton("", buttonIndex);
-        addToLog(logEntry);
-        player.money -= setOfCrime[buttonIndex].cost;
-
-        // once new times have been set and money taken away, update the cookie so if refresh happens during a cookie countdown it's still happening
-        setCookie(buttonIndex);
-        refreshInfoPanel(globalButtonIndex);
-      }
+      // once new times have been set and money taken away, update the cookie so if refresh happens during a cookie countdown it's still happening
+      setCookie(buttonIndex);
+      refreshInfoPanel(globalButtonIndex);
     } else {
       document.getElementById("infotextID").innerHTML = "U CANNOT AFORD";
     }
   }
-  //refreshInfoPanel(globalButtonIndex);
 }
+//refreshInfoPanel(globalButtonIndex);
 
 function removeItemsFromInventory(buttonIndex) {
   if (setOfCrime[buttonIndex].requiredInventory.length > 1) {
