@@ -5,7 +5,7 @@ var logOfCrimes = new Array(logLength).fill("");
 // playerNoto = 0;
 // playerMoney = 0;
 var accumDataText = "";
-versionNumber = "0.933si";
+versionNumber = "0.934si";
 versionCode = "inventory branch";
 
 //these functions are initialistion based
@@ -197,14 +197,16 @@ function refreshInfoPanel(buttonIndex) {
     case 0:
       //var newInfoTitle = setOfCrime[buttonIndex].name;
 
-      var newInfoText = "<h1>" + setOfCrime[buttonIndex].name + "</h1><br><br>REQUIRED:<br><br>" + setOfCrime[buttonIndex].requiredNoto + "N<br>";
+      var newInfoText = "<h1>" + setOfCrime[buttonIndex].name + "</h1><br><br>REQUIRED:<br><br>" + setOfCrime[buttonIndex].requiredNoto + " N<br>";
       if (setOfCrime[buttonIndex].cost > 0) {
-        newInfoText += setOfCrime[buttonIndex].cost + "$";
+        newInfoText += setOfCrime[buttonIndex].cost + " $<br>";
       }
 
       let tempInventoryText = generateInventoryNeededText(buttonIndex);
       tempInventoryText += generateInventoryGainedText(buttonIndex);
-      newInfoText += tempInventoryText + generateGameStateDataText(buttonIndex);
+      // newInfoText += "<br>";
+      newInfoText += tempInventoryText;
+      newInfoText += generateGameStateDataText(buttonIndex);
 
       break;
     //
@@ -296,12 +298,14 @@ function generateGameStateDataText(buttonIndex) {
     } else {
       accumDataText += localNumberTimesCommitted + " TIMES";
     }
-    accumDataText +=
-      "<br>earning:<br>" +
-      setOfCrime[buttonIndex].notoEarned * localNumberTimesCommitted +
-      " NOTORIETY<br>" +
-      setOfCrime[buttonIndex].moneyEarned * localNumberTimesCommitted +
-      " $<BR>AND SPENT<br> ";
+
+    accumDataText += "<br>AND SPENT<br>";
+    // accumDataText +=
+    //   "<br>earning:<br>" +
+    //   setOfCrime[buttonIndex].notoEarned * localNumberTimesCommitted +
+    //   " NOTORIETY<br>" +
+    //   setOfCrime[buttonIndex].moneyEarned * localNumberTimesCommitted +
+    //   " $<BR>AND SPENT<br> ";
     // generate some duration values
     timeSpentDoingCrime = dayjs.duration(setOfCrime[buttonIndex].timeToCompleteInMilliseconds * localNumberTimesCommitted, "millisecond");
     timeSpentDoingCrime.days = parseInt(timeSpentDoingCrime.format("DD"));
