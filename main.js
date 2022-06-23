@@ -5,7 +5,7 @@ var logOfCrimes = new Array(logLength).fill("");
 // playerNoto = 0;
 // playerMoney = 0;
 var accumDataText = "";
-versionNumber = "0.931si";
+versionNumber = "0.932si";
 versionCode = "inventory branch";
 
 //these functions are initialistion based
@@ -652,7 +652,7 @@ function readCookies() {
   for (let cookieReadIndex = 0; cookieReadIndex < setOfCrime.length; cookieReadIndex++) {
     tempCookieReadout = Cookies.get("'cookie" + cookieReadIndex + "'");
     if (tempCookieReadout == undefined) {
-      console.log("no gamestate cookie for crime number: " + cookieReadIndex);
+      console.log("no cookie for crime number: " + cookieReadIndex);
     } else {
       arrayFromTempCookieReadout = tempCookieReadout.split(";");
       console.log("cookie read: ", arrayFromTempCookieReadout);
@@ -681,11 +681,11 @@ function setInventoryCookie(inventoryCodeToAddTo) {
 }
 
 function readInventoryCookies() {
-  for (let i = 0; playerInventoryLength; i++) {
+  for (let i = 0; i < playerInventoryLength; i++) {
     tempCookieReadout = Cookies.get("'inventoryCookie" + i + "'");
 
     if (tempCookieReadout == undefined) {
-      console.log("no gamestate cookie for inventory index: " + "'inventoryCookie" + i + "'");
+      console.log("no cookie for inventory index: " + "'inventoryCookie" + i + "'");
     } else {
       playerInventory[i].inventoryQuantityHeld = tempCookieReadout;
     }
