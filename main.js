@@ -5,7 +5,7 @@ var logOfCrimes = new Array(logLength).fill("");
 // playerNoto = 0;
 // playerMoney = 0;
 var accumDataText = "";
-versionNumber = 0.9si;
+versionNumber = "0.9si";
 versionCode = "inventory branch";
 
 //these functions are initialistion based
@@ -39,18 +39,12 @@ function structOfCrimes(
 }
 // this creates an array "setOfCrime" that contains different crimes
 var setOfCrime = [
-  new structOfCrimes("loit", "Loitering", 0, 0, 0, 2, 12, 0, ["scorp"], ["pain"], 4),
-  new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0, 0, 0, 0, "", "", 0),
-  new structOfCrimes("litt", "Littering", 0, 2, 0, 1, 4, 0, 0, 0, 0),
-  new structOfCrimes("watch", "Selling Counterfeit Watches", 0, 20, 5, 2, 60, 0, 0, 0, 0, "", "", 0),
-  new structOfCrimes("baby", "Candy from a Baby", 0, 12, 0, 3, 28, 0, 0, 0, 0, "", "", 0),
-  new structOfCrimes("jorts", "Wearing Jorts", 15, 17, 0, -5, 60, 0, 0, 0, 0, "", "", 0),
-  new structOfCrimes("xloit", "Extreme Loitering", 0, 0, 0, 200, 60, 168, 0, 0, 0, "", "", 0),
-  new structOfCrimes("jayw", "Jaywalking", 0, 0, 0, 5, 24, 0, 0, 0, 0, "", "", 0),
-  new structOfCrimes("stealc", "Stealing a Car Stereo", 0, 50, 100, 30, 1200, 0, 0, 0, 0, "", "", 0),
-  new structOfCrimes("walrus", "Transporting a Walrus without a Licence", 200, 100, 300, 200, 0, 3, 0, 0, 0, "", "", 0),
-  new structOfCrimes("scorp", "Enhancing a Scorpion", 150, 35, 200, 100, 0, 2, 0, 0, 0, "", "", 0),
-  new structOfCrimes("runr", "Running a Red Light", 0, 12, 0, 20, 60, 0, 0, 0, 0, "", "", 0),
+  new structOfCrimes("loit", "Loitering", 0, 0, 0, 2, 12, 0, 0, 0, 0),
+  new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0, ["skate"], 0, 0),
+  new structOfCrimes("xloit", "Extreme Loitering", 0, 0, 0, 200, 60, 168, ["belt"], 0, 0),
+  new structOfCrimes("stealw", "Stealing Walrus", 0, 100, 0, 200, 0, 0, 0, 0, 0),
+  new structOfCrimes("walrus", "Transporting a Walrus without a Licence", 200, 100, 300, 200, 0, 3, 0, 0, 0),
+  new structOfCrimes("scorp", "Enhancing a Scorpion", 150, 35, 200, 100, 0, 2, ["scorp", "masc"], "escorp", 1),
 ];
 
 // struct for accumulated data (I expect to add more as time goes on)
@@ -69,7 +63,7 @@ function structOfGameState(state, numberTimesCommitted, datetimeCrimeWillEnd, da
 function structOfInventoryItems(inventoryCode, inventoryName, quantityHeld) {
   this.inventoryCode = inventoryCode;
   this.inventoryName = inventoryName;
-  this.inventoryQuantityHeld = 0;
+  this.inventoryQuantityHeld = quantityHeld;
 }
 
 function structOfPlayer(playerNoto, playerMoney, playerSTR, playerLUCK, playerINT, playerCHARM) {
@@ -81,13 +75,29 @@ function structOfPlayer(playerNoto, playerMoney, playerSTR, playerLUCK, playerIN
   this.CHARM = playerCHARM;
 }
 
-var player = new structOfPlayer(0, 0, 0, 0, 0, 0);
+var player = new structOfPlayer(50, 500, 0, 0, 0, 0);
 
-var playerInventory = [new structOfInventoryItems("scorp", "Scorpions", 0), new structOfInventoryItems("pain", "A lot of pain", 0)];
+var playerInventory = [
+  new structOfInventoryItems("cam", "Big Camera", 0),
+  new structOfInventoryItems("skate", "Skateboard", 0),
+
+  new structOfInventoryItems("belt", "Brown Leather Belt", 1),
+  new structOfInventoryItems("scorp", "Sporpion", 1),
+  new structOfInventoryItems("escorp", "Enhanced Scorpion", 0),
+  new structOfInventoryItems("bag", "Cloth Bag", 0),
+  new structOfInventoryItems("lockp", "Lock Picking Set", 0),
+  new structOfInventoryItems("knife", "Big Knife", 0),
+  new structOfInventoryItems("calc", "Calculator", 0),
+  new structOfInventoryItems("prot", "Protractor", 0),
+  new structOfInventoryItems("uran", "Uranium", 0),
+  new structOfInventoryItems("hazm", "Hazmat Suit", 0),
+  new structOfInventoryItems("masc", "Mascara", 1),
+  new structOfInventoryItems("walr", "Walrus", 1),
+];
 var playerInventoryLength = playerInventory.length;
 
 function returnInventoryIndex(inventoryCode) {
-  for (let i = 0; i < playerInventory.length; i++) {
+  for (let i = 0; i < playerInventoryLength; i++) {
     if (inventoryCode == playerInventory[i].inventoryCode) {
       return i;
     }
@@ -179,12 +189,7 @@ function refreshInfoPanel(buttonIndex) {
   //
   document.getElementById("infotextID").setAttribute("state", "crimeSelected");
   document.getElementById("buttonAndTitleWrapperID").setAttribute("state", "crimeSelected");
-  switch (buttonIndex) {
-    case -1:
-      break;
-    case -2:
-      break;
-  }
+
   // work on the assumption that the button index passed is the msot recently pressed button
   switch (gameState[buttonIndex].state) {
     //
@@ -193,7 +198,7 @@ function refreshInfoPanel(buttonIndex) {
     case 0:
       //var newInfoTitle = setOfCrime[buttonIndex].name;
 
-      var newInfoText = "" + setOfCrime[buttonIndex].name + "<br><br>REQUIRED:<br><br>" + setOfCrime[buttonIndex].requiredNoto + "N";
+      var newInfoText = "<h1>" + setOfCrime[buttonIndex].name + "</h1><br><br>REQUIRED:<br><br>" + setOfCrime[buttonIndex].requiredNoto + "N<br>";
       if (setOfCrime[buttonIndex].cost > 0) {
         newInfoText += setOfCrime[buttonIndex].cost + "$";
       }
@@ -201,11 +206,7 @@ function refreshInfoPanel(buttonIndex) {
       let tempInventoryText = generateInventoryNeededText(buttonIndex);
       tempInventoryText += generateInventoryGainedText(buttonIndex);
       newInfoText += generateGameStateDataText(buttonIndex) + tempInventoryText;
-      // if (player.money >= setOfCrime[buttonIndex].cost) {
-      //     updateGoButton("CLICK TO COMMIT");
-      // } else {
-      //     updateGoButton("U CAN'T AFFORD IT", "alert");
-      // }
+
       break;
     //
     // case 1 means activelyt committing
@@ -235,8 +236,7 @@ function refreshInfoPanel(buttonIndex) {
     //
     // case three means unavailable yet
     case 3:
-      var newInfoTitle = "COMMIT MORE CRIME TO UNLOCK";
-      var newInfoText = setOfCrime[buttonIndex].requiredNoto + " NOTORIETY required";
+      var newInfoText = setOfCrime[buttonIndex].requiredNoto + " NOTORIETY required<br>TO UNLOCK";
     //updateGoButton("U NEED 2 COMMIT MORE CRIME");
   }
   //document.getElementById("infoID").innerHTML = newInfoTitle;
@@ -372,24 +372,63 @@ function updateGoButton(newText, buttonState) {
 function commitCrime(buttonIndex) {
   // this is just laziness lol
   buttonIndex = globalButtonIndex;
+  tempNumber = 0;
+  let arrayOfTempNumber = new Array();
   //is the crime ready to go?
   if (gameState[buttonIndex].state == 0) {
     // can the player afford it?
     if (player.money >= setOfCrime[buttonIndex].cost) {
       // ok go ahead commit crimes
-      setDatetimes(buttonIndex);
-      gameState[buttonIndex].state = 1;
-      // send message to log
-      logEntry = setOfCrime[buttonIndex].name + " will finish at: <br>" + dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).format("DD/MM/YY HH:mm:ss");
-      refreshSingleButton("", buttonIndex);
-      addToLog(logEntry);
-      player.money -= setOfCrime[buttonIndex].cost;
+      //check if player has necessary inventory
+      if (setOfCrime[buttonIndex].requiredInventory.length > 1) {
+        for (let i = 0; i < setOfCrime[buttonIndex].requiredInventory.length; i++) {
+          arrayOfTempNumber[i] = checkQuantityOfInventoryCode(setOfCrime[buttonIndex].requiredInventory[i]);
+          if (arrayOfTempNumber[i] == 0) {
+            document.getElementById("infotextID").innerHTML = "U NEED<br>" + setOfCrime[buttonIndex].requiredInventory[i];
+            console.log("not enough");
+            return;
+          }
+        }
+        // it should have returned from this function if it came across a 0 hence
+        // if the code gets here, it's all 1 or more
+        tempNumber = 1;
+      } else {
+        tempNumber = checkQuantityOfInventoryCode(setOfCrime[buttonIndex].requiredInventory);
+      }
 
-      // once new times have been set and money taken away, update the cookie so if refresh happens during a cookie countdown it's still happening
-      setCookie(buttonIndex);
+      if (tempNumber > 0) {
+        removeItemsFromInventory(buttonIndex);
+
+        setDatetimes(buttonIndex);
+        gameState[buttonIndex].state = 1;
+        // send message to log
+        logEntry = setOfCrime[buttonIndex].name + " will finish at: <br>" + dayjs(gameState[buttonIndex].datetimeCrimeWillEnd).format("DD/MM/YY HH:mm:ss");
+        refreshSingleButton("", buttonIndex);
+        addToLog(logEntry);
+        player.money -= setOfCrime[buttonIndex].cost;
+
+        // once new times have been set and money taken away, update the cookie so if refresh happens during a cookie countdown it's still happening
+        setCookie(buttonIndex);
+        refreshInfoPanel(globalButtonIndex);
+      }
+    } else {
+      document.getElementById("infotextID").innerHTML = "U CANNOT AFORD";
     }
   }
-  refreshInfoPanel(globalButtonIndex);
+  //refreshInfoPanel(globalButtonIndex);
+}
+
+function removeItemsFromInventory(buttonIndex) {
+  if (setOfCrime[buttonIndex].requiredInventory.length > 1) {
+    for (let i = 0; i < setOfCrime[buttonIndex].requiredInventory.length; i++) {
+      addToInventoryCode(setOfCrime[buttonIndex].requiredInventory[i], -1);
+    }
+  }
+  // it should have returned from this function if it came across a 0 hence
+  // if the code gets here, it's all 1 or more
+  else {
+    addToInventoryCode(setOfCrime[buttonIndex].requiredInventory, -1);
+  }
 }
 
 // sets dates and times of crime start and finish
@@ -430,12 +469,17 @@ function generateInventoryNeededText(buttonIndex) {
   tempReturnText = "";
   // if it's empty just return nothing
   if ((setOfCrime[buttonIndex].requiredInventory == "") | (setOfCrime[buttonIndex].requiredInventory == 0)) {
-    return;
+    console.log("no need to return inventory");
+    return tempReturnText;
   }
 
   //cycle thru the array.
-  for (let i = 0; i < setOfCrime[buttonIndex].requiredInventory.length; i++) {
-    tempReturnText += getInventoryNameFromInventoryCode(setOfCrime[buttonIndex].requiredInventory[i]) + "<br>";
+  if (setOfCrime[buttonIndex].requiredInventory.length == 1) {
+    tempReturnText = getInventoryNameFromInventoryCode(setOfCrime[buttonIndex].requiredInventory);
+  } else {
+    for (let i = 0; i < setOfCrime[buttonIndex].requiredInventory.length; i++) {
+      tempReturnText += getInventoryNameFromInventoryCode(setOfCrime[buttonIndex].requiredInventory[i]) + "<br>";
+    }
   }
   //   console.log("required text");
   //   console.log(setOfCrime[buttonIndex].requiredInventory);
@@ -444,7 +488,7 @@ function generateInventoryNeededText(buttonIndex) {
 
 function generateInventoryGainedText(buttonIndex) {
   if ((setOfCrime[buttonIndex].gainedInventory == "") | (setOfCrime[buttonIndex].gainedInventory == 0)) {
-    return;
+    return "";
   }
   tempReturnText =
     "<br>Gaining you:<br><br>" +
@@ -459,7 +503,7 @@ function generateInventoryGainedText(buttonIndex) {
 function checkQuantityOfInventoryCode(inventoryCodeToCheck) {
   // in this function I cycle through the player inventory
   // and when get to that point, check and return the value
-  for (let i = 0; i > playerInventoryLength; i++) {
+  for (let i = 0; i < playerInventoryLength; i++) {
     if (inventoryCodeToCheck == playerInventory[i].inventoryCode) {
       return playerInventory[i].inventoryQuantityHeld;
     }
@@ -487,9 +531,9 @@ function getIndexOfInventoryCode(inventoryCodeToCheck) {
 }
 
 function addToInventoryCode(inventoryCodeToAddTo, inventoryItemQuantityToAdd) {
-  for (let i = 0; i > playerInventory.length; i++) {
-    if (inventoryCodeToAddTo == playerInventory[i].code) {
-      playerInventory[i].inventoryItemQuantity += inventoryItemQuantityToAdd;
+  for (let i = 0; i < playerInventoryLength; i++) {
+    if (inventoryCodeToAddTo == playerInventory[i].inventoryCode) {
+      playerInventory[i].inventoryQuantityHeld += inventoryItemQuantityToAdd;
       setInventoryCookie(inventoryCodeToAddTo);
       return 1;
     }
@@ -538,7 +582,15 @@ function inventoryTab() {
   document.getElementById("buttonAndTitleWrapperID").setAttribute("state", "inventorySelected");
   document.getElementById("invButtonID").setAttribute("state", "selected");
 
-  document.getElementById("infotextID").innerHTML = "inventory tab";
+  let tempInventoryTabText = "YOU HAVE:<br><br>";
+
+  for (let i = 0; i < playerInventoryLength; i++) {
+    if (playerInventory[i].inventoryQuantityHeld > 0) {
+      tempInventoryTabText += "" + playerInventory[i].inventoryQuantityHeld + " x " + playerInventory[i].inventoryName + "<br>";
+    }
+  }
+
+  document.getElementById("infotextID").innerHTML = tempInventoryTabText;
 }
 
 function statsTab() {
@@ -554,7 +606,6 @@ function statsTab() {
   tempStatsTabText += "&nbspLUCK: " + player.LUCK + "<br>";
   tempStatsTabText += "&nbsp&nbspINT: " + player.INT + "<br>";
   tempStatsTabText += "CHARM: " + player.CHARM + "<br>";
-  tempStatsTabText += "<br><br>BUFFS:<br>NONE";
 
   document.getElementById("infotextID").innerHTML = tempStatsTabText;
 }
@@ -620,7 +671,7 @@ function setInventoryCookie(inventoryCodeToAddTo, inventoryItemQuantityTotal) {
 }
 
 function readInventoryCookies() {
-  for (let i = 0; playerInventory.length; i++) {
+  for (let i = 0; playerInventoryLength; i++) {
     tempCookieReadout = Cookies.get("'inventoryCookie" + i + "'");
 
     if (tempCookieReadout == undefined) {

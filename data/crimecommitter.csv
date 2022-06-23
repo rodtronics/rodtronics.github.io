@@ -1,13 +1,7 @@
-buttonid,name,cost,requiredNoto,moneyEarned,notoEarned,timeToCompleteInSeconds,timeToCompleteInHours
-loit,Loitering,0,0,0,2,12,0
-skate,Skateboarding,0,10,0,5,45,0
-litt,Littering,0,2,0,1,4,0
-watch,Selling Counterfeit Watches,0,20,5,2,60,0
-baby,Candy from a Baby,0,12,0,3,28,0
-jorts,Wearing Jorts,15,17,0,-5,60,0
-xloit,Extreme Loitering,0,0,0,200,60,168
-jayw,Jaywalking,0,0,0,5,24,0
-stealc,Stealing a Car Stereo,0,50,100,30,1200,0
-walrus,Transporting a Walrus without a Licence,200,100,300,200,0,3
-scorp,Enhancing a Scorpion,150,35,200,100,0,2
-runr,Running a Red Light,0,12,0,20,60,0
+buttonid,name,cost,requiredNoto,moneyEarned,notoEarned,timeToCompleteInSeconds,timeToCompleteInHours,requiredInventory,gainedInventory,gainedInventoryMultiplier
+loit,Loitering,0,0,0,2,12,0,,,
+skate,Skateboarding,0,10,0,5,45,0,,,
+xloit,Extreme Loitering,0,0,0,200,60,168,,,
+stealw,Stealing Walrus,0,100,0,200,0,0,,,3
+walrus,Transporting a Walrus without a Licence,200,100,300,200,0,3,"[""walr""]",,
+scorp,Enhancing a Scorpion,150,35,200,100,0,2,"[""scorp""]",,
