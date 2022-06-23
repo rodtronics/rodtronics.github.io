@@ -1,7 +1,7 @@
 buttonid,name,cost,requiredNoto,moneyEarned,notoEarned,timeToCompleteInSeconds,timeToCompleteInHours,requiredInventory,gainedInventory,gainedInventoryMultiplier
-loit,Loitering,0,0,0,2,12,0,,,
-skate,Skateboarding,0,10,0,5,45,0,,,
-xloit,Extreme Loitering,0,0,0,200,60,168,,,
-stealw,Stealing Walrus,0,100,0,200,0,0,,,3
+loit,Loitering,0,0,0,2,12,0,0,,
+skate,Skateboarding,0,10,0,5,45,0,0,,
+xloit,Extreme Loitering,0,0,0,200,60,168,0,,
+stealw,Stealing Walrus,0,100,0,200,0,0,0,,3
 walrus,Transporting a Walrus without a Licence,200,100,300,200,0,3,"[""walr""]",,
 scorp,Enhancing a Scorpion,150,35,200,100,0,2,"[""scorp""]",,

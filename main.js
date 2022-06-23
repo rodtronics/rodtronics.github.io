@@ -5,7 +5,7 @@ var logOfCrimes = new Array(logLength).fill("");
 // playerNoto = 0;
 // playerMoney = 0;
 var accumDataText = "";
-versionNumber = "0.932si";
+versionNumber = "0.933si";
 versionCode = "inventory branch";
 
 //these functions are initialistion based
@@ -204,7 +204,7 @@ function refreshInfoPanel(buttonIndex) {
 
       let tempInventoryText = generateInventoryNeededText(buttonIndex);
       tempInventoryText += generateInventoryGainedText(buttonIndex);
-      newInfoText += generateGameStateDataText(buttonIndex) + tempInventoryText;
+      newInfoText += tempInventoryText + generateGameStateDataText(buttonIndex);
 
       break;
     //
