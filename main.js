@@ -5,7 +5,7 @@ var logOfCrimes = new Array(logLength).fill("");
 // playerNoto = 0;
 // playerMoney = 0;
 var accumDataText = "";
-versionNumber = "0.92si";
+versionNumber = "0.93si";
 versionCode = "inventory branch";
 
 //these functions are initialistion based
@@ -44,7 +44,7 @@ var setOfCrime = [
   new structOfCrimes("xloit", "Extreme Loitering", 0, 0, 0, 200, 60, 168, ["belt"], 0, 0),
   new structOfCrimes("stealw", "Stealing Walrus", 0, 100, 0, 200, 0, 0, 0, 0, 0),
   new structOfCrimes("walrus", "Transporting a Walrus without a Licence", 200, 100, 300, 200, 0, 3, 0, 0, 0),
-  new structOfCrimes("scorp", "Enhancing a Scorpion", 150, 35, 200, 100, 0, 2, ["scorp", "masc"], "escorp", 1),
+  new structOfCrimes("scorp", "Enhancing a Scorpion", 150, 35, 200, 100, 3, 0, ["scorp", "masc"], "escorp", 1),
 ];
 
 // struct for accumulated data (I expect to add more as time goes on)
@@ -172,7 +172,6 @@ function successfulCrime(buttonIndex) {
   gameState[buttonIndex].numberTimesCommitted += 1;
 
   addToInventoryCode(setOfCrime[buttonIndex].gainedInventory, setOfCrime[buttonIndex].gainedInventoryMultiplier);
-
   //update cookies
   setCookie(buttonIndex);
 
@@ -387,7 +386,6 @@ function commitCrime(buttonIndex) {
         if (setOfCrime[buttonIndex].requiredInventory.length > 1) {
           for (let i = 0; i < setOfCrime[buttonIndex].requiredInventory.length; i++) {
             arrayOfTempNumber[i] = checkQuantityOfInventoryCode(setOfCrime[buttonIndex].requiredInventory[i]);
-            console.log(arrayOfTempNumber[i]);
             if (arrayOfTempNumber[i] == 0) {
               document.getElementById("infotextID").innerHTML =
                 "YOU NEED<br>" + getInventoryNameFromInventoryCode(setOfCrime[buttonIndex].requiredInventory[i]);
@@ -536,8 +534,8 @@ function getIndexOfInventoryCode(inventoryCodeToCheck) {
     if (inventoryCodeToCheck == playerInventory[i].inventoryCode) {
       return i;
     }
-    return -1;
   }
+  return -1;
 }
 
 function addToInventoryCode(inventoryCodeToAddTo, inventoryItemQuantityToAdd) {
@@ -669,14 +667,16 @@ function readCookies() {
   buttonIndex = 0;
 }
 
-function setInventoryCookie(inventoryCodeToAddTo, inventoryItemQuantityTotal) {
-  inventoryIndex = getIndexOfInventoryCode();
+function setInventoryCookie(inventoryCodeToAddTo) {
+  inventoryIndex = getIndexOfInventoryCode(inventoryCodeToAddTo);
+
   if (inventoryIndex == -1) {
-    console.log("illegal inventory name requested for cookie update");
+    console.log("illegal inventory name requested for cookie update: " + inventoryCodeToAddTo);
   } else {
     cookieName = "'inventoryCookie" + inventoryIndex + "'";
-    cookieValue = inventoryItemQuantityTotal;
+    cookieValue = checkQuantityOfInventoryCode(inventoryCodeToAddTo);
     Cookies.set(cookieName, cookieValue);
+    console.log("wrote to inventory cookie: " + cookieName + " " + cookieValue);
   }
 }
 
@@ -733,9 +733,11 @@ function refreshLoop(timestamp) {
 addToLog(dayjs().format("YY.MM.DD HH:mm") + " the crimespree has begun");
 
 // get values from prior usage
-//readPlayerCookie();
+readPlayerCookie();
 
-//readCookies();
+readCookies();
+
+readInventoryCookies();
 
 // make the crime buttons
 setOfCrime.forEach(createCrimeButtons);
