@@ -5,7 +5,7 @@ var logOfCrimes = new Array(logLength).fill("");
 // playerNoto = 0;
 // playerMoney = 0;
 var accumDataText = "";
-versionNumber = "0.93si";
+versionNumber = "0.931si";
 versionCode = "inventory branch";
 
 //these functions are initialistion based
@@ -685,7 +685,7 @@ function readInventoryCookies() {
     tempCookieReadout = Cookies.get("'inventoryCookie" + i + "'");
 
     if (tempCookieReadout == undefined) {
-      console.log("no gamestate cookie for inventory index: " + cookieReadIndex);
+      console.log("no gamestate cookie for inventory index: " + "'inventoryCookie" + i + "'");
     } else {
       playerInventory[i].inventoryQuantityHeld = tempCookieReadout;
     }
