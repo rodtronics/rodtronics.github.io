@@ -1,17 +1,17 @@
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ES4EQF9S2P"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
+      window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag("js", new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-        gtag("config", "G-ES4EQF9S2P");
+      gtag("config", "G-ES4EQF9S2P");
     </script>
 
     <meta charset="UTF-8" />
@@ -33,53 +33,56 @@
     <script src="data/crimes.js"></script>
 
     <script>
-        dayjs.extend(dayjs_plugin_relativeTime);
+      dayjs.extend(dayjs_plugin_relativeTime);
     </script>
     <script>
-        dayjs.extend(dayjs_plugin_duration);
+      dayjs.extend(dayjs_plugin_duration);
     </script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="total_wrapper">
-        <div class="header_wrapper">
-            <div class="stats_banner" id="statsBannerID">notoriety 12 money $56</div>
-            <div class="criminal_status" id="criminalStatusID">criminal status:<br />ignored</div>
-            <div class="title_link_wrapper">
-                <div class="title">crime committer<br />v0.8.74 eXtreme beta<br />made by wfproductionsnz</div>
-                <div class="links">
-                    <a href="https://twitter.com/_crimecommitter" target="_blank" rel="noopener noreferrer">twitter</a><br />
-                    <a href="https://discord.gg/tvwEjcmuXM" target="_blank" rel="noopener noreferrer">discord</a>
-                </div>
-            </div>
+      <div class="header_wrapper">
+        <div class="stats_banner" id="statsBannerID">failed to load correct</div>
+        <div class="criminal_status" id="criminalStatusID"></div>
+        <div class="title_link_wrapper">
+          <div class="title" id="titleID">crime committer<br />made by wfproductionsnz</div>
+          <div class="links">
+            <a href="https://twitter.com/_crimecommitter" target="_blank" rel="noopener noreferrer">twitter</a><br />
+            <a href="https://discord.gg/tvwEjcmuXM" target="_blank" rel="noopener noreferrer">discord</a>
+          </div>
         </div>
-        <br />
+      </div>
+      <br />
 
-        <div class="main_wrapper">
-            <div class="crime_and_words_wrapper">
-                <div class="crime_wrapper" id="crimeID">
-                    <!-- this is where the crime buttons go    -->
-                </div>
-                <div class="words">this is where I am going to put words about crimes. some of the best words you've ever seen</div>
-            </div>
-
-            <div class="side_wrapper">
-                <div class="button_and_title_wrapper">
-                    <button type="button" id="buttonLocationID" state="normal">CHOOSE A CRIME</button>
-                    <div class="information_title" id="infoID"></div>
-                    <div class="information_text" id="infotextID">this is a game</div>
-                </div>
-
-                <div class="time_and_log_wrapper">
-                    <div class="like_log" id="currentTimeID"></div>
-                    <div class="small_text">disclaimer: don't commit crimes</div>
-
-                    <div class="log" id="logID">14.06.2022 13:54<br />murder was the case</div>
-                </div>
-            </div>
+      <div class="main_wrapper">
+        <div class="crime_and_words_wrapper">
+          <div class="crime_wrapper" id="crimeID">
+            <!-- this is where the crime buttons go    -->
+          </div>
+          <div class="words" id="wordsAtBottomID">this is where I am going to put words about crimes. some of the best words you've ever seen</div>
         </div>
+
+        <div class="side_wrapper" id="buttonAndTitleWrapperID" state="crimeselected">
+          <div class="button_and_title_wrapper">
+            <!-- <button type="button" id="buttonLocationID" state="normal">CHOOSE A CRIME</button> -->
+            <!-- <div class="information_title" id="infoID"></div> -->
+            <div class="invAndStatButtonWrapper">
+              <div class="invAndStatButton" id="invButtonID">INV</div>
+              <div class="invAndStatButton" id="statButtonID">STATS</div>
+            </div>
+            <div class="information_text" id="infotextID" state="crimeselected">double click to start a crime</div>
+          </div>
+
+          <div class="time_and_log_wrapper">
+            <div class="like_log" id="currentTimeID"></div>
+            <div class="small_text">disclaimer: don't commit crimes</div>
+
+            <div class="log" id="logID">14.06.2022 13:54<br />murder was the case</div>
+          </div>
+        </div>
+      </div>
     </div>
-</body>
-<script type="text/javascript" src="main.js"></script>
-
+  </body>
+  <script type="text/javascript" src="main.js"></script>
 </html>
