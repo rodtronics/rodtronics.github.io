@@ -1,4 +1,4 @@
-new structOfCrimes("buttonid","name",cost,requiredNoto,moneyEarned,notoEarned,timeToCompleteInSeconds,timeToCompleteInHours,0, 0, 0),
+new structOfCrimes("crimeID","name",cost,requiredNoto,moneyEarned,notoEarned,timeToCompleteInSeconds,timeToCompleteInHours,0, 0, 0),
 new structOfCrimes("loit","Loitering",0,0,0,2,12,0,0, 0, 0),
 new structOfCrimes("skate","Skateboarding",0,10,0,5,45,0,0, 0, 0),
 new structOfCrimes("xloit","Extreme Loitering",0,0,0,200,60,168,0, 0, 0),

@@ -1,4 +1,4 @@
-buttonid,name,cost,requiredNoto,moneyEarned,notoEarned,timeToCompleteInSeconds,timeToCompleteInHours,requiredInventory,gainedInventory,gainedInventoryMultiplier
+crimeID,name,cost,requiredNoto,moneyEarned,notoEarned,timeToCompleteInSeconds,timeToCompleteInHours,requiredInventory,gainedInventory,gainedInventoryMultiplier
 loit,Loitering,0,0,0,2,12,0,0,,
 skate,Skateboarding,0,10,0,5,45,0,0,,
 xloit,Extreme Loitering,0,0,0,200,60,168,0,,

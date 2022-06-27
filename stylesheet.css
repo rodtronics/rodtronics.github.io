@@ -1,378 +1,382 @@
 :root {
-    --background-color: black;
-    --color-A: #9400d3;
-    --color-B: #f44174;
-    --color-C: #f9dc5c;
-    --color-D: #01baef;
-    --color-D: #017fa2;
-    --color-E: #171738;
-    --color-F: #09bc8a;
-    --color-G: #8FD694;
-    --hover-color: linear-gradient(0deg, rgba(251, 141, 63, 1) 0%, rgba(252, 70, 107, 1) 100%);
-    --running-color: linear-gradient(0deg, rgba(34, 118, 195, 1) 0%, rgba(119, 202, 255, 1) 100%);
-    --complete-color: linear-gradient(0deg, rgba(195, 53, 34, 1) 0%, rgba(255, 119, 161, 1) 100%);
-    --border-color: white;
-    --stats-color: var(--color-D);
-    --inv-color: var(--color-B);
+  --background-color: black;
+  --color-A: #9400d3;
+  --color-B: #f44174;
+  --color-C: #f9dc5c;
+  --color-D: #01baef;
+  --color-D: #017fa2;
+  --color-E: #171738;
+  --color-F: #09bc8a;
+  --color-G: #8fd694;
+  --hover-color: linear-gradient(0deg, rgba(251, 141, 63, 1) 0%, rgba(252, 70, 107, 1) 100%);
+  --running-color: linear-gradient(0deg, rgba(34, 118, 195, 1) 0%, rgba(119, 202, 255, 1) 100%);
+  --complete-color: linear-gradient(0deg, rgba(195, 53, 34, 1) 0%, rgba(255, 119, 161, 1) 100%);
+  --border-color: white;
+  --stats-color: var(--color-D);
+  --inv-color: var(--color-B);
 }
 
 * {
-    font-family: "Source Code Pro", monospace;
-    text-align: left;
-    background: var(--background-color);
-    font-weight: 200;
-    /* color: #fff; */
+  font-family: "Source Code Pro", monospace;
+  text-align: left;
+  background: var(--background-color);
+  font-weight: 200;
+  /* color: #fff; */
 }
 
 h1 {
-    font-size: 20px;
-    background: none;
-    font-weight: 900;
-    line-height: 90%;
+  font-size: 20px;
+  background: none;
+  font-weight: 900;
+  line-height: 90%;
 }
 
 .total_wrapper {
-    display: flex;
-    margin: 0 auto;
-    flex-direction: column;
-    flex-grow: 0;
-    max-width: 70vw;
-    max-height: 100vh;
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  flex-grow: 0;
+  max-width: 70vw;
+  max-height: 100vh;
 }
 
 .header_wrapper {
-    display: flex;
-    flex-flow: row;
-    flex: 0 0;
-    color: #fff;
-    justify-content: space-between;
-    padding: 8px;
-    border: 2px;
-    border-color: var(--border-color);
-    border-style: solid;
-    height: 15%;
+  display: flex;
+  flex-flow: row;
+  flex: 0 0;
+  color: #fff;
+  justify-content: space-between;
+  padding: 8px;
+  border: 2px;
+  border-color: var(--border-color);
+  border-style: solid;
+  height: 15%;
 }
 
 .stats_banner {
-    font-size: 20pt;
-    letter-spacing: 2px;
-    align-items: flex-end;
-    align-content: center;
-    align-self: center;
+  font-size: 20pt;
+  letter-spacing: 2px;
+  align-items: flex-end;
+  align-content: center;
+  align-self: center;
+  color: white;
 }
 
 .criminal_status {
-    font-size: 15pt;
-    text-align: end;
-    align-self: center;
+  font-size: 15pt;
+  text-align: end;
+  align-self: center;
 }
 
 .title_link_wrapper {
-    display: flex;
-    flex-flow: row;
-    max-height: 20vh;
+  display: flex;
+  flex-flow: row;
+  max-height: 20vh;
 }
 
 .title {
-    color: var(--color-A);
-    font-size: 15pt;
-    line-height: 90%;
-    letter-spacing: 5%;
-    text-align: end;
-    text-transform: none;
-    padding-right: 10px;
-    align-self: center;
+  color: var(--color-A);
+  font-size: 15pt;
+  line-height: 90%;
+  letter-spacing: 5%;
+  text-align: end;
+  text-transform: none;
+  padding-right: 10px;
+  align-self: center;
 }
 
 .links {
-    text-transform: lowercase;
-    font-size: 10pt;
-    color: white;
-    writing-mode: vertical-lr;
-    align-self: center;
+  text-transform: lowercase;
+  font-size: 10pt;
+  color: white;
+  writing-mode: vertical-lr;
+  align-self: center;
+}
+
+a {
+  color: white;
 }
 
 .main_wrapper {
-    display: flex;
-    flex-flow: row;
-    flex: 1 100%;
-    background: var(--background-color);
-    justify-content: space-between;
-    margin: 5px;
-    gap: 2px;
-    flex-grow: 0;
-    flex-shrink: 0;
-    margin: 0 auto;
-    text-transform: uppercase;
-    height: 80vh;
+  display: flex;
+  flex-flow: row;
+  flex: 1 100%;
+  background: var(--background-color);
+  justify-content: space-between;
+  margin: 5px;
+  gap: 2px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin: 0 auto;
+  text-transform: uppercase;
+  height: 80vh;
 }
 
 .crime_and_words_wrapper {
-    display: flex;
-    flex-flow: column;
-    justify-content: space-between;
-    height: 80vh;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  height: 80vh;
 }
 
 .crime_wrapper {
-    display: flex;
-    padding: 2px;
-    flex-grow: 0;
-    margin: 2px;
-    flex-flow: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    overflow-x: hidden;
-    overflow-y: auto;
+  display: flex;
+  padding: 2px;
+  flex-grow: 0;
+  margin: 2px;
+  flex-flow: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .words {
-    padding: 25px;
-    background: var(--color-D);
-    border: 2px;
-    border-color: var(--border-color);
-    border-style: solid;
-    text-transform: lowercase;
+  padding: 25px;
+  background: var(--color-D);
+  border: 2px;
+  border-color: var(--border-color);
+  border-style: solid;
+  text-transform: lowercase;
 }
 
 .crime {
-    text-transform: uppercase;
-    display: flex;
-    width: 150px;
-    height: 80px;
-    color: #fff;
-    font-size: 15px;
-    margin: 5px;
-    padding: 8px;
-    text-align: left;
-    flex-grow: 0;
-    border: 2px;
-    border-color: var(--border-color);
-    border-style: solid;
-    line-height: 80%;
+  text-transform: uppercase;
+  display: flex;
+  width: 150px;
+  height: 80px;
+  color: #fff;
+  font-size: 15px;
+  margin: 5px;
+  padding: 8px;
+  text-align: left;
+  flex-grow: 0;
+  border: 2px;
+  border-color: var(--border-color);
+  border-style: solid;
+  line-height: 80%;
 }
-
 
 /* width */
 
 ::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
-
 
 /* Track */
 
 ::-webkit-scrollbar-track {
-    background: black;
+  background: black;
 }
-
 
 /* Handle */
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-A);
+  background: var(--color-A);
 }
-
 
 /* Handle on hover */
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-B);
+  background: var(--color-B);
 }
 
 .crime:hover {
-    background: #fb8d3f;
-    background: var(--hover-color);
-    color: #f9dc5c;
+  background: #fb8d3f;
+  background: var(--hover-color);
+  color: #f9dc5c;
 }
 
 #buttonLocationID {
-    font-size: 30px;
-    text-align: center;
-    border: 0;
-    line-height: 75%;
-    padding: 10px;
+  font-size: 30px;
+  text-align: center;
+  border: 0;
+  line-height: 75%;
+  padding: 10px;
 }
 
 [state="ready"] {
-    background: var(--background-color);
+  background: var(--background-color);
 }
 
 [state="running"] {
-    background: #2276c3;
-    background: var(--running-color);
+  background: #2276c3;
+  background: var(--running-color);
 }
 
 [state="complete"] {
-    background: #c33522;
-    background: var(--complete-color);
+  background: #c33522;
+  background: var(--complete-color);
 }
 
 [state="normal"] {
-    background: var(--color-B);
-    color: #fff;
+  background: var(--color-B);
+  color: #fff;
 }
 
 [state="alert"] {
-    background: var(--color-F);
-    color: #fff;
+  background: var(--color-F);
+  color: #fff;
 }
 
 [state="inventorySelected"] {
-    background: var(--color-B);
-    color: var(--color-E);
+  background: var(--color-B);
+  color: var(--color-E);
 }
 
 [state="statsSelected"] {
-    background: var(--color-C);
-    color: var(--color-E);
+  background: var(--color-C);
+  color: var(--color-E);
 }
 
 [state="crimeSelected"] {
-    background: var(--color-A);
-    color: white;
+  background: var(--color-A);
+  color: white;
 }
 
 .invAndStatButtonWrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .invAndStatButton {
-    user-select: none;
-    width: 50%;
-    color: var(--color-E);
-    padding: 5px;
-    font-size: 20px;
-    font-weight: 800;
-    text-align: center;
+  user-select: none;
+  width: 50%;
+  color: var(--color-E);
+  padding: 5px;
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
 }
 
 #invButtonID {
-    background: var(--inv-color);
-    border-color: var(--inv-color);
+  background: var(--inv-color);
+  border-color: var(--inv-color);
 }
 
 #statButtonID {
-    background: var(--stats-color);
-    border-color: var(--stats-color);
+  background: var(--stats-color);
+  border-color: var(--stats-color);
 }
 
 .invAndStatButton:hover {
-    color: white;
+  color: white;
 }
 
 .side_wrapper {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    width: 250px;
-    flex-shrink: 0;
-    justify-content: space-between;
-    /* background: var(--color-A); */
-    color: white;
-    margin: 0 0;
-    flex: 0 0 auto;
-    max-height: 80vh;
-}
-
-[state="inventorySelected"] {
-    background: var(--inv-color);
-    color: var(--color-E);
-}
-
-[state="statsSelected"] {
-    background: var(--stats-color);
-    color: var(--color-E);
-}
-
-[state="crimeSelected"] {
-    background: var(--color-A);
-    color: white;
-}
-
-[state="selected"] {
-    color: white;
-}
-
-[state="unselected"] {
-    color: var(--color-E);
-}
-
-[state="noticeText"] {
-    background: var(--color-G);
-    color: black;
-}
-
-.button_and_title_wrapper {
-    display: flex;
-    flex-direction: column;
-}
-
-.information_title {
-    font-size: 25pt;
-    letter-spacing: 2px;
-    /* background: var(--color-A); */
-    max-height: 10vh;
-    flex: 1 1;
-    padding: 10px;
-    text-align: right;
-    justify-content: flex-start;
-    line-height: 75%;
-    flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 250px;
+  flex-shrink: 0;
+  justify-content: space-between;
+  /* background: var(--color-A); */
+  color: white;
+  margin: 0 0;
+  flex: 0 0 auto;
+  max-height: 80vh;
 }
 
 .information_text {
-    font-size: 12pt;
-    /* background: var(--color-A); */
-    color: #fff;
-    padding: 15px;
-    justify-content: flex-start;
-    line-height: 80%;
-    flex: 0 0 auto;
-    max-height: 300px;
+  font-size: 12pt;
+  /* background: var(--color-A); */
+  color: #fff;
+  padding: 15px;
+  justify-content: flex-start;
+  line-height: 80%;
+  flex: 0 0 auto;
+  max-height: 300px;
+}
+
+[state="inventorySelected"] {
+  background: var(--inv-color);
+  /* color: var(--color-E); */
+}
+
+[state="statsSelected"] {
+  background: var(--stats-color);
+  /* color: var(--color-E); */
+}
+
+[state="crimeSelected"] {
+  background: var(--color-A);
+  color: white;
+}
+
+[state="selected"] {
+  color: white;
+}
+
+[state="unselected"] {
+  color: var(--color-E);
+}
+
+[state="noticeText"] {
+  background: var(--color-G);
+  color: var(--color-E);
+}
+
+.button_and_title_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.information_title {
+  font-size: 25pt;
+  letter-spacing: 2px;
+  /* background: var(--color-A); */
+  max-height: 10vh;
+  flex: 1 1;
+  padding: 10px;
+  text-align: right;
+  justify-content: flex-start;
+  line-height: 75%;
+  flex: 0 0 auto;
 }
 
 .time_and_log_wrapper {
-    /* display: flex; */
-    flex-direction: column;
+  /* display: flex; */
+  flex-direction: column;
+  color: white;
 }
 
 .small_text {
-    font-size: 10px;
-    background: var(--color-A);
-    text-align: center;
-    flex: 0 0 auto;
+  font-size: 10px;
+  background: var(--color-A);
+  text-align: center;
+  flex: 0 0 auto;
 }
 
 .words {
-    display: flex;
+  display: flex;
+  color: white;
+  max-width: 100vh;
 }
 
 .like_log {
-    display: flex;
-    flex-direction: row;
-    text-transform: lowercase;
-    /* align-self: center; */
-    border-style: solid;
-    border-color: var(--border-color);
-    border-width: 2px;
-    padding: 2px;
+  display: flex;
+  flex-direction: row;
+  text-transform: lowercase;
+  /* align-self: center; */
+  border-style: solid;
+  border-color: var(--border-color);
+  border-width: 2px;
+  padding: 2px;
 }
 
 .log {
-    display: flex;
-    background-color: var(--background-color);
-    border: 2px;
-    border-color: var(--border-color);
-    border-style: solid;
-    flex: 1 0;
-    color: #fff;
-    text-transform: none;
-    padding: 5px;
-    overflow-y: scroll;
-    height: 150px;
-    flex-grow: 0;
-    font-size: 10px;
+  display: flex;
+  background-color: var(--background-color);
+  border: 2px;
+  border-color: var(--border-color);
+  border-style: solid;
+  flex: 1 0;
+  color: #fff;
+  text-transform: none;
+  padding: 5px;
+  overflow-y: scroll;
+  height: 150px;
+  flex-grow: 0;
+  font-size: 10px;
 }
