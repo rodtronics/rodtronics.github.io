@@ -41,12 +41,13 @@ function structOfCrimes(
 }
 // this creates an array "setOfCrime" that contains different crimes
 var setOfCrime = [
-  new structOfCrimes("loit", "Loitering", 0, 0, 0, 2, 12, 0, 0, 0, 0),
+  new structOfCrimes("loit", "Loitering", 0, 0, 0, 2, 12, 0, 0, 0),
   new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0, ["skate"], 0, 0),
-  new structOfCrimes("xloit", "Extreme Loitering", 0, 0, 0, 200, 60, 168, ["belt"], 0, 0),
-  new structOfCrimes("stealw", "Stealing Walrus", 0, 100, 0, 200, 0, 0, 0, 0, 0),
-  new structOfCrimes("walrus", "Transporting a Walrus without a Licence", 200, 100, 300, 200, 0, 3, 0, 0, 0),
-  new structOfCrimes("scorp", "Enhancing a Scorpion", 150, 35, 200, 100, 3, 0, ["scorp", "masc"], "escorp", 1),
+  new structOfCrimes("xloit", "Extreme Loitering", 0, 0, 0, 12.5, 60, 168, 0, 0, 0),
+  new structOfCrimes("stealw", "Stealing Walrus", 0, 100, 0, 100, 0, 1, ["steal"], "walr", 3),
+  new structOfCrimes("walrus", "Transporting a Walrus without a Licence", 200, 100, 300, 250, 0, 3, ["walr"], 0, 0),
+  new structOfCrimes("undies", "Stealing Brown Underwear", 0, 200, 0, 12, 60 * 10, 0, ["steal", "trap"], "undies", 1),
+  new structOfCrimes("scarek", "Scare a young kid", 0, 50, 0, 30, 60 * 5, 0, 0, "skate", 1),
 ];
 
 const wordsAboutCrime = {

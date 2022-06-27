@@ -74,6 +74,22 @@ h1 {
   max-height: 20vh;
 }
 
+.about_title {
+  /* color: black; */
+  color: var(--color-B);
+  font-weight: 1000;
+  font-size: 20px;
+  /* background: linear-gradient(0deg, rgba(255, 0, 0, 1) 0%, rgba(249, 255, 0, 1) 100%); */
+}
+
+.about {
+  /* color: black; */
+  color: var(--color-A);
+  font-weight: 400;
+  font-size: 15px;
+  /* background: linear-gradient(0deg, rgba(255, 0, 0, 1) 0%, rgba(249, 255, 0, 1) 100%); */
+}
+
 .title {
   color: var(--color-A);
   font-size: 15pt;
@@ -91,6 +107,7 @@ h1 {
   color: white;
   writing-mode: vertical-lr;
   align-self: center;
+  text-align: center;
 }
 
 a {
@@ -138,6 +155,7 @@ a {
   border-color: var(--border-color);
   border-style: solid;
   text-transform: lowercase;
+  background: radial-gradient(circle, rgba(0, 154, 196, 1) 0%, rgba(1, 127, 162, 1) 100%);
 }
 
 .crime {

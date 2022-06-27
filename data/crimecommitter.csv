@@ -1,7 +1,8 @@
-crimeID,name,cost,requiredNoto,moneyEarned,notoEarned,timeToCompleteInSeconds,timeToCompleteInHours,requiredInventory,gainedInventory,gainedInventoryMultiplier
-loit,Loitering,0,0,0,2,12,0,0,,
-skate,Skateboarding,0,10,0,5,45,0,0,,
-xloit,Extreme Loitering,0,0,0,200,60,168,0,,
-stealw,Stealing Walrus,0,100,0,200,0,0,0,,3
-walrus,Transporting a Walrus without a Licence,200,100,300,200,0,3,"[""walr""]",,
-scorp,Enhancing a Scorpion,150,35,200,100,0,2,"[""scorp""]",,
+buttonid,name,cost,required Noto,money Earned,noto Earned,time To Complete In Seconds,time To Complete In Hours,required Inventory,gained Inventory,gained Inventory Multiplier
+loit,Loitering,0,0,0,2,12,0,,,
+skate,Skateboarding,0,10,0,5,45,0,"[""skate""]",,
+xloit,Extreme Loitering,0,0,0,12.5,60,168,,,
+stealw,Stealing Walrus,0,100,0,100,0,1,"[""steal""]",walr,3
+walrus,Transporting a Walrus without a Licence,200,100,300,250,0,3,"[""walr""]",,
+undies,Stealing Brown Underwear,0,200,0,12,60*10,0,"[""steal"",""trap""]",undies,1
+scarek,Scare a young kid,0,50,0,30,60*5,0,,skate,1
