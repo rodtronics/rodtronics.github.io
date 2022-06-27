@@ -7,7 +7,7 @@
     --color-D: #017fa2;
     --color-E: #171738;
     --color-F: #09bc8a;
-    --color-G: #CC2936;
+    --color-G: #8FD694;
     --hover-color: linear-gradient(0deg, rgba(251, 141, 63, 1) 0%, rgba(252, 70, 107, 1) 100%);
     --running-color: linear-gradient(0deg, rgba(34, 118, 195, 1) 0%, rgba(119, 202, 255, 1) 100%);
     --complete-color: linear-gradient(0deg, rgba(195, 53, 34, 1) 0%, rgba(255, 119, 161, 1) 100%);
@@ -20,14 +20,15 @@
     font-family: "Source Code Pro", monospace;
     text-align: left;
     background: var(--background-color);
-    font-weight: 400;
-    color: #fff;
+    font-weight: 200;
+    /* color: #fff; */
 }
 
 h1 {
     font-size: 20px;
     background: none;
     font-weight: 900;
+    line-height: 90%;
 }
 
 .total_wrapper {
@@ -86,7 +87,7 @@ h1 {
 .links {
     text-transform: lowercase;
     font-size: 10pt;
-    color: var(--color-B);
+    color: white;
     writing-mode: vertical-lr;
     align-self: center;
 }
@@ -301,7 +302,7 @@ h1 {
 
 [state="noticeText"] {
     background: var(--color-G);
-    color: white;
+    color: black;
 }
 
 .button_and_title_wrapper {
@@ -323,7 +324,7 @@ h1 {
 }
 
 .information_text {
-    font-size: 15pt;
+    font-size: 12pt;
     /* background: var(--color-A); */
     color: #fff;
     padding: 15px;

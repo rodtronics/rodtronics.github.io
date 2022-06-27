@@ -5,8 +5,9 @@ var logOfCrimes = new Array(logLength).fill("");
 // playerNoto = 0;
 // playerMoney = 0;
 var accumDataText = "";
-versionNumber = "0.934si";
+versionNumber = "0.935si";
 versionCode = "inventory branch";
+noticeState = false;
 
 //these functions are initialistion based
 
@@ -150,6 +151,8 @@ function doubleClickOnCrimeButton(buttonIndex) {
 // this function is called when a crime button is clicked
 // and largely makes sure the info panel is relevant
 function clickOnCrimeButton(buttonIndex) {
+    noticeState = false;
+
     // set the global button index
     globalButtonIndex = buttonIndex;
     // first off, if they've clicked on it because the crime was ready to reap rewards
@@ -180,21 +183,73 @@ function successfulCrime(buttonIndex) {
     // refresh the noto requireds
     setOfCrime.forEach(checkNotoRequired);
     //updateCriminalStatus();
-    noticeHTML = "YOU JUST GOT<br>" +
+    noticeHTML = "YOU JUST GOT:<br><br>" +
         setOfCrime[buttonIndex].notoEarned + " N<br>" +
         setOfCrime[buttonIndex].moneyEarned + " $<br>";
     noticeHTML += generateInventoryGainedText(buttonIndex);
 
     // addToLog(noticeHTML);
-    // displayNotice(noticeHTML);
+    displayNotice(noticeHTML);
     // console.log(noticeHTML);
 }
 
 function refreshInfoPanel(buttonIndex) {
+    if (noticeState == true) {
+        return;
+    }
+    deselectInventoryAndStats();
+    //
+    document.getElementById("infotextID").setAttribute("state", "crimeSelected");
+    document.getElementById("buttonAndTitleWrapperID").setAttribute("state", "crimeSelected");
+
+    var newInfoText = "";
+    var endInfoText = "";
+
+    // initially check if it's still locked
+    if (gameState[buttonIndex].state == 3) {
+        newInfoText = setOfCrime[buttonIndex].requiredNoto + " NOTORIETY required<br>TO UNLOCK";
+    } else {
+        newInfoText = "<h1>" + setOfCrime[buttonIndex].name + "</h1><br>";
+
+        switch (gameState[buttonIndex].state) {
+            // state 0 means good to go
+            case 1:
+                newInfoText += "in progress<br><br>";
+                break;
+            case 2:
+                newInfoText += "completed<br><br>";
+                break;
+        }
+
+
+        newInfoText += "<br>REQUIRED:<br><br>" + setOfCrime[buttonIndex].requiredNoto + " N<br>";
+        if (setOfCrime[buttonIndex].cost > 0) {
+            newInfoText += setOfCrime[buttonIndex].cost + " $<br>";
+        }
+        // start the text that discusses needed inventory
+        let tempInventoryText = generateInventoryNeededText(buttonIndex);
+        let tempInventoryGainedText = generateInventoryGainedText(buttonIndex);
+        if (tempInventoryGainedText != "") {
+            tempInventoryText += "<br><br>gaining you:<br><br>" + tempInventoryGainedText;
+        }
+        // newInfoText += "<br>";
+        newInfoText += tempInventoryText;
+
+
+    }
+    document.getElementById("infotextID").innerHTML = newInfoText;
+
+}
+
+function deselectInventoryAndStats() {
     // unselect other buttons
     document.getElementById("statButtonID").setAttribute("state", "uselected");
     document.getElementById("invButtonID").setAttribute("state", "uselected");
+}
 
+function XrefreshInfoPanel(buttonIndex) {
+
+    deselectInventoryAndStats();
     //
     document.getElementById("infotextID").setAttribute("state", "crimeSelected");
     document.getElementById("buttonAndTitleWrapperID").setAttribute("state", "crimeSelected");
@@ -213,7 +268,10 @@ function refreshInfoPanel(buttonIndex) {
             }
 
             let tempInventoryText = generateInventoryNeededText(buttonIndex);
-            tempInventoryText += "<br><br>gaining you:<br><br>" + generateInventoryGainedText(buttonIndex);
+            let tempInventoryGainedText = generateInventoryGainedText(buttonIndex);
+            if (tempInventoryGainedText != "") {
+                tempInventoryText += "<br><br>gaining you:<br><br>" + generateInventoryGainedText(buttonIndex);
+            }
             // newInfoText += "<br>";
             newInfoText += tempInventoryText;
             //newInfoText += generateGameStateDataText(buttonIndex);
@@ -596,6 +654,8 @@ function updateCriminalStatus() {
 }
 
 function inventoryTab() {
+    noticeState = false;
+
     //unselect other button
     document.getElementById("statButtonID").setAttribute("state", "uselected");
 
@@ -615,6 +675,8 @@ function inventoryTab() {
 }
 
 function statsTab() {
+    noticeState = false;
+
     //unselect other button
     document.getElementById("invButtonID").setAttribute("state", "uselected");
 
@@ -632,8 +694,11 @@ function statsTab() {
 }
 
 function displayNotice(noticeHTML) {
-    document.getElementById("infotextID").setAttribute("state", "inventorySelected");
-    document.getElementById("infotextID").innerHTML = noticeHTML;
+    document.getElementById("buttonAndTitleWrapperID").setAttribute("state", "noticeText");
+    document.getElementById("infotextID").setAttribute("state", "noticeText");
+    document.getElementById("infotextID").innerHTML = "<h1>" + noticeHTML + "</h1>";
+
+    noticeState = true;
 }
 
 
