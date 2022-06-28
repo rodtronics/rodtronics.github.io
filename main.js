@@ -5,7 +5,7 @@ var logOfCrimes = new Array(logLength).fill("");
 // playerNoto = 0;
 // playerMoney = 0;
 var accumDataText = "";
-versionNumber = "v0.94";
+versionNumber = "v0.95";
 versionCode = "uncle beta";
 noticeState = false;
 override = false;
@@ -41,13 +41,19 @@ function structOfCrimes(
 }
 // this creates an array "setOfCrime" that contains different crimes
 var setOfCrime = [
-  new structOfCrimes("loit", "Loitering", 0, 0, 0, 2, 12, 0, 0, 0),
-  new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0, ["skate"], 0, 0),
-  new structOfCrimes("xloit", "Extreme Loitering", 0, 0, 0, 12.5, 60, 168, 0, 0, 0),
-  new structOfCrimes("stealw", "Stealing Walrus", 0, 100, 0, 100, 0, 1, ["steal"], "walr", 3),
-  new structOfCrimes("walrus", "Transporting a Walrus without a Licence", 200, 100, 300, 250, 0, 3, ["walr"], 0, 0),
-  new structOfCrimes("undies", "Stealing Brown Underwear", 0, 200, 0, 12, 60 * 10, 0, ["steal", "trap"], "undies", 1),
-  new structOfCrimes("scarek", "Scare a young kid", 0, 50, 0, 30, 60 * 5, 0, 0, "skate", 1),
+  new structOfCrimes("loit", "Loitering", 0, 0, 0, 2, 5, 0, [], "", 0),
+  new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 5, 0, ["skate"], "", 0),
+  new structOfCrimes("xloit", "Extreme Loitering", 0, 0, 0, 12.5, 5, 168, [], "", 0),
+  new structOfCrimes("stealw", "Stealing Walrus", 0, 100, 0, 100, 5, 1, ["thiefk"], "walr", 3),
+  new structOfCrimes("walrus", "Transporting a Walrus without a Licence", 200, 100, 300, 250, 5, 3, ["walr"], "", 0),
+  new structOfCrimes("undies", "Stealing Brown Underwear", 0, 200, 0, 12, 5, 0, ["steal", "trap"], "undies", 1),
+  new structOfCrimes("scarek", "Scare a young kid", 0, 50, 0, 30, 5, 0, [], "skate", 1),
+  new structOfCrimes("bagofs", "Light a bag of shit on fire", 12, 150, 0, 300, 5, 0, ["papbag", "lighter", "dogshit"], "", 0),
+  new structOfCrimes("dogshit", "Clean up some dog shit", 0, 20, 0, 0, 5, 0, 0, "dogshit", 1),
+  new structOfCrimes("buytheif", "Buy a theif kit", 200, 50, 0, 0, 5, 0, 0, "thiefk", 1),
+  new structOfCrimes("stealbag", "Steal a paper bag", 0, 30, 0, 0, 5, 0, ["thiefk"], "papbag", 1),
+  new structOfCrimes("stealpurse", "Steal a rich ladies purse", 0, 40, 78, 12, 5, 0, ["thiefk"], "lighter", 1),
+  new structOfCrimes("stealthief", "Steal a thief kit", 20, 50, 0, 4, 2, 0, ["thiefk"], "thiefk", 3),
 ];
 
 const wordsAboutCrime = {
@@ -85,15 +91,13 @@ function structOfPlayer(playerNoto, playerMoney, playerSTR, playerLUCK, playerIN
   this.CHARM = playerCHARM;
 }
 
-var player = new structOfPlayer(50, 500, 0, 0, 0, 0);
+// this is where you put in start values
+var player = new structOfPlayer(500000, 500000, 0, 0, 0, 0);
 
 var playerInventory = [
   new structOfInventoryItems("cam", "Big Camera", 0),
-  new structOfInventoryItems("skate", "Skateboard", 0),
-
   new structOfInventoryItems("belt", "Brown Leather Belt", 1),
-  new structOfInventoryItems("scorp", "Sporpion", 1),
-  new structOfInventoryItems("escorp", "Enhanced Scorpion", 0),
+  new structOfInventoryItems("scorp", "Sporpion", 0),
   new structOfInventoryItems("bag", "Cloth Bag", 0),
   new structOfInventoryItems("lockp", "Lock Picking Set", 0),
   new structOfInventoryItems("knife", "Big Knife", 0),
@@ -101,7 +105,17 @@ var playerInventory = [
   new structOfInventoryItems("prot", "Protractor", 0),
   new structOfInventoryItems("uran", "Uranium", 0),
   new structOfInventoryItems("hazm", "Hazmat Suit", 0),
-  new structOfInventoryItems("masc", "Mascara", 1),
+  new structOfInventoryItems("masc", "Mascara", 0),
+  new structOfInventoryItems("thiefk", "Thief Kit", 5),
+  new structOfInventoryItems("shoes", "Brown Leather Shoes", 1),
+  new structOfInventoryItems("pants", "Brown Leather Pants", 1),
+  new structOfInventoryItems("shirt", "Brown Leather Shirt", 1),
+  new structOfInventoryItems("undies", "Brown Leather Undies", 0),
+  new structOfInventoryItems("trap", "All Purpose Trap", 0),
+  new structOfInventoryItems("papbag", "Brown Paper Bag", 0),
+  new structOfInventoryItems("lighter", "Cigarette Lighter", 0),
+  new structOfInventoryItems("dogshit", "Dog Shit", 0),
+  new structOfInventoryItems("skate", "Skateboard", 0),
   new structOfInventoryItems("walr", "Walrus", 0),
 ];
 var playerInventoryLength = playerInventory.length;
@@ -248,9 +262,15 @@ function refreshInfoPanel(buttonIndex) {
       tempInventoryText += "<br><br>used:<br><br>";
     }
     tempInventoryText += generateInventoryNeededText(buttonIndex);
-    let tempInventoryGainedText = generateInventoryGainedText(buttonIndex);
+
+    let tempInventoryGainedText = "";
+    if (setOfCrime[buttonIndex].moneyEarned > 0) {
+      tempInventoryGainedText += setOfCrime[buttonIndex].moneyEarned + " $<br>";
+    }
+
+    tempInventoryGainedText += generateInventoryGainedText(buttonIndex);
     if (tempInventoryGainedText != "") {
-      tempInventoryText += "<br><br>gaining you:<br><br>" + tempInventoryGainedText;
+      tempInventoryText += "<br><br><br>gaining you:<br><br>" + tempInventoryGainedText;
     }
     // newInfoText += "<br>";
     newInfoText += tempInventoryText;
@@ -362,6 +382,7 @@ function refreshSingleButton(structOfCrimes, buttonIndex) {
       break;
     // case 3 means not enough notoriety to see
     case 3:
+      document.getElementById(setOfCrime[buttonIndex].crimeID).setAttribute("state", "locked");
       refreshedButtonText = "COMMIT MORE CRIME";
   }
   document.getElementById(setOfCrime[buttonIndex].crimeID).innerHTML = refreshedButtonText;
@@ -650,7 +671,7 @@ function addToLog(text) {
 }
 
 function refreshBanner() {
-  updatedBannerHTML = player.noto + " N<br>" + player.money + " $";
+  updatedBannerHTML = player.noto.toLocaleString("en-US") + " N<br>" + player.money.toLocaleString("en-US") + " $";
   document.getElementById("statsBannerID").innerHTML = updatedBannerHTML;
 }
 
@@ -660,7 +681,8 @@ function updateWordsAtBottom(buttonIndex, override, innerHTML) {
     document.getElementById("wordsAtBottomID").innerHTML = innerHTML;
   } else {
     if (gameState[buttonIndex].numberTimesCommitted == 0) {
-      document.getElementById("wordsAtBottomID").innerHTML = setOfCrime[buttonIndex].name;
+      // document.getElementById("wordsAtBottomID").innerHTML = setOfCrime[buttonIndex].name;
+      document.getElementById("wordsAtBottomID").innerHTML = "you haven't done this before";
     } else {
       tempWords = wordsAboutCrime[setOfCrime[buttonIndex].crimeID];
       if (tempWords == undefined) {

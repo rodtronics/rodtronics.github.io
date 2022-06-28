@@ -8,9 +8,24 @@
   --color-E: #171738;
   --color-F: #09bc8a;
   --color-G: #8fd694;
+  --color-H: #333333;
   --hover-color: linear-gradient(0deg, rgba(251, 141, 63, 1) 0%, rgba(252, 70, 107, 1) 100%);
+
   --running-color: linear-gradient(0deg, rgba(34, 118, 195, 1) 0%, rgba(119, 202, 255, 1) 100%);
+  --running-color: rgba(34, 118, 195, 1);
+  --running-color: radial-gradient(circle, rgba(49, 122, 255, 1) 0%, rgba(43, 110, 232, 1) 100%);
+  --running-color: radial-gradient(circle, rgba(38, 132, 218, 1) 0%, rgba(34, 118, 195, 1) 100%);
+
   --complete-color: linear-gradient(0deg, rgba(195, 53, 34, 1) 0%, rgba(255, 119, 161, 1) 100%);
+  --complete-color: linear-gradient(
+    0deg,
+    rgba(255, 199, 135, 1) 0%,
+    rgba(180, 84, 0, 1) 30%,
+    rgba(113, 56, 0, 1) 35%,
+    rgba(255, 255, 255, 1) 36%,
+    rgba(0, 155, 255, 1) 100%
+  );
+
   --border-color: white;
   --stats-color: var(--color-D);
   --inv-color: var(--color-B);
@@ -202,6 +217,7 @@ a {
 .crime:hover {
   background: #fb8d3f;
   background: var(--hover-color);
+
   color: #f9dc5c;
 }
 
@@ -225,6 +241,9 @@ a {
 [state="complete"] {
   background: #c33522;
   background: var(--complete-color);
+  /* color: var(--color-B); */
+  color: black;
+  font-weight: 800;
 }
 
 [state="normal"] {
@@ -250,6 +269,14 @@ a {
 [state="crimeSelected"] {
   background: var(--color-A);
   color: white;
+}
+
+[state="locked"] {
+  color: var(--color-H);
+}
+
+[state="unlocked"] {
+  color: var(--color-H);
 }
 
 .invAndStatButtonWrapper {

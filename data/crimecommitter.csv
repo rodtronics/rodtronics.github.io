@@ -1,8 +1,14 @@
-buttonid,name,cost,required Noto,money Earned,noto Earned,time To Complete In Seconds,time To Complete In Hours,required Inventory,gained Inventory,gained Inventory Multiplier
-loit,Loitering,0,0,0,2,12,0,,,
-skate,Skateboarding,0,10,0,5,45,0,"[""skate""]",,
-xloit,Extreme Loitering,0,0,0,12.5,60,168,,,
-stealw,Stealing Walrus,0,100,0,100,0,1,"[""steal""]",walr,3
-walrus,Transporting a Walrus without a Licence,200,100,300,250,0,3,"[""walr""]",,
-undies,Stealing Brown Underwear,0,200,0,12,60*10,0,"[""steal"",""trap""]",undies,1
-scarek,Scare a young kid,0,50,0,30,60*5,0,,skate,1
+buttonID,name,cost,required Noto,money Earned,noto Earned,time To Complete In Seconds,time To Complete In Hours,required Inventory,gained Inventory,gained Inventory Multiplier
+loit,Loitering,0,0,0,2,5,0,[],,0
+skate,Skateboarding,0,10,0,5,5,0,"[""skate""]",,0
+xloit,Extreme Loitering,0,0,0,12.5,5,168,[],,0
+stealw,Stealing Walrus,0,100,0,100,5,1,"[""thiefk""]",walr,3
+walrus,Transporting a Walrus without a Licence,200,100,300,250,5,3,"[""walr""]",,0
+undies,Stealing Brown Underwear,0,200,0,12,5,0,"[""steal"",""trap""]",undies,1
+scarek,Scare a young kid,0,50,0,30,5,0,[],skate,1
+bagofs,Light a bag of shit on fire,12,150,0,300,5,0,"[""papbag"",""lighter"",""dogshit""]",,0
+dogshit,Clean up some dog shit,0,20,0,0,5,0,,dogshit,1
+buytheif,Buy a theif kit,200,50,0,0,5,0,,thiefk,1
+stealbag,Steal a paper bag,0,30,0,0,5,0,"[""thiefk""]",papbag,1
+stealpurse,Steal a rich ladies purse,0,40,78,12,5,0,"[""thiefk""]",lighter,1
+stealthief,Steal a thief kit,20,50,0,4,2,0,"[""thiefk""]",thiefk,3
