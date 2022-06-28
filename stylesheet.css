@@ -332,6 +332,7 @@ a {
   line-height: 80%;
   flex: 0 0 auto;
   max-height: 300px;
+  overflow-y: hidden;
 }
 
 [state="inventorySelected"] {

@@ -200,14 +200,9 @@ function successfulCrime(buttonIndex) {
   player.noto += setOfCrime[buttonIndex].notoEarned;
   player.money += setOfCrime[buttonIndex].moneyEarned;
   addToLogText =
-    setOfCrime[buttonIndex].name +
-    " committed<br>you got<br>" +
-    setOfCrime[buttonIndex].notoEarned +
-    " N <br>" +
-    setOfCrime[buttonIndex].moneyEarned +
-    " $<br>";
-  addToLogText += generateInventoryGainedText(buttonIndex);
-  addToLog(addToLogText + "<br>");
+    setOfCrime[buttonIndex].name + " committed<br>you got<br>" + setOfCrime[buttonIndex].notoEarned + " N <br>" + setOfCrime[buttonIndex].moneyEarned + " $";
+  // addToLogText += generateInventoryGainedText(buttonIndex);
+  addToLog(addToLogText);
   // set the crime back to ready
   gameState[buttonIndex].state = 0;
   //update accumulated data
@@ -672,9 +667,9 @@ function addToLog(text) {
   // build new log text
   newLogText = "";
   for (logAddIndex = 0; logAddIndex < logLength + 1; logAddIndex++) {
-    newLogText = newLogText + "*-" + logOfCrimes[logAddIndex] + "<br>";
+    newLogText = newLogText + "<br>*-" + logOfCrimes[logAddIndex];
   }
-  document.getElementById("logID").innerHTML = newLogText;
+  // document.getElementById("logID").innerHTML = newLogText;
 }
 
 function refreshBanner() {
@@ -743,13 +738,13 @@ function statsTab() {
   document.getElementById("buttonAndTitleWrapperID").setAttribute("state", "statsSelected");
   document.getElementById("statButtonID").setAttribute("state", "selected");
 
-  let tempStatsTabText = "";
-  tempStatsTabText += "&nbsp&nbspSTR: " + player.STR + "<br>";
-  tempStatsTabText += "&nbspLUCK: " + player.LUCK + "<br>";
-  tempStatsTabText += "&nbsp&nbspINT: " + player.INT + "<br>";
-  tempStatsTabText += "CHARM: " + player.CHARM + "<br>";
+  // let tempStatsTabText = "";
+  // tempStatsTabText += "&nbsp&nbspSTR: " + player.STR + "<br>";
+  // tempStatsTabText += "&nbspLUCK: " + player.LUCK + "<br>";
+  // tempStatsTabText += "&nbsp&nbspINT: " + player.INT + "<br>";
+  // tempStatsTabText += "CHARM: " + player.CHARM + "<br>";
 
-  document.getElementById("infotextID").innerHTML = tempStatsTabText + "<br>these dont work and might never";
+  document.getElementById("infotextID").innerHTML = newLogText;
 }
 
 function displayNotice(noticeHTML) {
@@ -805,8 +800,11 @@ function readCookies() {
       gameState[cookieReadIndex].datetimeCrimeStarted = parseInt(arrayFromTempCookieReadout[3]);
     }
   }
-  newLogText = Cookies.get("log");
-  document.getElementById("logID").innerHTML = newLogText;
+  tempNewLogText = Cookies.get("log");
+  if (tempNewLogText != undefined) {
+    newLogText = tempNewLogText;
+  }
+  // document.getElementById("logID").innerHTML = newLogText;
   buttonIndex = 0;
 }
 
