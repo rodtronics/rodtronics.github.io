@@ -1,3 +1,5 @@
+// const CSV = require("./scripts/csv");
+
 //globals
 var globalButtonIndex = 0;
 const logLength = 20;
@@ -5,7 +7,7 @@ var logOfCrimes = new Array(logLength).fill("");
 // playerNoto = 0;
 // playerMoney = 0;
 var accumDataText = "";
-versionNumber = "v0.95";
+versionNumber = "v0.951";
 versionCode = "uncle beta";
 noticeState = false;
 override = false;
@@ -44,7 +46,7 @@ var setOfCrime = [
   new structOfCrimes("loit", "Loitering", 0, 0, 0, 2, 5, 0, [], "", 0),
   new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 5, 0, ["skate"], "", 0),
   new structOfCrimes("xloit", "Extreme Loitering", 0, 0, 0, 12.5, 5, 168, [], "", 0),
-  new structOfCrimes("stealw", "Stealing Walrus", 0, 100, 0, 100, 5, 1, ["thiefk"], "walr", 3),
+  new structOfCrimes("stealw", "Stealing Walrus", 0, 100, 0, 100, 5, 0, ["thiefk"], "walr", 3),
   new structOfCrimes("walrus", "Transporting a Walrus without a Licence", 200, 100, 300, 250, 5, 3, ["walr"], "", 0),
   new structOfCrimes("undies", "Stealing Brown Underwear", 0, 200, 0, 12, 5, 0, ["steal", "trap"], "undies", 1),
   new structOfCrimes("scarek", "Scare a young kid", 0, 50, 0, 30, 5, 0, [], "skate", 1),
@@ -57,11 +59,16 @@ var setOfCrime = [
 ];
 
 const wordsAboutCrime = {
-  loit: "Loitering is as old as time. Charles Darwin wrote about it in the Origin of Species. a crime used by police across the globe",
+  loit: "Loitering is as old as time. Charles Darwin wrote about it in the Origin of Species. a crime used by police across the globe to oppress.",
   skate:
     "Skateboarding is an artform. an artform with slabs of wood and wheels and if you can do it you're basically cool. if you can't? good luck lol you'll need it",
   xloit: "you waited a very long time for this, and you had no idea how disappointing it was going to be",
   scorp: "scorpions weren't meant for this, and you can tell it's sad. however, it is a killing machine. perhaps it will come in handy one day",
+  stealw:
+    "you didn't think it was going to be possible, but when you backed the truck up to the local marine park, the dude we were paying to smuggle a walrus gave you three! what the hell are you going to do with three of these sons of bitches",
+  scarek:
+    "so this kid is eating his lunch and you tell him to put the food down and walk away because you were trying to eat his food but he got scared because of how you look and dropped his skateboard",
+  walrus: "your cousin needs another walrus but he lives over state lines, ",
 };
 // struct for accumulated data (I expect to add more as time goes on)
 function structOfGameState(state, numberTimesCommitted, datetimeCrimeWillEnd, datetimeCrimeStarted) {
@@ -742,7 +749,7 @@ function statsTab() {
   tempStatsTabText += "&nbsp&nbspINT: " + player.INT + "<br>";
   tempStatsTabText += "CHARM: " + player.CHARM + "<br>";
 
-  document.getElementById("infotextID").innerHTML = tempStatsTabText;
+  document.getElementById("infotextID").innerHTML = tempStatsTabText + "<br>these dont work and might never";
 }
 
 function displayNotice(noticeHTML) {
