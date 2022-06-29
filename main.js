@@ -7,8 +7,8 @@ var logOfCrimes = new Array(logLength).fill("");
 // playerNoto = 0;
 // playerMoney = 0;
 var accumDataText = "";
-versionNumber = "v0.951";
-versionCode = "uncle beta";
+versionNumber = "v0.952";
+versionCode = "beta";
 noticeState = false;
 override = false;
 
@@ -43,19 +43,26 @@ function structOfCrimes(
 }
 // this creates an array "setOfCrime" that contains different crimes
 var setOfCrime = [
-  new structOfCrimes("loit", "Loitering", 0, 0, 0, 2, 5, 0, [], "", 0),
-  new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 5, 0, ["skate"], "", 0),
-  new structOfCrimes("xloit", "Extreme Loitering", 0, 0, 0, 12.5, 5, 168, [], "", 0),
-  new structOfCrimes("stealw", "Stealing Walrus", 0, 100, 0, 100, 5, 0, ["thiefk"], "walr", 3),
-  new structOfCrimes("walrus", "Transporting a Walrus without a Licence", 200, 100, 300, 250, 5, 3, ["walr"], "", 0),
-  new structOfCrimes("undies", "Stealing Brown Underwear", 0, 200, 0, 12, 5, 0, ["steal", "trap"], "undies", 1),
-  new structOfCrimes("scarek", "Scare a young kid", 0, 50, 0, 30, 5, 0, [], "skate", 1),
-  new structOfCrimes("bagofs", "Light a bag of shit on fire", 12, 150, 0, 300, 5, 0, ["papbag", "lighter", "dogshit"], "", 0),
-  new structOfCrimes("dogshit", "Clean up some dog shit", 0, 20, 0, 0, 5, 0, 0, "dogshit", 1),
-  new structOfCrimes("buytheif", "Buy a theif kit", 200, 50, 0, 0, 5, 0, 0, "thiefk", 1),
-  new structOfCrimes("stealbag", "Steal a paper bag", 0, 30, 0, 0, 5, 0, ["thiefk"], "papbag", 1),
-  new structOfCrimes("stealpurse", "Steal a rich ladies purse", 0, 40, 78, 12, 5, 0, ["thiefk"], "lighter", 1),
-  new structOfCrimes("stealthief", "Steal a thief kit", 20, 50, 0, 4, 2, 0, ["thiefk"], "thiefk", 3),
+  new structOfCrimes("loit", "Loitering", 0, 0, 0, 4, 6, 0, [], "", 0),
+  new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0, ["skate"], "", 0),
+  new structOfCrimes("xloit", "Extreme Loitering", 0, 0, 0, 60, 11, 168, [], "loitb", 1),
+  new structOfCrimes("stealw", "Stealing Walrus", 0, 100, 0, 100, 0, 1, ["thiefk"], "walr", 3),
+  new structOfCrimes("walrus", "Transporting a Walrus without a Licence", 200, 100, 300, 50, 0, 3, ["walr"], "", 0),
+  new structOfCrimes("undies", "Stealing Brown Underwear", 0, 200, 0, 12, 300, 0, ["steal", "trap"], "undies", 1),
+  new structOfCrimes("scarek", "Scare a young kid", 0, 20, 0, 30, 180, 0, [], "skate", 1),
+  new structOfCrimes("bagofs", "Light a bag of shit on fire", 12, 150, 0, 100, 1800, 0, ["papbag", "lighter", "dogshit"], "ligher", 0),
+  new structOfCrimes("dogshit", "Clean up some dog shit", 0, 20, 0, 0, 5, 1, [], "dogshit", 1),
+  new structOfCrimes("buytheif", "Buy a theif kit", 200, 50, 0, 0, 1200, 0, [], "thiefk", 1),
+  new structOfCrimes("stealbag", "Steal a paper bag", 0, 30, 0, 0, 300, 0, ["thiefk"], "papbag", 1),
+  new structOfCrimes("stealpurse", "Steal a rich ladies purse", 0, 40, 78, 12, 60, 0, ["thiefk"], "lighter", 1),
+  new structOfCrimes("stealthief", "Steal a thief kit", 20, 50, 0, 4, 180, 0, ["thiefk"], "thiefk", 3),
+  new structOfCrimes("wearb", "Wear a brown leather outfit", 200, 500, 0, 56, 10 * 60, 0, ["belt", "shoes", "pants", "shirt", "undies", "socks"], "bsuit", 1),
+  new structOfCrimes("embez", "Embezzlement", 1000, 200, 0, 70, 0, 2, [], "", 0),
+  new structOfCrimes("forge", "Forgery of Minor Cash", 200, 1000, 2000, 60, 0, 3, ["forges"], "", 0),
+  new structOfCrimes("mintheist", "Heist at the Mint", 500, 500, 0, 65, 0, 20, ["thiefk"], "bnote"),
+  new structOfCrimes("buycrew", "Hire thugs", 1000, 500, 0, 50, 550, 0, [], "thugs", 1),
+  new structOfCrimes("robbook", "Rob a book store", 0, 200, 50, 75, 500, 0, ["thiefk"], "books"),
+  new structOfCrimes("buyforge", "Buy a forgery set", 100, 250, 0, 40, 300, 0, [], "forges", 1),
 ];
 
 const wordsAboutCrime = {
@@ -68,7 +75,27 @@ const wordsAboutCrime = {
     "you didn't think it was going to be possible, but when you backed the truck up to the local marine park, the dude we were paying to smuggle a walrus gave you three! what the hell are you going to do with three of these sons of bitches",
   scarek:
     "so this kid is eating his lunch and you tell him to put the food down and walk away because you were trying to eat his food but he got scared because of how you look and dropped his skateboard",
-  walrus: "your cousin needs another walrus but he lives over state lines, ",
+  walrus: "your cousin needs another walrus but he lives over state lines, and you're prepared to do anything for this walrus loving son of a bitch",
+  undies: "it's often wonders what it's like to have brown leather underwear on and it's not half bad",
+  bagofs:
+    "you'd heard tales of your older brother doing this to old man jackson down the road. he fell for it every time. now the torch has been passed down and it's you ligthing a bag of dog shit on fire",
+  dogshit:
+    "there's this dog down the road and you hate it because it was mean to you once and now you're scared of it and it gives you this sad face and guilt trips you into cleaning up after it",
+  buytheif: "a theiftech4000 theivery kit. contains one of everything you'll need for general theivery",
+  stealbag:
+    "you sneak into the butchers store and carefully and slowly crawl over the display cabinet. you fall off the top of the cabinet, crashing to the ground. the butcher hears you can comes running from the break room. he sees you on the floor, and you just up and grab a paper bag from the counter as you jump over and run out of the building",
+  stealpurse: "this lady is rich but has poor taste and this purse is too ugly to be seen in public, so you borrow it for later",
+  stealthief: "using your theiftech4000, you break into the theivery store and steal three more kits",
+  wearb:
+    "it's finally time where you can complete your final form, your full body leather outfit. you finally realise why it was so difficult to find leather socks to complete the outfit",
+  embez: "carefully you misappropiate some assets entrusted to you",
+  forge:
+    "the easiest way to make money is to literally make it. it's not even illegal. you got the blank bank notes and the forgery kit, and you can finally make more money than you've ever seen",
+  mintheist:
+    "you need blank bankotes to forge some money, and you suspected correctly, the mint does have them. it was quite easy to break into this place all things considered",
+  buycrew: "you need thugs to give you a hand up on a hard day",
+  robbook: "you'll never forgive the bookstore for all the drama and hurt it bought onto you. you were embarassed and it smelt weird",
+  buyforge: "a few art brushes? you were expecting more",
 };
 // struct for accumulated data (I expect to add more as time goes on)
 function structOfGameState(state, numberTimesCommitted, datetimeCrimeWillEnd, datetimeCrimeStarted) {
@@ -99,7 +126,7 @@ function structOfPlayer(playerNoto, playerMoney, playerSTR, playerLUCK, playerIN
 }
 
 // this is where you put in start values
-var player = new structOfPlayer(500000, 500000, 0, 0, 0, 0);
+var player = new structOfPlayer(0, 50, 0, 0, 0, 0);
 
 var playerInventory = [
   new structOfInventoryItems("cam", "Big Camera", 0),
@@ -124,6 +151,14 @@ var playerInventory = [
   new structOfInventoryItems("dogshit", "Dog Shit", 0),
   new structOfInventoryItems("skate", "Skateboard", 0),
   new structOfInventoryItems("walr", "Walrus", 0),
+  new structOfInventoryItems("bsuit", "Full body brown leather onesie", 0),
+  new structOfInventoryItems("cat", "Cat", 0),
+  new structOfInventoryItems("socks", "Brown Leather Socks", 0),
+  new structOfInventoryItems("bnote", "Blank Bank Notes", 0),
+  new structOfInventoryItems("loitb", "Badge for loitering", 0),
+  new structOfInventoryItems("forges", "Forgery set", 0),
+  new structOfInventoryItems("books", "Just some books", 0),
+  new structOfInventoryItems("thugs", "Hired thugs", 0),
 ];
 var playerInventoryLength = playerInventory.length;
 
