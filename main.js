@@ -7,10 +7,11 @@ var logOfCrimes = new Array(logLength).fill("");
 // playerNoto = 0;
 // playerMoney = 0;
 var accumDataText = "";
-versionNumber = "v0.952";
-versionCode = "beta";
+versionNumber = "v0.954";
+versionCode = "awkward phase";
 noticeState = false;
 override = false;
+arrayOfInventoryButtons = [];
 
 //these functions are initialistion based
 
@@ -97,6 +98,7 @@ const wordsAboutCrime = {
   robbook: "you'll never forgive the bookstore for all the drama and hurt it bought onto you. you were embarassed and it smelt weird",
   buyforge: "a few art brushes? you were expecting more",
 };
+
 // struct for accumulated data (I expect to add more as time goes on)
 function structOfGameState(state, numberTimesCommitted, datetimeCrimeWillEnd, datetimeCrimeStarted) {
   // state refers to where the crime is at
@@ -160,6 +162,12 @@ var playerInventory = [
   new structOfInventoryItems("books", "Just some books", 0),
   new structOfInventoryItems("thugs", "Hired thugs", 0),
 ];
+
+const wordsAboutInventory = {
+  cam: "big ass camera",
+  belt: "it's brown and you've owned it for 14 years",
+};
+
 var playerInventoryLength = playerInventory.length;
 
 function returnInventoryIndex(inventoryCode) {
@@ -212,10 +220,56 @@ function doubleClickOnCrimeButton(buttonIndex) {
 //end of init functions
 //
 //
+// this is called when clicked on inventory tab. unlike crime tabs these are made each time.
+function createInventoryButtons(inventoryCode) {
+  // check if inventorycode is valid
+  // if (getIndexOfInventoryCode() == -1) {
+  //   console.log("couldn't create inventory button " + inventoryCode);
+  //   return -1;
+  // }
+  // create a new div that will be added to the flexbox
+  var newInventoryButton = document.createElement("button");
+
+  //give it some attributes
+  newInventoryButton.className = "inventoryButton";
+  newInventoryButton.id = inventoryCode;
+
+  let tempInventoryButtonInnerHTML = checkQuantityOfInventoryCode(inventoryCode) + "x ";
+
+  newInventoryButton.innerHTML = tempInventoryButtonInnerHTML + getInventoryNameFromInventoryCode(inventoryCode);
+
+  // add this button into array so I can clear them later
+  //arrayOfInventoryButtons.push(newInventoryButton);
+
+  //add it to the right place
+  document.getElementById("infotextID").appendChild(newInventoryButton);
+
+  //add functionality
+  document.getElementById(inventoryCode).addEventListener("click", () => clickOnInventoryButton(inventoryCode));
+}
+
+function clickOnInventoryButton(inventoryCode) {
+  tempWordsAtBottom = wordsAboutInventory[inventoryCode];
+  if (tempWordsAtBottom == undefined) {
+    tempWordsAtBottom = "it's a " + getInventoryNameFromInventoryCode(inventoryCode);
+  }
+  updateWordsAtBottom(1, true, tempWordsAtBottom);
+}
+
+// this is meant to delete inventory butons but maybe it doesn't matter
+function discardInventoryButtons() {
+  for (let i = 0; i < playerInventoryLength; i++) {
+    if (playerInventory[i].inventoryQuantityHeld > 0) {
+      console.log("remove button " + playerInventory[i].inventoryCode);
+      document.getElementById(playerInventory[i].inventoryCode).remove();
+    }
+  }
+}
 
 // this function is called when a crime button is clicked
 // and largely makes sure the info panel is relevant
 function clickOnCrimeButton(buttonIndex) {
+  //discardInventoryButtons();
   noticeState = false;
 
   // set the global button index
@@ -752,15 +806,14 @@ function inventoryTab() {
   document.getElementById("buttonAndTitleWrapperID").setAttribute("state", "inventorySelected");
   document.getElementById("invButtonID").setAttribute("state", "selected");
 
-  let tempInventoryTabText = "YOU HAVE:<br><br>";
+  // clear the space
+  document.getElementById("infotextID").innerHTML = "YOU HAVE:<br><br>";
 
   for (let i = 0; i < playerInventoryLength; i++) {
     if (playerInventory[i].inventoryQuantityHeld > 0) {
-      tempInventoryTabText += "" + playerInventory[i].inventoryQuantityHeld + " x " + playerInventory[i].inventoryName + "<br>";
+      createInventoryButtons(playerInventory[i].inventoryCode);
     }
   }
-
-  document.getElementById("infotextID").innerHTML = tempInventoryTabText;
 }
 
 function statsTab() {
