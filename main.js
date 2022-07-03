@@ -165,7 +165,7 @@ var playerInventory = [
 
 const wordsAboutInventory = {
   cam: "big ass camera",
-  belt: "it's brown and you've owned it for 14 years",
+  belt: "it's brown and you've owned it for 14 years. it doesn't smell",
 };
 
 var playerInventoryLength = playerInventory.length;
