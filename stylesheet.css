@@ -146,15 +146,19 @@ a {
     display: flex;
     flex-flow: row;
     justify-content: space-around;
+    flex: 0 0   1;
 }
 
 .neighbourhood_tab {
     user-select: none;
     color: white;
     text-transform: uppercase;
-    border: none;
+    border: ;
     background: var(--color-D);
     font-size: 15pt;
+   // flex: 0 0   1;
+
+    
 }
 
 .neighbourhood_tab:hover {

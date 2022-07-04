@@ -7,7 +7,7 @@ var logOfCrimes = new Array(logLength).fill("");
 // playerNoto = 0;
 // playerMoney = 0;
 var accumDataText = "";
-versionNumber = "v0.9.2";
+versionNumber = "v0.9.21";
 versionCode = "the hood";
 noticeState = false;
 override = false;
@@ -186,7 +186,14 @@ function structOfNeighbourhoods(tabID, name, notoRequired) {
   this.notoRequired = notoRequired;
 }
 
-const neighbourhoodTabs = [new structOfNeighbourhoods("fend_tab", "fendalton", 0), new structOfNeighbourhoods("next_tab", "nextown", 500)];
+const neighbourhoodTabs = [new structOfNeighbourhoods("fend_tab", "loserton", 0),
+  new structOfNeighbourhoods("poundhead_tab", "poundhead", 10),
+  new structOfNeighbourhoods("dugtown_tab", "dugtown", 100),
+  new structOfNeighbourhoods("castle_tab", "castle rock", 1000),
+  new structOfNeighbourhoods("gusta_tab", "bo gusta", 10000),
+  new structOfNeighbourhoods("coolrock_tab", "cool rock", 100000),
+  new structOfNeighbourhoods("flathill_tab", "flat hill", 10000000),
+];
 
 var playerInventoryLength = playerInventory.length;
 
@@ -205,7 +212,7 @@ var textAboutCrime;
 var gameState = new Array(setOfCrime.length);
 // use a for loop to fill them, initialise them with state three so
 for (let gameStateDataIndex = 0; gameStateDataIndex < setOfCrime.length; gameStateDataIndex++) {
-  gameState[gameStateDataIndex] = new structOfGameState(3, 0, 0);
+  gameState[gameStateDataIndex] = new structOfGameState(0, 0, 0);
 }
 
 // this function builds the crime windows and places them in the flexbox
@@ -364,7 +371,7 @@ function successfulCrime(buttonIndex) {
   setCookie(buttonIndex);
 
   // refresh the noto requireds
-  setOfCrime.forEach(checkNotoRequired);
+  //setOfCrime.forEach(checkNotoRequired);
   //updateCriminalStatus();
   noticeHTML = "YOU JUST GOT:<br><br>" + setOfCrime[buttonIndex].notoEarned + " N<br>" + setOfCrime[buttonIndex].moneyEarned + " $<br>";
   noticeHTML += generateInventoryGainedText(buttonIndex);
@@ -729,9 +736,13 @@ function hasCrimeFinished(structOfCrimes, buttonIndex) {
 // this takes any crime out of state 3 (not ready) if it's noto is high enough
 // and will have been called with a foreach
 function checkNotoRequired(structOfCrimes, crimeIndex) {
-  if (gameState[crimeIndex].state == 3 && player.noto >= setOfCrime[crimeIndex].requiredNoto) {
+  // if (gameState[crimeIndex].state == 3 && player.noto >= setOfCrime[crimeIndex].requiredNoto) {
+  //   gameState[crimeIndex].state = 0;
+  // }
+  if (gameState[crimeIndex].state == 3) {
     gameState[crimeIndex].state = 0;
   }
+
 }
 
 function generateInventoryNeededText(buttonIndex) {
@@ -909,7 +920,7 @@ function cheat(keyPressKey) {
   player.noto += 2;
   player.money += 1;
   updatedBannerHTML;
-  setOfCrime.forEach(checkNotoRequired);
+  //setOfCrime.forEach(checkNotoRequired);
 }
 
 // called whenever a crime is started, or completed,
@@ -1043,7 +1054,7 @@ readInventoryCookies();
 createCrimeButtonsForNeighbourhood(currentNeighbourhoodTabIndex);
 
 // call this initially to set initial crime state to 0
-setOfCrime.forEach(checkNotoRequired);
+//setOfCrime.forEach(checkNotoRequired);
 
 createNeighbourhoodButtons();
 
