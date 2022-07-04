@@ -1,3 +1,10 @@
+v0.9.2
+4/7/22
+merging back to origin. have incorporated "neighbourhoods",
+and amazingly, with a bit of shoehorning, it works 
+very well, and may even now be more efficient because updating
+less buttons each time
+
 v0.95
 29/6/22
 merged back into main branch

@@ -1,21 +1,21 @@
-buttonid,name,cost,required Noto,money Earned,noto Earned,time To Complete In Seconds,time To Complete In Hours,required Inventory,gained Inventory,gained Inventory Multiplier
-loit,Loitering,0,0,0,4,6,0,[],"""""",0
-skate,Skateboarding,0,10,0,5,45,0,"[""skate""]","""""",0
-xloit,Extreme Loitering,0,0,0,60,11,168,[],"""loitb""",1
-stealw,Stealing Walrus,0,100,0,100,0,1,"[""thiefk""]","""walr""",3
-walrus,Transporting a Walrus without a Licence,200,100,300,50,0,3,"[""walr""]","""""",0
-undies,Stealing Brown Underwear,0,200,0,12,300,0,"[""steal"",""trap""]","""undies""",1
-scarek,Scare a young kid,0,20,0,30,180,0,[],"""skate""",1
-bagofs,Light a bag of shit on fire,12,150,0,100,1800,0,"[""papbag"",""lighter"",""dogshit""]","""ligher""",0
-dogshit,Clean up some dog shit,0,20,0,0,5,1,[],"""dogshit""",1
-buytheif,Buy a theif kit,200,50,0,0,1200,0,[],"""thiefk""",1
-stealbag,Steal a paper bag,0,30,0,0,300,0,"[""thiefk""]","""papbag""",1
-stealpurse,Steal a rich ladies purse,0,40,78,12,60,0,"[""thiefk""]","""lighter""",1
-stealthief,Steal a thief kit,20,50,0,4,180,0,"[""thiefk""]","""thiefk""",3
-wearb,Wear a brown leather outfit,200,500,0,56,10*60,0,"[""belt"",""shoes"",""pants"",""shirt"",""undies"",""socks""]","""bsuit""",1
-embez,Embezzlement,1000,200,0,70,0,2,[],"""""",0
-forge,Forgery of Minor Cash,200,1000,2000,60,0,3,"[""forges""]","""""",0
-mintheist,Heist at the Mint,500,500,0,65,0,20,"[""thiefk""]","""bnote""",
-buycrew,Hire thugs,1000,500,0,50,550,0,[],"""thugs""",1
-robbook,Rob a book store,0,200,50,75,500,0,"[""thiefk""]","""books""",
-buyforge,Buy a forgery set,100,250,0,40,300,0,[],"""forges""",1
+buttonid,name,cost,required Noto,money Earned,noto Earned,time To Complete In Seconds,time To Complete In Hours,required Inventory,gained Inventory,gained Inventory Multiplier,NeighbourhoodIndex
+loit,Loitering,0,0,0,4,6,0,[],"""""",0,0
+skate,Skateboarding,0,10,0,5,45,0,"[""skate""]","""""",0,0
+xloit,Extreme Loitering,0,0,0,60,11,168,[],"""loitb""",1,0
+stealw,Stealing Walrus,0,100,0,100,0,1,"[""thiefk""]","""walr""",3,0
+walrus,Transporting a Walrus without a Licence,200,100,300,50,0,3,"[""walr""]","""""",0,0
+undies,Stealing Brown Underwear,0,200,0,12,300,0,"[""steal"",""trap""]","""undies""",1,0
+scarek,Scare a young kid,0,20,0,30,180,0,[],"""skate""",1,0
+bagofs,Light a bag of shit on fire,12,150,0,100,1800,0,"[""papbag"",""lighter"",""dogshit""]","""ligher""",0,0
+dogshit,Clean up some dog shit,0,20,0,0,5,1,[],"""dogshit""",1,0
+buytheif,Buy a theif kit,200,50,0,0,1200,0,[],"""thiefk""",1,0
+stealbag,Steal a paper bag,0,30,0,0,300,0,"[""thiefk""]","""papbag""",1,0
+stealpurse,Steal a rich ladies purse,0,40,78,12,60,0,"[""thiefk""]","""lighter""",1,1
+stealthief,Steal a thief kit,20,50,0,4,180,0,"[""thiefk""]","""thiefk""",3,1
+wearb,Wear a brown leather outfit,200,500,0,56,10*60,0,"[""belt"",""shoes"",""pants"",""shirt"",""undies"",""socks""]","""bsuit""",1,1
+embez,Embezzlement,1000,200,0,70,0,2,[],"""""",0,1
+forge,Forgery of Minor Cash,200,1000,2000,60,0,3,"[""forges""]","""""",0,1
+mintheist,Heist at the Mint,500,500,0,65,0,20,"[""thiefk""]","""bnote""",,1
+buycrew,Hire thugs,1000,500,0,50,550,0,[],"""thugs""",1,1
+robbook,Rob a book store,0,200,50,75,500,0,"[""thiefk""]","""books""",,1
+buyforge,Buy a forgery set,100,250,0,40,300,0,[],"""forges""",1,1

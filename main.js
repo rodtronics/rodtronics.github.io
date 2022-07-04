@@ -7,13 +7,22 @@ var logOfCrimes = new Array(logLength).fill("");
 // playerNoto = 0;
 // playerMoney = 0;
 var accumDataText = "";
-versionNumber = "v0.954";
-versionCode = "awkward phase";
+versionNumber = "v0.9.2";
+versionCode = "the hood";
 noticeState = false;
 override = false;
 arrayOfInventoryButtons = [];
+var currentNeighbourhoodTabIndex = 0;
 
 //these functions are initialistion based
+
+function structOfPlayer(playerNoto, playerMoney) {
+  this.noto = playerNoto;
+  this.money = playerMoney;
+}
+
+// this is where you put in start values
+var player = new structOfPlayer(5550, 50);
 
 // this function stores information in itself, and defines our main object
 function structOfCrimes(
@@ -27,7 +36,8 @@ function structOfCrimes(
   timeToCompleteInHours,
   requiredInventory,
   gainedInventory,
-  gainedInventoryMultiplier
+  gainedInventoryMultiplier,
+  neighbourhoodTabIndex
 ) {
   this.crimeID = crimeID;
   this.name = name;
@@ -41,29 +51,43 @@ function structOfCrimes(
   this.requiredInventory = requiredInventory;
   this.gainedInventory = gainedInventory;
   this.gainedInventoryMultiplier = gainedInventoryMultiplier;
+  this.neighbourhoodTabIndex = neighbourhoodTabIndex;
 }
 // this creates an array "setOfCrime" that contains different crimes
 var setOfCrime = [
-  new structOfCrimes("loit", "Loitering", 0, 0, 0, 4, 6, 0, [], "", 0),
-  new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0, ["skate"], "", 0),
-  new structOfCrimes("xloit", "Extreme Loitering", 0, 0, 0, 60, 11, 168, [], "loitb", 1),
-  new structOfCrimes("stealw", "Stealing Walrus", 0, 100, 0, 100, 0, 1, ["thiefk"], "walr", 3),
-  new structOfCrimes("walrus", "Transporting a Walrus without a Licence", 200, 100, 300, 50, 0, 3, ["walr"], "", 0),
-  new structOfCrimes("undies", "Stealing Brown Underwear", 0, 200, 0, 12, 300, 0, ["steal", "trap"], "undies", 1),
-  new structOfCrimes("scarek", "Scare a young kid", 0, 20, 0, 30, 180, 0, [], "skate", 1),
-  new structOfCrimes("bagofs", "Light a bag of shit on fire", 12, 150, 0, 100, 1800, 0, ["papbag", "lighter", "dogshit"], "ligher", 0),
-  new structOfCrimes("dogshit", "Clean up some dog shit", 0, 20, 0, 0, 5, 1, [], "dogshit", 1),
-  new structOfCrimes("buytheif", "Buy a theif kit", 200, 50, 0, 0, 1200, 0, [], "thiefk", 1),
-  new structOfCrimes("stealbag", "Steal a paper bag", 0, 30, 0, 0, 300, 0, ["thiefk"], "papbag", 1),
-  new structOfCrimes("stealpurse", "Steal a rich ladies purse", 0, 40, 78, 12, 60, 0, ["thiefk"], "lighter", 1),
-  new structOfCrimes("stealthief", "Steal a thief kit", 20, 50, 0, 4, 180, 0, ["thiefk"], "thiefk", 3),
-  new structOfCrimes("wearb", "Wear a brown leather outfit", 200, 500, 0, 56, 10 * 60, 0, ["belt", "shoes", "pants", "shirt", "undies", "socks"], "bsuit", 1),
-  new structOfCrimes("embez", "Embezzlement", 1000, 200, 0, 70, 0, 2, [], "", 0),
-  new structOfCrimes("forge", "Forgery of Minor Cash", 200, 1000, 2000, 60, 0, 3, ["forges"], "", 0),
-  new structOfCrimes("mintheist", "Heist at the Mint", 500, 500, 0, 65, 0, 20, ["thiefk"], "bnote"),
-  new structOfCrimes("buycrew", "Hire thugs", 1000, 500, 0, 50, 550, 0, [], "thugs", 1),
-  new structOfCrimes("robbook", "Rob a book store", 0, 200, 50, 75, 500, 0, ["thiefk"], "books"),
-  new structOfCrimes("buyforge", "Buy a forgery set", 100, 250, 0, 40, 300, 0, [], "forges", 1),
+  new structOfCrimes("loit", "Loitering", 0, 0, 0, 4, 6, 0, [], "", 0, 0),
+  new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0, ["skate"], "", 0, 0),
+  new structOfCrimes("xloit", "Extreme Loitering", 0, 0, 0, 60, 11, 168, [], "loitb", 1, 0),
+  new structOfCrimes("stealw", "Stealing Walrus", 0, 100, 0, 100, 0, 1, ["thiefk"], "walr", 3, 0),
+  new structOfCrimes("walrus", "Transporting a Walrus without a Licence", 200, 100, 300, 50, 0, 3, ["walr"], "", 0, 0),
+  new structOfCrimes("undies", "Stealing Brown Underwear", 0, 200, 0, 12, 300, 0, ["steal", "trap"], "undies", 1, 0),
+  new structOfCrimes("scarek", "Scare a young kid", 0, 20, 0, 30, 180, 0, [], "skate", 1, 0),
+  new structOfCrimes("bagofs", "Light a bag of shit on fire", 12, 150, 0, 100, 1800, 0, ["papbag", "lighter", "dogshit"], "ligher", 0, 0),
+  new structOfCrimes("dogshit", "Clean up some dog shit", 0, 20, 0, 0, 5, 1, [], "dogshit", 1, 0),
+  new structOfCrimes("buytheif", "Buy a theif kit", 200, 50, 0, 0, 1200, 0, [], "thiefk", 1, 0),
+  new structOfCrimes("stealbag", "Steal a paper bag", 0, 30, 0, 0, 300, 0, ["thiefk"], "papbag", 1, 0),
+  new structOfCrimes("stealpurse", "Steal a rich ladies purse", 0, 40, 78, 12, 60, 0, ["thiefk"], "lighter", 1, 1),
+  new structOfCrimes("stealthief", "Steal a thief kit", 20, 50, 0, 4, 180, 0, ["thiefk"], "thiefk", 3, 1),
+  new structOfCrimes(
+    "wearb",
+    "Wear a brown leather outfit",
+    200,
+    500,
+    0,
+    56,
+    10 * 60,
+    0,
+    ["belt", "shoes", "pants", "shirt", "undies", "socks"],
+    "bsuit",
+    1,
+    1
+  ),
+  new structOfCrimes("embez", "Embezzlement", 1000, 200, 0, 70, 0, 2, [], "", 0, 1),
+  new structOfCrimes("forge", "Forgery of Minor Cash", 200, 1000, 2000, 60, 0, 3, ["forges"], "", 0, 1),
+  new structOfCrimes("mintheist", "Heist at the Mint", 500, 500, 0, 65, 0, 20, ["thiefk"], "bnote", 0, 1),
+  new structOfCrimes("buycrew", "Hire thugs", 1000, 500, 0, 50, 550, 0, [], "thugs", 1, 1),
+  new structOfCrimes("robbook", "Rob a book store", 0, 200, 50, 75, 500, 0, ["thiefk"], "books", 0, 1),
+  new structOfCrimes("buyforge", "Buy a forgery set", 100, 250, 0, 40, 300, 0, [], "forges", 1, 1),
 ];
 
 const wordsAboutCrime = {
@@ -118,18 +142,6 @@ function structOfInventoryItems(inventoryCode, inventoryName, quantityHeld) {
   this.inventoryQuantityHeld = quantityHeld;
 }
 
-function structOfPlayer(playerNoto, playerMoney, playerSTR, playerLUCK, playerINT, playerCHARM) {
-  this.noto = playerNoto;
-  this.money = playerMoney;
-  this.STR = playerSTR;
-  this.LUCK = playerLUCK;
-  this.INT = playerINT;
-  this.CHARM = playerCHARM;
-}
-
-// this is where you put in start values
-var player = new structOfPlayer(0, 50, 0, 0, 0, 0);
-
 var playerInventory = [
   new structOfInventoryItems("cam", "Big Camera", 0),
   new structOfInventoryItems("belt", "Brown Leather Belt", 1),
@@ -165,8 +177,16 @@ var playerInventory = [
 
 const wordsAboutInventory = {
   cam: "big ass camera",
-  belt: "it's brown and you've owned it for 14 years",
+  belt: "it's brown and you've owned it for 14 years. it doesn't smell",
 };
+
+function structOfNeighbourhoods(tabID, name, notoRequired) {
+  this.tabID = tabID;
+  this.name = name;
+  this.notoRequired = notoRequired;
+}
+
+const neighbourhoodTabs = [new structOfNeighbourhoods("fend_tab", "fendalton", 0), new structOfNeighbourhoods("next_tab", "nextown", 500)];
 
 var playerInventoryLength = playerInventory.length;
 
@@ -205,6 +225,8 @@ function createCrimeButtons(structOfCrimesIterator, buttonIndex) {
 
   // append the newly created div to the flexbox
   document.getElementById("crimeID").appendChild(newCrimeButton);
+
+  //refreshSingleButton(buttonIndex);
 
   // add function to the button for when it is clicked
   document.getElementById(structOfCrimesIterator.crimeID).addEventListener("click", () => clickOnCrimeButton(buttonIndex));
@@ -248,12 +270,52 @@ function createInventoryButtons(inventoryCode) {
   document.getElementById(inventoryCode).addEventListener("click", () => clickOnInventoryButton(inventoryCode));
 }
 
+function createNeighbourhoodButtons() {
+  for (let i = 0; i < neighbourhoodTabs.length; i++) {
+    var newNeighbourhoodTabButton = document.createElement("button");
+
+    newNeighbourhoodTabButton.className = "neighbourhood_tab";
+    newNeighbourhoodTabButton.id = neighbourhoodTabs[i].tabID;
+    newNeighbourhoodTabButton.innerHTML = neighbourhoodTabs[i].name;
+    document.getElementById("neighbourhoodTabWrapperID").appendChild(newNeighbourhoodTabButton);
+    document.getElementById(neighbourhoodTabs[i].tabID).addEventListener("click", () => clickOnNeighbourhoodTabButton(i));
+  }
+}
+
+function getNeighbourhoodTabIndexFromCode(neighbourhoodTabCode) {
+  for (let i = 0; i < neighbourhoodTabs.length; i++) {
+    if (neighbourhoodTabCode == neighbourhoodTabs[i].tabID) {
+      return i;
+    }
+  }
+  return -1;
+}
+
 function clickOnInventoryButton(inventoryCode) {
   tempWordsAtBottom = wordsAboutInventory[inventoryCode];
   if (tempWordsAtBottom == undefined) {
     tempWordsAtBottom = "it's a " + getInventoryNameFromInventoryCode(inventoryCode);
   }
   updateWordsAtBottom(1, true, tempWordsAtBottom);
+}
+
+function createCrimeButtonsForNeighbourhood(neighbourhoodTabIndex) {
+  // clear the area
+  document.getElementById("crimeID").innerHTML = "";
+  for (i = 0; i < setOfCrime.length; i++) {
+    if (setOfCrime[i].neighbourhoodTabIndex == neighbourhoodTabIndex) {
+      createCrimeButtons(setOfCrime[i], i);
+    }
+  }
+}
+
+function clickOnNeighbourhoodTabButton(neighbourhoodTabIndex) {
+  if (player.noto >= neighbourhoodTabs[neighbourhoodTabIndex].notoRequired) {
+    currentNeighbourhoodTabIndex = neighbourhoodTabIndex;
+    createCrimeButtonsForNeighbourhood(neighbourhoodTabIndex);
+  } else {
+    displayNotice("you're not notorious enough");
+  }
 }
 
 // this is meant to delete inventory butons but maybe it doesn't matter
@@ -952,7 +1014,15 @@ function refreshLoop(timestamp) {
   refreshBanner();
   document.getElementById("currentTimeID").innerHTML = "its " + dayjs().format("YY.MM.DD HH:mm:ss");
   // refresh info on each button
-  setOfCrime.forEach(refreshSingleButton);
+
+  // only refresh button for selected neighbourhood
+  for (i = 0; i < setOfCrime.length; i++) {
+    if (setOfCrime[i].neighbourhoodTabIndex == currentNeighbourhoodTabIndex) {
+      refreshSingleButton(setOfCrime[i], i);
+    }
+  }
+
+  //setOfCrime.forEach(refreshSingleButton);
   setOfCrime.forEach(hasCrimeFinished);
   // and set up the refresh loop to start next repaint of the frame
   window.requestAnimationFrame(refreshLoop);
@@ -969,10 +1039,13 @@ readCookies();
 readInventoryCookies();
 
 // make the crime buttons
-setOfCrime.forEach(createCrimeButtons);
+//setOfCrime.forEach(createCrimeButtons);
+createCrimeButtonsForNeighbourhood(currentNeighbourhoodTabIndex);
 
 // call this initially to set initial crime state to 0
 setOfCrime.forEach(checkNotoRequired);
+
+createNeighbourhoodButtons();
 
 //updateCriminalStatus();
 
