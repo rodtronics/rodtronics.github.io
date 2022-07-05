@@ -14,8 +14,10 @@
     --running-color: rgba(34, 118, 195, 1);
     --running-color: radial-gradient(circle, rgba(49, 122, 255, 1) 0%, rgba(43, 110, 232, 1) 100%);
     --running-color: radial-gradient(circle, rgba(38, 132, 218, 1) 0%, rgba(34, 118, 195, 1) 100%);
+    --neighbourhood-color:radial-gradient(circle, rgba(0,159,255,1) 0%, rgba(0,147,236,1) 100%);
     --complete-color: linear-gradient(0deg, rgba(195, 53, 34, 1) 0%, rgba(255, 119, 161, 1) 100%);
-    --complete-color: linear-gradient( 0deg, rgba(255, 199, 135, 1) 0%, rgba(180, 84, 0, 1) 30%, rgba(113, 56, 0, 1) 35%, rgba(255, 255, 255, 1) 36%, rgba(0, 155, 255, 1) 100%);
+    --complete-color: linear-gradient( 0deg, rgba(255, 199, 135, 0.8) 0%, rgba(180, 84, 0, 0.8) 30%, rgba(113, 56, 0, 0.8) 35%, rgba(255, 255, 255, 0.8) 36%, rgba(0, 155, 255, 0.8) 100%);
+
     --border-color: white;
     --stats-color: var(--color-D);
     --inv-color: var(--color-B);
@@ -26,6 +28,7 @@
     text-align: left;
     background: var(--background-color);
     font-weight: 200;
+
     /* color: #fff; */
 }
 
@@ -82,8 +85,9 @@ h1 {
 .about_title {
     /* color: black; */
     color: var(--color-B);
-    color: white font-weight: 1000;
-    font-size: 20px;
+    color: white; 
+    font-weight: 1000;
+    font-size: 10px;
     /* background: linear-gradient(0deg, rgba(255, 0, 0, 1) 0%, rgba(249, 255, 0, 1) 100%); */
 }
 
@@ -153,18 +157,20 @@ a {
 
 .neighbourhood_tab {
     user-select: none;
-    color: white;
+    color: var(--color-E);
     text-transform: uppercase;
-    border: ;
+    /* border: ; */
     background: var(--color-D);
+    background: var(--neighbourhood-color);
     font-size: 15pt;
-   // flex: 0 0   1;
+   /* flex: 0 0   1; */
 
     
 }
 
 .neighbourhood_tab:hover {
-    color: var(--color-B);
+    color:white ;
+    text-shadow: none;
 }
 
 .crime_wrapper {
@@ -182,9 +188,9 @@ a {
 .words {
     display: flex;
     flex: 0 0   1;
-    flex-grow: 0;
     color: white;
     max-width: 100vh;
+    height: 10vh;
     padding: 15px;
     background: var(--color-D);
     border: 2px;
@@ -192,6 +198,7 @@ a {
     border-style: solid;
     text-transform: lowercase;
     background: radial-gradient(circle, rgba(0, 154, 196, 1) 0%, rgba(1, 127, 162, 1) 100%);
+
 }
 
 .inventoryButton {
@@ -333,11 +340,15 @@ a {
 [state="running"] {
     background: #2276c3;
     background: var(--running-color);
+    text-shadow: 0px 0px 20px white;
 }
 
 [state="complete"] {
-    background: #c33522;
-    background: var(--complete-color);
+    /* background: #c33522; */
+    background: var(--complete-color),radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(0,0,0,1) 100%);
+    background-blend-mode:screen;
+    /* text-shadow: 0px 0px 5px white; */
+
     /* color: var(--color-B); */
     color: black;
     font-weight: 800;
