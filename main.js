@@ -7,7 +7,7 @@ var logOfCrimes = new Array(logLength).fill("");
 // playerNoto = 0;
 // playerMoney = 0;
 var accumDataText = "";
-versionNumber = "v0.9.21";
+versionNumber = "v0.9.22";
 versionCode = "the hood";
 noticeState = false;
 override = false;
@@ -22,7 +22,7 @@ function structOfPlayer(playerNoto, playerMoney) {
 }
 
 // this is where you put in start values
-var player = new structOfPlayer(5550, 50);
+var player = new structOfPlayer(0, 50);
 
 // this function stores information in itself, and defines our main object
 function structOfCrimes(
@@ -55,39 +55,24 @@ function structOfCrimes(
 }
 // this creates an array "setOfCrime" that contains different crimes
 var setOfCrime = [
-  new structOfCrimes("loit", "Loitering", 0, 0, 0, 4, 6, 0, [], "", 0, 0),
-  new structOfCrimes("skate", "Skateboarding", 0, 10, 0, 5, 45, 0, ["skate"], "", 0, 0),
-  new structOfCrimes("xloit", "Extreme Loitering", 0, 0, 0, 60, 11, 168, [], "loitb", 1, 0),
-  new structOfCrimes("stealw", "Stealing Walrus", 0, 100, 0, 100, 0, 1, ["thiefk"], "walr", 3, 0),
-  new structOfCrimes("walrus", "Transporting a Walrus without a Licence", 200, 100, 300, 50, 0, 3, ["walr"], "", 0, 0),
-  new structOfCrimes("undies", "Stealing Brown Underwear", 0, 200, 0, 12, 300, 0, ["steal", "trap"], "undies", 1, 0),
-  new structOfCrimes("scarek", "Scare a young kid", 0, 20, 0, 30, 180, 0, [], "skate", 1, 0),
-  new structOfCrimes("bagofs", "Light a bag of shit on fire", 12, 150, 0, 100, 1800, 0, ["papbag", "lighter", "dogshit"], "ligher", 0, 0),
-  new structOfCrimes("dogshit", "Clean up some dog shit", 0, 20, 0, 0, 5, 1, [], "dogshit", 1, 0),
-  new structOfCrimes("buytheif", "Buy a theif kit", 200, 50, 0, 0, 1200, 0, [], "thiefk", 1, 0),
-  new structOfCrimes("stealbag", "Steal a paper bag", 0, 30, 0, 0, 300, 0, ["thiefk"], "papbag", 1, 0),
-  new structOfCrimes("stealpurse", "Steal a rich ladies purse", 0, 40, 78, 12, 60, 0, ["thiefk"], "lighter", 1, 1),
-  new structOfCrimes("stealthief", "Steal a thief kit", 20, 50, 0, 4, 180, 0, ["thiefk"], "thiefk", 3, 1),
-  new structOfCrimes(
-    "wearb",
-    "Wear a brown leather outfit",
-    200,
-    500,
-    0,
-    56,
-    10 * 60,
-    0,
-    ["belt", "shoes", "pants", "shirt", "undies", "socks"],
-    "bsuit",
-    1,
-    1
-  ),
-  new structOfCrimes("embez", "Embezzlement", 1000, 200, 0, 70, 0, 2, [], "", 0, 1),
-  new structOfCrimes("forge", "Forgery of Minor Cash", 200, 1000, 2000, 60, 0, 3, ["forges"], "", 0, 1),
-  new structOfCrimes("mintheist", "Heist at the Mint", 500, 500, 0, 65, 0, 20, ["thiefk"], "bnote", 0, 1),
-  new structOfCrimes("buycrew", "Hire thugs", 1000, 500, 0, 50, 550, 0, [], "thugs", 1, 1),
-  new structOfCrimes("robbook", "Rob a book store", 0, 200, 50, 75, 500, 0, ["thiefk"], "books", 0, 1),
-  new structOfCrimes("buyforge", "Buy a forgery set", 100, 250, 0, 40, 300, 0, [], "forges", 1, 1),
+  new structOfCrimes("jwalk","jaywalking",0,0,0,1,7,0,0,0,0,0),
+new structOfCrimes("skate","skatebaording",0,0,0,1,72,0,0,0,0,1),
+new structOfCrimes("graf","graffiti",0,0,0,9,61,0,0,0,0,2),
+new structOfCrimes("scarek","scare a young kig",0,0,0,120,79,0,0,0,0,3),
+new structOfCrimes("speed","speeding",0,0,0,800,63,0,0,0,0,4),
+new structOfCrimes("butte","tripping over a politician",0,0,0,9000,96,0,0,0,0,5),
+new structOfCrimes("tagf","tagging a fence",0,0,0,2,2000,0,0,0,0,0),
+new structOfCrimes("sfridge","stealing a fridge",0,0,0,14,1985,0,0,0,0,1),
+new structOfCrimes("richlad","steal a rice ladies purpse",0,0,0,150,1763,0,0,0,0,2),
+new structOfCrimes("steald","steal a prize duck",0,0,0,1200,1759,0,0,0,0,3),
+new structOfCrimes("grantf","steal a car",0,0,0,9800,1862,0,0,0,0,4),
+new structOfCrimes("stealh","steal a house",0,0,0,86000,1502,0,0,0,0,5),
+new structOfCrimes("loit","loitering",0,0,0,7,300,0,0,0,0,0),
+new structOfCrimes("ploit","power loitering",0,0,0,68,345,68,0,0,0,1),
+new structOfCrimes("xloit","extreme loitering",0,0,0,490,26,81,0,0,0,2),
+new structOfCrimes("proloit","profound loitering",0,0,0,5600,683,60,0,0,0,3),
+new structOfCrimes("uloit","unrelenting loitering",0,0,0,48560,862,54,0,0,0,4),
+new structOfCrimes("dloit","death loitering",0,0,0,390000,683,80,0,0,0,5),
 ];
 
 const wordsAboutCrime = {
@@ -186,14 +171,17 @@ function structOfNeighbourhoods(tabID, name, notoRequired) {
   this.notoRequired = notoRequired;
 }
 
-const neighbourhoodTabs = [new structOfNeighbourhoods("fend_tab", "loserton", 0),
+const neighbourhoodTabs = [new structOfNeighbourhoods("loser_tab", "loserton", 0),
   new structOfNeighbourhoods("poundhead_tab", "poundhead", 10),
   new structOfNeighbourhoods("dugtown_tab", "dugtown", 100),
   new structOfNeighbourhoods("castle_tab", "castle rock", 1000),
   new structOfNeighbourhoods("gusta_tab", "bo gusta", 10000),
   new structOfNeighbourhoods("coolrock_tab", "cool rock", 100000),
-  new structOfNeighbourhoods("flathill_tab", "flat hill", 10000000),
 ];
+
+const wordsAboutNeighbourhood = {
+  loser_tab:"you grew up in this grimy dank suburb. you're proud to call it home but no one else thinks you should be"
+}
 
 var playerInventoryLength = playerInventory.length;
 
@@ -317,11 +305,33 @@ function createCrimeButtonsForNeighbourhood(neighbourhoodTabIndex) {
 }
 
 function clickOnNeighbourhoodTabButton(neighbourhoodTabIndex) {
+  // check to see if clicking on current tab
+  if (neighbourhoodTabIndex == currentNeighbourhoodTabIndex)
+  {
+    displayNotice("you're already there dingus");
+    
+    // get words about neighbourhood and display them unless undefined
+
+    tempNeighbourhoodWords = wordsAboutNeighbourhood[neighbourhoodTabs[neighbourhoodTabIndex].tabID];
+    if (wordsAboutNeighbourhood != undefined) {
+      updateWordsAtBottom(0, true, tempNeighbourhoodWords);
+    }
+
+    return;
+  }
+  // check to see if they have enough noto
   if (player.noto >= neighbourhoodTabs[neighbourhoodTabIndex].notoRequired) {
     currentNeighbourhoodTabIndex = neighbourhoodTabIndex;
+    tempNeighbourhoodWords = wordsAboutNeighbourhood[neighbourhoodTabs[neighbourhoodTabIndex.tabID]];
+    if (wordsAboutNeighbourhood !=undefined)
+      {
+      updateWordsAtBottom(0, true, tempNeighbourhoodWords);
+
+
+    } 
     createCrimeButtonsForNeighbourhood(neighbourhoodTabIndex);
   } else {
-    displayNotice("you're not notorious enough");
+    displayNotice("you're not notorious enough to visit "+neighbourhoodTabs[neighbourhoodTabIndex].name +"<br><br>you need "+neighbourhoodTabs[neighbourhoodTabIndex].notoRequired.toLocaleString()+" N");
   }
 }
 
@@ -413,9 +423,9 @@ function refreshInfoPanel(buttonIndex) {
         break;
     }
 
-    newInfoText += "<br>REQUIRED:<br><br>" + setOfCrime[buttonIndex].requiredNoto + " N<br>";
+    newInfoText += "<br>REQUIRED:<br><br>";// + setOfCrime[buttonIndex].requiredNoto + " N<br>";
     if (setOfCrime[buttonIndex].cost > 0) {
-      newInfoText += setOfCrime[buttonIndex].cost + " $<br>";
+      newInfoText += setOfCrime[buttonIndex].cost.toLocaleString() + " $<br>";
     }
     // start the text that discusses needed inventory
     if (usedVariable == true) {
@@ -425,9 +435,11 @@ function refreshInfoPanel(buttonIndex) {
 
     let tempInventoryGainedText = "";
     if (setOfCrime[buttonIndex].moneyEarned > 0) {
-      tempInventoryGainedText += setOfCrime[buttonIndex].moneyEarned + " $<br>";
+      tempInventoryGainedText += setOfCrime[buttonIndex].moneyEarned.toLocaleString() + " $<br>";
     }
 
+
+    tempInventoryGainedText += setOfCrime[buttonIndex].notoEarned.toLocaleString() + " N<br>";
     tempInventoryGainedText += generateInventoryGainedText(buttonIndex);
     if (tempInventoryGainedText != "") {
       tempInventoryText += "<br><br><br>gaining you:<br><br>" + tempInventoryGainedText;

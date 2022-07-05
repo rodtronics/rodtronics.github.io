@@ -1,21 +1,19 @@
-buttonid,name,cost,required Noto,money Earned,noto Earned,time To Complete In Seconds,time To Complete In Hours,required Inventory,gained Inventory,gained Inventory Multiplier,NeighbourhoodIndex
-loit,Loitering,0,0,0,4,6,0,[],"""""",0,0
-skate,Skateboarding,0,10,0,5,45,0,"[""skate""]","""""",0,0
-xloit,Extreme Loitering,0,0,0,60,11,168,[],"""loitb""",1,0
-stealw,Stealing Walrus,0,100,0,100,0,1,"[""thiefk""]","""walr""",3,0
-walrus,Transporting a Walrus without a Licence,200,100,300,50,0,3,"[""walr""]","""""",0,0
-undies,Stealing Brown Underwear,0,200,0,12,300,0,"[""steal"",""trap""]","""undies""",1,0
-scarek,Scare a young kid,0,20,0,30,180,0,[],"""skate""",1,0
-bagofs,Light a bag of shit on fire,12,150,0,100,1800,0,"[""papbag"",""lighter"",""dogshit""]","""ligher""",0,0
-dogshit,Clean up some dog shit,0,20,0,0,5,1,[],"""dogshit""",1,0
-buytheif,Buy a theif kit,200,50,0,0,1200,0,[],"""thiefk""",1,0
-stealbag,Steal a paper bag,0,30,0,0,300,0,"[""thiefk""]","""papbag""",1,0
-stealpurse,Steal a rich ladies purse,0,40,78,12,60,0,"[""thiefk""]","""lighter""",1,1
-stealthief,Steal a thief kit,20,50,0,4,180,0,"[""thiefk""]","""thiefk""",3,1
-wearb,Wear a brown leather outfit,200,500,0,56,10*60,0,"[""belt"",""shoes"",""pants"",""shirt"",""undies"",""socks""]","""bsuit""",1,1
-embez,Embezzlement,1000,200,0,70,0,2,[],"""""",0,1
-forge,Forgery of Minor Cash,200,1000,2000,60,0,3,"[""forges""]","""""",0,1
-mintheist,Heist at the Mint,500,500,0,65,0,20,"[""thiefk""]","""bnote""",,1
-buycrew,Hire thugs,1000,500,0,50,550,0,[],"""thugs""",1,1
-robbook,Rob a book store,0,200,50,75,500,0,"[""thiefk""]","""books""",,1
-buyforge,Buy a forgery set,100,250,0,40,300,0,[],"""forges""",1,1
+buttonid,name,cost,required Noto,money Earned,noto Earned,time To Complete In Seconds,time To Complete In Hours,required Inventory,gained Inventory,gained Inventory Multiplier,NeighbourhoodIndex,,
+jwalk,jaywalking,0,0,0,1,7,0,0,0,0,0,10,10%
+skate,skatebaording,0,0,0,9,72,0,0,0,0,1,100,9%
+graf,graffiti,0,0,0,9,61,0,0,0,0,2,1000,1%
+scarek,scare a young kig,0,0,0,120,79,0,0,0,0,3,10000,1%
+speed,speeding,0,0,0,800,63,0,0,0,0,4,100000,1%
+butte,tripping over a politician,0,0,0,9000,96,0,0,0,0,5,1000000,1%
+tagf,tagging a fence,0,0,0,2,2000,0,0,0,0,0,10,20%
+sfridge,stealing a fridge,0,0,0,14,1985,0,0,0,0,1,100,14%
+richlad,steal a rice ladies purpse,0,0,0,150,1763,0,0,0,0,2,1000,15%
+steald,steal a prize duck,0,0,0,1200,1759,0,0,0,0,3,10000,12%
+grantf,steal a car,0,0,0,9800,1862,0,0,0,0,4,100000,10%
+stealh,steal a house,0,0,0,86000,1502,0,0,0,0,5,1000000,9%
+loit,loitering,0,0,0,7,300,0,0,0,0,0,10,70%
+ploit,power loitering,0,0,0,68,345,68,0,0,0,1,100,68%
+xloit,extreme loitering,0,0,0,490,26,81,0,0,0,2,1000,49%
+proloit,profound loitering,0,0,0,5600,683,60,0,0,0,3,10000,56%
+uloit,unrelenting loitering,0,0,0,48560,862,54,0,0,0,4,100000,49%
+dloit,death loitering,0,0,0,390000,683,80,0,0,0,5,1000000,39%
