@@ -287,7 +287,8 @@ function clickOnInventoryButton(inventoryCode) {
 
 function createCrimeButtonsForNeighbourhood(neighbourhoodTabIndex) {
     // clear the area
-    document.getElementById("crimeID").innerHTML = "";
+  document.getElementById("crimeID").innerHTML = "";
+  
     for (i = 0; i < setOfCrime.length; i++) {
         if (setOfCrime[i].neighbourhoodTabIndex == neighbourhoodTabIndex) {
             createCrimeButtons(setOfCrime[i], i);
@@ -320,6 +321,7 @@ function clickOnNeighbourhoodTabButton(neighbourhoodTabIndex) {
         }
         createCrimeButtonsForNeighbourhood(neighbourhoodTabIndex);
     } else {
+      createCrimeButtonsForNeighbourhood(false);
         displayNotice("you're not notorious enough to visit " + neighbourhoodTabs[neighbourhoodTabIndex].name + "<br><br>you need " + neighbourhoodTabs[neighbourhoodTabIndex].notoRequired.toLocaleString() + " N");
     }
 }

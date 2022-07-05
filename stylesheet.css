@@ -147,6 +147,8 @@ a {
     flex-flow: row;
     justify-content: space-around;
     flex: 0 0   1;
+    color: hotpink;
+    flex-flow: row;
 }
 
 .neighbourhood_tab {
@@ -179,6 +181,8 @@ a {
 
 .words {
     display: flex;
+    flex: 0 0   1;
+    flex-grow: 0;
     color: white;
     max-width: 100vh;
     padding: 15px;
@@ -263,63 +267,6 @@ a {
     padding: 10px;
 }
 
-[state="ready"] {
-    background: var(--background-color);
-}
-
-[state="running"] {
-    background: #2276c3;
-    background: var(--running-color);
-}
-
-[state="complete"] {
-    background: #c33522;
-    background: var(--complete-color);
-    /* color: var(--color-B); */
-    color: black;
-    font-weight: 800;
-}
-
-[state="normal"] {
-    background: var(--color-B);
-    color: #fff;
-}
-
-[state="alert"] {
-    background: var(--color-F);
-    color: #fff;
-}
-
-[state="inventorySelected"] {
-    background: var(--color-B);
-    color: var(--color-E);
-}
-
-[state="statsSelected"] {
-    background: var(--color-C);
-    color: var(--color-E);
-}
-
-[state="crimeSelected"] {
-    background: var(--color-A);
-    color: white;
-}
-
-[state="locked"] {
-    color: var(--color-H);
-}
-
-[state="unlocked"] {
-    color: var(--color-H);
-}
-
-[state="neighbourhoodSelected"] {
-    border: white;
-}
-
-[state="neighbourhoodUnselected"] {
-    border: black;
-}
 
 .invAndStatButtonWrapper {
     display: flex;
@@ -375,6 +322,52 @@ a {
     flex: 0 0 auto;
     max-height: 60vh;
     overflow-y: hidden;
+}
+
+/* states */
+
+[state="ready"] {
+    background: var(--background-color);
+}
+
+[state="running"] {
+    background: #2276c3;
+    background: var(--running-color);
+}
+
+[state="complete"] {
+    background: #c33522;
+    background: var(--complete-color);
+    /* color: var(--color-B); */
+    color: black;
+    font-weight: 800;
+}
+
+[state="normal"] {
+    background: var(--color-B);
+    color: #fff;
+}
+
+[state="alert"] {
+    background: var(--color-F);
+    color: #fff;
+}
+
+
+[state="locked"] {
+    color: var(--color-H);
+}
+
+[state="unlocked"] {
+    color: var(--color-H);
+}
+
+[state="neighbourhoodSelected"] {
+    border: white;
+}
+
+[state="neighbourhoodUnselected"] {
+    border: black;
 }
 
 [state="inventorySelected"] {
